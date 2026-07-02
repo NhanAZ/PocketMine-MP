@@ -88,7 +88,9 @@ Why this first:
 
 ## Pilot Import
 
-Start with `pocketmine/color`.
+Pilot package: `pocketmine/color`.
+
+Status: imported into `packages/color` and wired through a Composer `path` repository.
 
 Reasons:
 
@@ -100,13 +102,13 @@ Reasons:
 
 Pilot checklist:
 
-1. Import `https://github.com/pmmp/Color.git` at `a0421f1e9e0b0c619300fb92d593283378f6a5e1` into `packages/color`.
-2. Add a Composer path repository for `packages/color` with `"symlink": false`.
-3. Run `composer update pocketmine/color --lock` or the smallest Composer command that rewrites the lock source to the path repository.
-4. Confirm `composer install --prefer-dist --no-interaction` works from a clean `vendor/`.
-5. Run PHPStan and PHPUnit.
-6. Build a phar.
-7. Commit and push the import separately from any unrelated changes.
+1. [x] Import `https://github.com/pmmp/Color.git` at `a0421f1e9e0b0c619300fb92d593283378f6a5e1` into `packages/color`.
+2. [x] Add a Composer path repository for `packages/color` with `"symlink": false`.
+3. [x] Run the smallest Composer update that rewrites the lock source to the path repository.
+4. [x] Confirm `composer install --prefer-dist --no-interaction` works.
+5. [x] Run PHPStan and PHPUnit.
+6. [x] Build a phar.
+7. [x] Commit and push the import separately from unrelated changes.
 
 ## Suggested Import Order
 
@@ -119,4 +121,3 @@ Pilot checklist:
 
 Do not combine high-risk imports with protocol updates.
 The fork should be able to bisect dependency import problems independently from Minecraft compatibility work.
-

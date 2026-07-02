@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "43b2298cca1bf8dc7aebd21cb8d1f587",
+    "content-hash": "86f0a295ea62c7ad3cb2648025129ebf",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -396,16 +396,10 @@
         {
             "name": "pocketmine/color",
             "version": "0.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pmmp/Color.git",
-                "reference": "a0421f1e9e0b0c619300fb92d593283378f6a5e1"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/Color/zipball/a0421f1e9e0b0c619300fb92d593283378f6a5e1",
-                "reference": "a0421f1e9e0b0c619300fb92d593283378f6a5e1",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/color",
+                "reference": "b55d29ca69445ee17f5c523315ebbdaaa06ed2ee"
             },
             "require": {
                 "php": "^8.0"
@@ -420,16 +414,14 @@
                     "pocketmine\\color\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0"
             ],
             "description": "Color handling library used by PocketMine-MP and related projects",
-            "support": {
-                "issues": "https://github.com/pmmp/Color/issues",
-                "source": "https://github.com/pmmp/Color/tree/0.3.1"
-            },
-            "time": "2023-04-10T11:38:05+00:00"
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "pocketmine/errorhandler",
