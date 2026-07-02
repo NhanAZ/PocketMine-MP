@@ -272,6 +272,17 @@ class Human extends Living implements ProjectileSource, InventoryHolder{
 		$inventory->getListeners()->add(...$listeners);
 	}
 
+	private static function loadHungerData(HungerManager $hungerManager, CompoundTag $nbt) : void{
+		try{
+			$hungerManager->setFood((float) $nbt->getInt(self::TAG_FOOD_LEVEL, (int) $hungerManager->getFood()));
+			$hungerManager->setExhaustion($nbt->getFloat(self::TAG_FOOD_EXHAUSTION_LEVEL, $hungerManager->getExhaustion()));
+			$hungerManager->setSaturation($nbt->getFloat(self::TAG_FOOD_SATURATION_LEVEL, $hungerManager->getSaturation()));
+			$hungerManager->setFoodTickTimer($nbt->getInt(self::TAG_FOOD_TICK_TIMER, $hungerManager->getFoodTickTimer()));
+		}catch(\InvalidArgumentException $e){
+			throw new SavedDataLoadingException("Invalid hunger data: " . $e->getMessage(), 0, $e);
+		}
+	}
+
 	protected function initEntity(CompoundTag $nbt) : void{
 		parent::initEntity($nbt);
 
@@ -346,10 +357,7 @@ class Human extends Living implements ProjectileSource, InventoryHolder{
 			fn(EntityEventBroadcaster $broadcaster, array $recipients) => $broadcaster->onMobMainHandItemChange($recipients, $this)
 		));
 
-		$this->hungerManager->setFood((float) $nbt->getInt(self::TAG_FOOD_LEVEL, (int) $this->hungerManager->getFood()));
-		$this->hungerManager->setExhaustion($nbt->getFloat(self::TAG_FOOD_EXHAUSTION_LEVEL, $this->hungerManager->getExhaustion()));
-		$this->hungerManager->setSaturation($nbt->getFloat(self::TAG_FOOD_SATURATION_LEVEL, $this->hungerManager->getSaturation()));
-		$this->hungerManager->setFoodTickTimer($nbt->getInt(self::TAG_FOOD_TICK_TIMER, $this->hungerManager->getFoodTickTimer()));
+		self::loadHungerData($this->hungerManager, $nbt);
 
 		$this->xpManager->setXpAndProgressNoEvent(
 			$nbt->getInt(self::TAG_XP_LEVEL, 0),

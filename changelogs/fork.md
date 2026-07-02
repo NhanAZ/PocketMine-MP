@@ -9,6 +9,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 
 - Implemented upstream issue #5603: nether-brick fences no longer extend collision boxes toward wooden fences, while different wooden fence variants continue connecting to each other.
 - Implemented upstream issue #5463: updater channel suggestions use `VersionInfo::BUILD_CHANNEL`, correctly distinguish alpha/beta releases from stable builds, and report the actual prerelease channel.
+- Implemented upstream issue #6712: invalid saved food, exhaustion, saturation, and hunger tick-timer values now raise `SavedDataLoadingException` instead of leaking `InvalidArgumentException` from strict hunger ranges.
 
 ### Maintenance
 
@@ -19,6 +20,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Targeted fence-family regression coverage passed (1 test, 5 assertions), along with full PHPUnit (233 tests, 72,606 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `ba48d1481`.
 - Recorded the non-blocking `pmmp/setup-php-action@3.2.0` Node.js 20 deprecation warning for a focused workflow maintenance follow-up.
 - For #5463, targeted channel-resolution coverage (1 test, 7 assertions), full PHPUnit (234 tests, 72,613 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks passed. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `5179fb448`.
+- For #6712, targeted hunger-data coverage (5 tests, 12 assertions), full PHPUnit (239 tests, 72,625 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks passed. PHP-CS-Fixer 3.75 remains covered by fork CI.
 
 ### Reviewed Or Deferred
 
