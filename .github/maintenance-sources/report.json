@@ -53,6 +53,19 @@
     },
     {
         "kind": "imported-package",
+        "name": "pocketmine/bedrock-protocol",
+        "repository": "pmmp/BedrockProtocol",
+        "branch": "master",
+        "pinned_ref": "b7863bd60042723b91c3cb87ac37309a4fec1309",
+        "latest_ref": "b7863bd60042723b91c3cb87ac37309a4fec1309",
+        "license": "LGPL-3.0",
+        "url": "https://github.com/pmmp/BedrockProtocol",
+        "path": "packages/bedrock-protocol",
+        "role": null,
+        "signal": "at-branch-head"
+    },
+    {
+        "kind": "imported-package",
         "name": "pocketmine/binaryutils",
         "repository": "pmmp/BinaryUtils",
         "branch": "stable",
@@ -144,19 +157,6 @@
     },
     {
         "kind": "composer-package",
-        "name": "pocketmine/bedrock-protocol",
-        "repository": "pmmp/BedrockProtocol",
-        "branch": "master",
-        "pinned_ref": "b7863bd60042723b91c3cb87ac37309a4fec1309",
-        "latest_ref": "b7863bd60042723b91c3cb87ac37309a4fec1309",
-        "license": "LGPL-3.0",
-        "url": "https://github.com/pmmp/BedrockProtocol",
-        "path": "vendor/pocketmine/bedrock-protocol",
-        "role": "Composer-managed PMMP dependency",
-        "signal": "at-branch-head"
-    },
-    {
-        "kind": "composer-package",
         "name": "pocketmine/raklib",
         "repository": "pmmp/RakLib",
         "branch": "stable",
@@ -239,7 +239,7 @@
         "repository": "PowerNukkitX/PowerNukkitX",
         "branch": "master",
         "pinned_ref": null,
-        "latest_ref": "f2cdff7eed3a0ad79099bd6adcc1f97ab31e7143",
+        "latest_ref": "efd90f359f2ef6b7f80921b32afefa4761fe7082",
         "license": "LGPL-3.0",
         "url": "https://github.com/PowerNukkitX/PowerNukkitX",
         "path": null,

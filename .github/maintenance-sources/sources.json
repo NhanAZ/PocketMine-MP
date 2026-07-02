@@ -34,6 +34,14 @@
     },
     {
       "kind": "imported-package",
+      "name": "pocketmine/bedrock-protocol",
+      "repository": "pmmp/BedrockProtocol",
+      "branch": "master",
+      "pinned_ref": "b7863bd60042723b91c3cb87ac37309a4fec1309",
+      "path": "packages/bedrock-protocol"
+    },
+    {
+      "kind": "imported-package",
       "name": "pocketmine/binaryutils",
       "repository": "pmmp/BinaryUtils",
       "branch": "stable",

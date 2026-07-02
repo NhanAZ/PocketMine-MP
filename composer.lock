@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bcd649f6dbbb45bf93fa90cd4e2823c",
+    "content-hash": "ccfe09605a2c6b7d8172d63d5ee09677",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -233,16 +233,10 @@
         {
             "name": "pocketmine/bedrock-protocol",
             "version": "58.0.0+bedrock-1.26.30",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pmmp/BedrockProtocol.git",
-                "reference": "b7863bd60042723b91c3cb87ac37309a4fec1309"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/BedrockProtocol/zipball/b7863bd60042723b91c3cb87ac37309a4fec1309",
-                "reference": "b7863bd60042723b91c3cb87ac37309a4fec1309",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/bedrock-protocol",
+                "reference": "2cb3d63f486f7ef1eef9e953ca6402e6ac9296fa"
             },
             "require": {
                 "ext-encoding": "~1.0.0",
@@ -266,16 +260,24 @@
                     "pocketmine\\network\\mcpe\\protocol\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "pocketmine\\network\\mcpe\\protocol\\": "tests/phpunit/"
+                }
+            },
+            "scripts": {
+                "update-create-methods": [
+                    "@php tools/generate-create-static-methods.php"
+                ]
+            },
             "license": [
                 "LGPL-3.0"
             ],
             "description": "An implementation of the Minecraft: Bedrock Edition protocol in PHP",
-            "support": {
-                "issues": "https://github.com/pmmp/BedrockProtocol/issues",
-                "source": "https://github.com/pmmp/BedrockProtocol/tree/58.0.0+bedrock-1.26.30"
-            },
-            "time": "2026-06-22T19:49:35+00:00"
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "pocketmine/binaryutils",
