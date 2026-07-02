@@ -17,7 +17,8 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Upstream issue #6711 was triaged and implemented: inventories now reject plain `Item` instances using block-item type IDs before they can crash later during serialization.
 - Upstream issue #6580 was reviewed and deferred: the real LevelDB compaction fix requires region-sharded DBs or a world-format migration, not a small safe patch.
 - Upstream issue #6808 was triaged and implemented: core entities now save with Bedrock entity IDs while retaining legacy Java/PM aliases for loading older worlds.
-- Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, and `git diff --check` are clean after the #6808 entity save-ID work.
+- Upstream issue #5632 was triaged and implemented: missing Bedrock blockstate properties now fall back to the registered default state for that block ID while still rejecting wrong property types.
+- Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, and `git diff --check` are clean after the #5632 blockstate default-property work.
 - Fork CI health is the top active gate; the latest red runs were PHP-CS-Fixer import order, PHPStan CLI argv handling, and Docker missing local `packages/` path repositories.
 - User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
 - Release automation is intentionally conservative: source builds and local phars only; GitHub Releases, Docker publishing, updater metadata, Discord, Crowdin, branch sync, and upstream RestrictedActions-style workflows are disabled until fork-owned destinations are configured.
@@ -73,15 +74,17 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
   - Opened issue #6711, "No serializer registered for pocketmine\item\Item (-10282) Grass".
   - Opened issue #6580, "LevelDB compaction performance issue with large worlds (especially converted worlds)".
   - Opened issue #6808, "Entities are still saved with Java 1.10 IDs".
+  - Opened issue #5632, "Update blocks due to missing blockstate properties produced by converters".
 - [x] Classify relevance and create only the smallest actionable fork task or port.
   - Classified as actionable network/protocol architecture work and implemented the smallest local change: pass `TypeConverter` through tile spawn NBT serialization and cache serialized spawn compounds per converter.
   - Classified #6711 as actionable core validation work and implemented the smallest local guard: `BaseInventory` rejects non-null plain `Item` objects whose type ID maps to a block type ID unless they are real `ItemBlock` instances.
   - Deferred #6580 because the least destructive upstream direction is splitting worlds into region DBs while keeping Mojang keys, which needs an explicit format design, converter path, rollback plan, and large-world benchmarks.
   - Classified #6808 as actionable core save-format work and implemented the smallest local change: make Bedrock entity IDs the default save IDs while preserving legacy aliases for deserialization.
+  - Classified #5632 as actionable world-load tolerance work and implemented the smallest local change: registered blockstate deserializers now supply default property values for missing states while preserving failures for unknown IDs, unread properties, invalid values, and wrong tag types.
 - [x] Preserve source links and authorship; do not copy whole discussions.
-  - Sources: https://github.com/pmmp/PocketMine-MP/issues/6284, https://github.com/pmmp/PocketMine-MP/issues/6711, https://github.com/pmmp/PocketMine-MP/issues/6580, and https://github.com/pmmp/PocketMine-MP/issues/6808 by dktapps; original issue comments were reviewed before implementation or deferral.
-  - Checks: targeted `SpawnableTest`, targeted `BaseInventoryTest`, targeted `EntityFactoryTest`, full PHPUnit, full PHPStan, PHP-CS-Fixer 3.75 dry-run, JSON validation, `git diff --check`, and generated-file collision check.
-  - The next shortlist candidate is #5632, but it must be opened and reviewed before any work is added.
+  - Sources: https://github.com/pmmp/PocketMine-MP/issues/6284, https://github.com/pmmp/PocketMine-MP/issues/6711, https://github.com/pmmp/PocketMine-MP/issues/6580, https://github.com/pmmp/PocketMine-MP/issues/6808 by dktapps, and https://github.com/pmmp/PocketMine-MP/issues/5632 by GH-PM with a dktapps root-cause comment; original issue comments were reviewed before implementation or deferral.
+  - Checks: targeted `SpawnableTest`, targeted `BaseInventoryTest`, targeted `EntityFactoryTest`, targeted `BlockSerializerDeserializerTest`, full PHPUnit, full PHPStan, PHP-CS-Fixer 3.75 dry-run, JSON validation, `git diff --check`, and generated-file collision check.
+  - The next shortlist candidates are #6750 and #6832, but the original issue must be opened and reviewed before any work is added.
 
 ## Dependency Track
 

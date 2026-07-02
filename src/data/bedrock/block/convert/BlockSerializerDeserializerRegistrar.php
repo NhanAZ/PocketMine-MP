@@ -49,6 +49,27 @@ final class BlockSerializerDeserializerRegistrar{
 	){}
 
 	/**
+	 * @param property\Property[] $properties
+	 *
+	 * @phpstan-template TBlock of Block
+	 * @phpstan-param TBlock $block
+	 * @phpstan-param list<\pocketmine\data\bedrock\block\convert\property\Property<contravariant TBlock>> $properties
+	 * @phpstan-return array<string, \pocketmine\nbt\tag\Tag>
+	 */
+	private static function serializeDefaultStates(string $id, Block $block, array $properties) : array{
+		if(count($properties) === 0){
+			return [];
+		}
+
+		$writer = new Writer($id);
+		foreach($properties as $property){
+			$property->serialize($block, $writer);
+		}
+
+		return $writer->getBlockStateData()->getStates();
+	}
+
+	/**
 	 * @param string[]|StringProperty[] $components
 	 *
 	 * @phpstan-param list<string|StringProperty<*>> $components
@@ -176,7 +197,7 @@ final class BlockSerializerDeserializerRegistrar{
 						$property->deserialize($block, $reader);
 					}
 					return $block;
-				});
+				}, self::serializeDefaultStates($id, $preparedBlock, $properties));
 			}else{
 				//fast path for blocks with no state properties
 				$this->deserializer->map($id, fn() => clone $preparedBlock);
@@ -225,7 +246,7 @@ final class BlockSerializerDeserializerRegistrar{
 				$descriptor->deserialize($newBlock, $in);
 			}
 			return $newBlock;
-		});
+		}, self::serializeDefaultStates($id, $block, $propertyDescriptors));
 		$this->serializer->map($block, static function(Block $block) use ($id, $propertyDescriptors) : Writer{
 			$writer = new Writer($id);
 			foreach($propertyDescriptors as $descriptor){

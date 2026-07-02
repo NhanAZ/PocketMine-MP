@@ -53,8 +53,12 @@ final class BlockStateReader{
 	 */
 	private array $unusedStates;
 
+	/**
+	 * @phpstan-param array<string, Tag> $defaultStates
+	 */
 	public function __construct(
-		private BlockStateData $data
+		private BlockStateData $data,
+		private array $defaultStates = []
 	){
 		$this->unusedStates = $this->data->getStates();
 	}
@@ -73,7 +77,7 @@ final class BlockStateReader{
 	/** @throws BlockStateDeserializeException */
 	public function readBool(string $name) : bool{
 		unset($this->unusedStates[$name]);
-		$tag = $this->data->getState($name);
+		$tag = $this->data->getState($name) ?? $this->defaultStates[$name] ?? null;
 		if($tag instanceof ByteTag){
 			switch($tag->getValue()){
 				case 0: return false;
@@ -87,7 +91,7 @@ final class BlockStateReader{
 	/** @throws BlockStateDeserializeException */
 	public function readInt(string $name) : int{
 		unset($this->unusedStates[$name]);
-		$tag = $this->data->getState($name);
+		$tag = $this->data->getState($name) ?? $this->defaultStates[$name] ?? null;
 		if($tag instanceof IntTag){
 			return $tag->getValue();
 		}
@@ -107,7 +111,7 @@ final class BlockStateReader{
 	public function readString(string $name) : string{
 		unset($this->unusedStates[$name]);
 		//TODO: only allow a specific set of values (strings are primarily used for enums)
-		$tag = $this->data->getState($name);
+		$tag = $this->data->getState($name) ?? $this->defaultStates[$name] ?? null;
 		if($tag instanceof StringTag){
 			return $tag->getValue();
 		}
@@ -334,6 +338,8 @@ final class BlockStateReader{
 	public function ignored(string $name) : void{
 		if($this->data->getState($name) !== null){
 			unset($this->unusedStates[$name]);
+		}elseif(isset($this->defaultStates[$name])){
+			//NOOP: the property was omitted, but it matches the default state for this block ID.
 		}else{
 			throw $this->missingOrWrongTypeException($name, null);
 		}

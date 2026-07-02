@@ -50,6 +50,12 @@ final class BlockStateToObjectDeserializer implements BlockStateDeserializer{
 	 */
 	private array $simpleCache = [];
 
+	/**
+	 * @var array[]
+	 * @phpstan-var array<string, array<string, \pocketmine\nbt\tag\Tag>>
+	 */
+	private array $defaultStates = [];
+
 	public function deserialize(BlockStateData $stateData) : int{
 		if(count($stateData->getStates()) === 0){
 			//if a block has zero properties, we can keep a map of string ID -> internal blockstate ID
@@ -70,9 +76,13 @@ final class BlockStateToObjectDeserializer implements BlockStateDeserializer{
 		return $stateId;
 	}
 
-	/** @phpstan-param \Closure(Reader) : Block $c */
-	public function map(string $id, \Closure $c) : void{
+	/**
+	 * @phpstan-param \Closure(Reader) : Block $c
+	 * @phpstan-param array<string, \pocketmine\nbt\tag\Tag> $defaultStates
+	 */
+	public function map(string $id, \Closure $c, array $defaultStates = []) : void{
 		$this->deserializeFuncs[$id] = $c;
+		$this->defaultStates[$id] = $defaultStates;
 		$this->simpleCache = [];
 	}
 
@@ -126,7 +136,7 @@ final class BlockStateToObjectDeserializer implements BlockStateDeserializer{
 		if(!array_key_exists($id, $this->deserializeFuncs)){
 			throw new UnsupportedBlockStateException("Unknown block ID \"$id\"");
 		}
-		$reader = new Reader($blockStateData);
+		$reader = new Reader($blockStateData, $this->defaultStates[$id] ?? []);
 		$block = $this->deserializeFuncs[$id]($reader);
 		$reader->checkUnreadProperties();
 		return $block;

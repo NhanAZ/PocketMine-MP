@@ -31,8 +31,14 @@ use pocketmine\block\CaveVines;
 use pocketmine\block\Farmland;
 use pocketmine\block\MobHead;
 use pocketmine\block\RuntimeBlockStateRegistry;
+use pocketmine\data\bedrock\block\BlockStateData;
 use pocketmine\data\bedrock\block\BlockStateDeserializeException;
+use pocketmine\data\bedrock\block\BlockStateNames as StateNames;
 use pocketmine\data\bedrock\block\BlockStateSerializeException;
+use pocketmine\data\bedrock\block\BlockStateStringValues as StateStringValues;
+use pocketmine\data\bedrock\block\BlockTypeNames as Ids;
+use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\StringTag;
 use function print_r;
 
 final class BlockSerializerDeserializerTest extends TestCase{
@@ -44,6 +50,22 @@ final class BlockSerializerDeserializerTest extends TestCase{
 		$this->serializer = new BlockObjectToStateSerializer();
 		$registrar = new BlockSerializerDeserializerRegistrar($this->deserializer, $this->serializer);
 		VanillaBlockMappings::init($registrar);
+	}
+
+	public function testMissingBlockStatePropertiesUseDefaultValues() : void{
+		$expected = $this->deserializer->deserializeBlock(new BlockStateData(Ids::OAK_LOG, [
+			StateNames::PILLAR_AXIS => new StringTag(StateStringValues::PILLAR_AXIS_Y)
+		], BlockStateData::CURRENT_VERSION));
+		$actual = $this->deserializer->deserializeBlock(new BlockStateData(Ids::OAK_LOG, [], BlockStateData::CURRENT_VERSION));
+
+		self::assertSame($expected->getStateId(), $actual->getStateId());
+	}
+
+	public function testInvalidProvidedBlockStatePropertiesStillRejected() : void{
+		$this->expectException(BlockStateDeserializeException::class);
+		$this->deserializer->deserializeBlock(new BlockStateData(Ids::OAK_LOG, [
+			StateNames::PILLAR_AXIS => new IntTag(0)
+		], BlockStateData::CURRENT_VERSION));
 	}
 
 	public function testAllKnownBlockStatesSerializableAndDeserializable() : void{
