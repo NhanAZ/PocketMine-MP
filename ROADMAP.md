@@ -6,6 +6,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 ## Current State
 
 - Fork governance, contribution, security, and production-risk warnings are established.
+- Fork-specific changelog tracking is established in `changelogs/fork.md` and backfilled from `a170743de838581487bcf91bc7026fe786de752b` through `6c78bb0b0`.
 - `pocketmine/color`, `pocketmine/errorhandler`, `pocketmine/log`, and `pocketmine/math` are local Composer path packages.
 - Source monitoring covers the PMMP root, PMMP-owned dependencies, and four protocol reference projects.
 - The current root matches `upstream/stable` at `fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff`.
@@ -108,7 +109,7 @@ Re-evaluate RakLib commit `765501863` during its import or when a release contai
 
 ## Milestones
 
-- **Foundation hardening: active.** Remaining: changelog habit.
+- **Foundation hardening: active.** Changelog habit is established; keep `changelogs/fork.md` current for each completed unit.
 - **Self-contained dependencies: active.** Four packages are local; protocol and network packages remain.
 - **Protocol velocity: active.** Evidence rules are ready; one real verified protocol update is still required.
 - **Fork releases: planned.** Automated publishing is disabled; release naming and artifact policy remain before public releases.

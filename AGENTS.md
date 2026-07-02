@@ -11,7 +11,8 @@ Keep it short. Active work belongs in `ROADMAP.md`, not here.
 4. Follow existing PocketMine-MP architecture, style, and tooling.
 5. Run checks proportional to risk; before pushing, run local equivalents of touched GitHub Actions when available, and state skipped or failing checks.
 6. Update `ROADMAP.md` live when work is completed, discovered, deferred, or reprioritized.
-7. Commit and push each completed unit when the maintainer has requested that workflow.
+7. Update `changelogs/fork.md` in the same commit for every completed code, workflow, dependency, protocol, release, or developer-visible maintenance unit.
+8. Commit and push each completed unit when the maintainer has requested that workflow.
 
 ## Engineering Rules
 
@@ -45,6 +46,7 @@ Keep it short. Active work belongs in `ROADMAP.md`, not here.
 
 - Do not create Markdown by default.
 - `AGENTS.md` stores durable rules; `ROADMAP.md` stores live state and next work.
+- `changelogs/fork.md` stores fork-specific change history; keep it concise and current.
 - Add other Markdown only for a distinct user, security, release, changelog, or concrete developer-reference need.
 - Prefer updating an existing document, code comments, tests, issue/PR text, or structured JSON over creating agent-context files.
 - Generated audits and backlog snapshots must be JSON-only.
