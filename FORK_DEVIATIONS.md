@@ -101,11 +101,14 @@ Files:
 - `composer.lock`
 - `packages/color/`
 - `packages/errorhandler/`
+- `packages/math/`
 
 Reason:
 
 The fork is moving PMMP-owned dependencies into this repository using Composer path packages first.
-`pocketmine/color` and `pocketmine/errorhandler` are imported and wired locally.
+`pocketmine/color`, `pocketmine/errorhandler`, and `pocketmine/math` are imported and wired locally.
+The math package is pinned to upstream commit `dc132d93595b32e9f210d78b3c8d43c662a5edbf` (version `1.0.0`).
+Risk is low because its public package version and autoload namespace are unchanged; rollback is the math subtree import plus its path-repository wiring commit.
 
 ## Review Later
 

@@ -5,17 +5,17 @@ Keep tasks small enough for one focused PR unless explicitly marked otherwise.
 
 ## Ready
 
-### Import `pocketmine/math`
+### Restore Full PHPStan Baseline
 
-Reason: low-risk next dependency consolidation step after `color` and `errorhandler`.
+Reason: the upstream backlog tools added after the last clean baseline currently produce 33 PHPStan errors, which hides regressions in later work.
 
 Checklist:
 
-- Import `https://github.com/pmmp/Math.git` at the version in `composer.lock` into `packages/math`.
-- Add a Composer path repository for `packages/math`.
-- Update only `pocketmine/math` in `composer.lock`.
-- Run `composer validate`, PHPStan, PHPUnit, and phar build.
-- Update `DEPENDENCY_CONSOLIDATION.md` and `FORK_DEVIATIONS.md`.
+- Add precise array shapes and iterable value types to `tools/fetch-upstream-backlog.php`.
+- Add precise array shapes and iterable value types to `tools/prioritize-upstream-backlog.php`.
+- Replace integer-or-false conditions with explicit comparisons.
+- Run both tools and confirm their generated JSON and Markdown remain valid.
+- Run the full `vendor\bin\phpstan.bat analyse --no-progress` command.
 
 ### Import `pocketmine/log`
 

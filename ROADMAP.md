@@ -18,7 +18,7 @@ Completed foundation:
 - Protocol update workflow is documented in [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md).
 - Sustainable maintenance audits are documented in [SUSTAINABLE_MAINTENANCE.md](SUSTAINABLE_MAINTENANCE.md).
 - Intentional fork drift is tracked in [FORK_DEVIATIONS.md](FORK_DEVIATIONS.md).
-- `pocketmine/color` and `pocketmine/errorhandler` are imported as local Composer path packages.
+- `pocketmine/color`, `pocketmine/errorhandler`, and `pocketmine/math` are imported as local Composer path packages.
 
 Current direction:
 
@@ -69,14 +69,15 @@ Status: active.
 
 Import order:
 
-1. `pocketmine/math`
-2. `pocketmine/log`
-3. `pocketmine/callback-validator`
-4. `pocketmine/binaryutils`
-5. `pocketmine/nbt`
-6. Bedrock data and upgrade schema packages
-7. `pocketmine/bedrock-protocol`
-8. `pocketmine/snooze`, `pocketmine/raklib`, and `pocketmine/raklib-ipc`
+Completed: `pocketmine/color`, `pocketmine/errorhandler`, and `pocketmine/math`.
+
+1. `pocketmine/log`
+2. `pocketmine/callback-validator`
+3. `pocketmine/binaryutils`
+4. `pocketmine/nbt`
+5. Bedrock data and upgrade schema packages
+6. `pocketmine/bedrock-protocol`
+7. `pocketmine/snooze`, `pocketmine/raklib`, and `pocketmine/raklib-ipc`
 
 Rules:
 

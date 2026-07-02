@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d02bf59b270326aa0d71f9b618017846",
+    "content-hash": "0ee95adf07e4e282bb1a5814c2517b8a",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -503,16 +503,10 @@
         {
             "name": "pocketmine/math",
             "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pmmp/Math.git",
-                "reference": "dc132d93595b32e9f210d78b3c8d43c662a5edbf"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/Math/zipball/dc132d93595b32e9f210d78b3c8d43c662a5edbf",
-                "reference": "dc132d93595b32e9f210d78b3c8d43c662a5edbf",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/math",
+                "reference": "fd989a2b2841655f6ce6ffe5d4af7f40dca4f78f"
             },
             "require": {
                 "php": "^8.0",
@@ -530,16 +524,19 @@
                     "pocketmine\\math\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "pocketmine\\math\\": "tests/phpunit/"
+                }
+            },
             "license": [
                 "LGPL-3.0"
             ],
             "description": "PHP library containing math related code used in PocketMine-MP",
-            "support": {
-                "issues": "https://github.com/pmmp/Math/issues",
-                "source": "https://github.com/pmmp/Math/tree/1.0.0"
-            },
-            "time": "2023-08-03T12:56:33+00:00"
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "pocketmine/nbt",

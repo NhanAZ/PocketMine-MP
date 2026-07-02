@@ -19,7 +19,7 @@ Source references are taken from `composer.lock`.
 | `pocketmine/color` | `0.3.1` | `LGPL-3.0` | `a0421f1` | Low | Best pilot import: one source file, no package dependencies. |
 | `pocketmine/errorhandler` | `0.7.1` | `LGPL-3.0` | `84c9ec8` | Low | Imported and wired through a local path package. |
 | `pocketmine/log` | `0.4.0` | `LGPL-3.0` | `e6c912c` | Low | Import early, but note it uses classmap autoloading. |
-| `pocketmine/math` | `1.0.0` | `LGPL-3.0` | `dc132d9` | Low | Import early; small and stable. |
+| `pocketmine/math` | `1.0.0` | `LGPL-3.0` | `dc132d9` | Low | Imported and wired through a local path package. |
 | `pocketmine/nbt` | `1.2.0` | `LGPL-3.0` | `51b8d6a` | Medium | Import after `binaryutils`; used by protocol and world/data paths. |
 | `pocketmine/raklib` | `1.2.1` | `GPL-3.0` | `669eb4d` | High | Import late; keep license boundaries explicit and test networking carefully. |
 | `pocketmine/raklib-ipc` | `1.0.1` | `GPL-3.0` | `ce632ef` | High | Import with or after RakLib; IPC/threading behaviour is high risk. |
@@ -112,12 +112,13 @@ Pilot checklist:
 
 ## Suggested Import Order
 
-1. `pocketmine/color` as the pilot.
-2. Small utilities: `log`, `math`, `callback-validator`.
-3. Binary/data foundations: `binaryutils`, `nbt`.
-4. Bedrock data/schema packages: `bedrock-data`, `bedrock-block-upgrade-schema`, `bedrock-item-upgrade-schema`.
-5. `bedrock-protocol`.
-6. Thread/network packages: `snooze`, `raklib`, `raklib-ipc`.
+Completed: `pocketmine/color`, `pocketmine/errorhandler`, and `pocketmine/math`.
+
+1. Small utilities: `log`, `callback-validator`.
+2. Binary/data foundations: `binaryutils`, `nbt`.
+3. Bedrock data/schema packages: `bedrock-data`, `bedrock-block-upgrade-schema`, `bedrock-item-upgrade-schema`.
+4. `bedrock-protocol`.
+5. Thread/network packages: `snooze`, `raklib`, `raklib-ipc`.
 
 Do not combine high-risk imports with protocol updates.
 The fork should be able to bisect dependency import problems independently from Minecraft compatibility work.
