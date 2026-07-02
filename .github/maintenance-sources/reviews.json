@@ -19,6 +19,11 @@
       "note": "Imported tag 6.7.0+bedrock-1.26.30 at the root lock pin and canonical master head bdb44a48fb6beffb6e9f6864f06d2232eb62b6a3 as packages/bedrock-data with its CC0-1.0 license and full subtree history."
     },
     {
+      "repository": "pmmp/BedrockItemUpgradeSchema",
+      "classification": "adopt",
+      "note": "Imported tag 1.17.0+bedrock-1.26.20 at the root lock pin and canonical master head e19685d2e7e76eb7446115c556df34e5d627d072 as packages/bedrock-item-upgrade-schema with its CC0-1.0 license and full subtree history."
+    },
+    {
       "repository": "pmmp/BinaryUtils",
       "classification": "adopt",
       "note": "Imported tag 0.2.7 at the root lock pin and canonical stable head 14c044afa33cb581b4a6d1ea04a87e0bc99e824b as packages/binaryutils with its LGPL-3.0 license and full subtree history."

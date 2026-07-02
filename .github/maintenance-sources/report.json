@@ -27,6 +27,19 @@
     },
     {
         "kind": "imported-package",
+        "name": "pocketmine/bedrock-item-upgrade-schema",
+        "repository": "pmmp/BedrockItemUpgradeSchema",
+        "branch": "master",
+        "pinned_ref": "e19685d2e7e76eb7446115c556df34e5d627d072",
+        "latest_ref": "e19685d2e7e76eb7446115c556df34e5d627d072",
+        "license": "CC0-1.0",
+        "url": "https://github.com/pmmp/BedrockItemUpgradeSchema",
+        "path": "packages/bedrock-item-upgrade-schema",
+        "role": null,
+        "signal": "at-branch-head"
+    },
+    {
+        "kind": "imported-package",
         "name": "pocketmine/binaryutils",
         "repository": "pmmp/BinaryUtils",
         "branch": "stable",
@@ -128,19 +141,6 @@
         "path": "vendor/pocketmine/bedrock-block-upgrade-schema",
         "role": "Composer-managed PMMP dependency",
         "signal": "review-needed"
-    },
-    {
-        "kind": "composer-package",
-        "name": "pocketmine/bedrock-item-upgrade-schema",
-        "repository": "pmmp/BedrockItemUpgradeSchema",
-        "branch": "master",
-        "pinned_ref": "e19685d2e7e76eb7446115c556df34e5d627d072",
-        "latest_ref": "e19685d2e7e76eb7446115c556df34e5d627d072",
-        "license": "CC0-1.0",
-        "url": "https://github.com/pmmp/BedrockItemUpgradeSchema",
-        "path": "vendor/pocketmine/bedrock-item-upgrade-schema",
-        "role": "Composer-managed PMMP dependency",
-        "signal": "at-branch-head"
     },
     {
         "kind": "composer-package",

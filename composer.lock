@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9dbd5bb1b65a580a011dc16fa3ecd0bc",
+    "content-hash": "de34f0ad73d2dd0da5519c56e58ef42d",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -223,28 +223,20 @@
         {
             "name": "pocketmine/bedrock-item-upgrade-schema",
             "version": "1.17.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pmmp/BedrockItemUpgradeSchema.git",
-                "reference": "e19685d2e7e76eb7446115c556df34e5d627d072"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/BedrockItemUpgradeSchema/zipball/e19685d2e7e76eb7446115c556df34e5d627d072",
-                "reference": "e19685d2e7e76eb7446115c556df34e5d627d072",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/bedrock-item-upgrade-schema",
+                "reference": "4d9792b15d8664886394a37d2832900f8dd3300b"
             },
             "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "CC0-1.0"
             ],
             "description": "JSON schemas for upgrading items found in older Minecraft: Bedrock world saves",
-            "support": {
-                "issues": "https://github.com/pmmp/BedrockItemUpgradeSchema/issues",
-                "source": "https://github.com/pmmp/BedrockItemUpgradeSchema/tree/1.17.0"
-            },
-            "time": "2026-05-06T13:12:04+00:00"
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "pocketmine/bedrock-protocol",

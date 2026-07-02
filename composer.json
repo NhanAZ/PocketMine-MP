@@ -17,6 +17,16 @@
       },
       {
          "type": "path",
+         "url": "packages/bedrock-item-upgrade-schema",
+         "options": {
+            "symlink": false,
+            "versions": {
+               "pocketmine/bedrock-item-upgrade-schema": "1.17.0"
+            }
+         }
+      },
+      {
+         "type": "path",
          "url": "packages/binaryutils",
          "options": {
             "symlink": false,

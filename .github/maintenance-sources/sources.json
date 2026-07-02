@@ -18,6 +18,14 @@
     },
     {
       "kind": "imported-package",
+      "name": "pocketmine/bedrock-item-upgrade-schema",
+      "repository": "pmmp/BedrockItemUpgradeSchema",
+      "branch": "master",
+      "pinned_ref": "e19685d2e7e76eb7446115c556df34e5d627d072",
+      "path": "packages/bedrock-item-upgrade-schema"
+    },
+    {
+      "kind": "imported-package",
       "name": "pocketmine/binaryutils",
       "repository": "pmmp/BinaryUtils",
       "branch": "stable",
