@@ -98,6 +98,14 @@
     },
     {
       "kind": "imported-package",
+      "name": "pocketmine/raklib",
+      "repository": "pmmp/RakLib",
+      "branch": "stable",
+      "pinned_ref": "669eb4d1e644f91437323ef24ce3ee985182b829",
+      "path": "packages/raklib"
+    },
+    {
+      "kind": "imported-package",
       "name": "pocketmine/snooze",
       "repository": "pmmp/Snooze",
       "branch": "master",

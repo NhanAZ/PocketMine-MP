@@ -117,6 +117,16 @@
       },
       {
          "type": "path",
+         "url": "packages/raklib",
+         "options": {
+            "symlink": false,
+            "versions": {
+               "pocketmine/raklib": "1.2.1"
+            }
+         }
+      },
+      {
+         "type": "path",
          "url": "packages/snooze",
          "options": {
             "symlink": false,

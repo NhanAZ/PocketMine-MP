@@ -157,6 +157,19 @@
     },
     {
         "kind": "imported-package",
+        "name": "pocketmine/raklib",
+        "repository": "pmmp/RakLib",
+        "branch": "stable",
+        "pinned_ref": "669eb4d1e644f91437323ef24ce3ee985182b829",
+        "latest_ref": "7655018631147f0b5d473326fddc2faea105dffe",
+        "license": "NOASSERTION",
+        "url": "https://github.com/pmmp/RakLib",
+        "path": "packages/raklib",
+        "role": null,
+        "signal": "review-needed"
+    },
+    {
+        "kind": "imported-package",
         "name": "pocketmine/snooze",
         "repository": "pmmp/Snooze",
         "branch": "master",
@@ -166,19 +179,6 @@
         "url": "https://github.com/pmmp/Snooze",
         "path": "packages/snooze",
         "role": null,
-        "signal": "review-needed"
-    },
-    {
-        "kind": "composer-package",
-        "name": "pocketmine/raklib",
-        "repository": "pmmp/RakLib",
-        "branch": "stable",
-        "pinned_ref": "669eb4d1e644f91437323ef24ce3ee985182b829",
-        "latest_ref": "7655018631147f0b5d473326fddc2faea105dffe",
-        "license": "GPL-3.0",
-        "url": "https://github.com/pmmp/RakLib",
-        "path": "vendor/pocketmine/raklib",
-        "role": "Composer-managed PMMP dependency",
         "signal": "review-needed"
     },
     {

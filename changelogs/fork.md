@@ -34,6 +34,7 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 - Imported `pocketmine/bedrock-item-upgrade-schema` 1.17.0+bedrock-1.26.20 at canonical commit `e19685d2e7e76eb7446115c556df34e5d627d072` as a local Composer path package with its CC0-1.0 license, package metadata, schema files, subtree history, and canonical source monitoring.
 - Imported `pocketmine/bedrock-protocol` 58.0.0+bedrock-1.26.30 at canonical commit `b7863bd60042723b91c3cb87ac37309a4fec1309` as a local Composer path package with its LGPL-3.0 license, package metadata, protocol sources, tests, tools, subtree history, and canonical source monitoring.
 - Imported `pocketmine/snooze` 0.5.0 at canonical commit `a86d9ee60ce44755d166d3c7ba4b8b8be8360915` as a local Composer path package with its LGPL-3.0 license, package metadata, static-analysis config, thread-notification sources, subtree history, and canonical source monitoring.
+- Imported `pocketmine/raklib` 1.2.1 at canonical commit `669eb4d1e644f91437323ef24ce3ee985182b829` as a local Composer path package with its GPL-3.0 license, package metadata, protocol/server sources, tools, static-analysis config, subtree history, and canonical source monitoring.
 - Previously imported `pocketmine/color`, `pocketmine/errorhandler`, `pocketmine/math`, and `pocketmine/log` remain local Composer path packages.
 
 ### Maintenance
@@ -49,8 +50,8 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 - Reviewed upstream issue #6580 and deferred it because the LevelDB compaction fix needs a world-format or region-sharded DB design, migration path, rollback plan, and benchmarks.
 - Reviewed upstream issue #6750 and deferred it because the public report is unconfirmed and the useful crash dumps are private to upstream maintainers.
 - Reviewed NBT stable commit `5429a21c9321eb154f7fcdaa789d2b5ccbcc6ea3` and deferred it because it only updates PHP 8.5 CI and PHPStan after the imported 1.2.0 lock pin.
-- Reviewed RakLib anti-spoofing cookies and deferred them until a tagged release or the planned local RakLib import.
-- Reviewed PowerNukkitX RakNet pacing and cookie configuration drift as reference-only evidence for the planned RakLib import.
+- Reviewed RakLib anti-spoofing cookies during the local RakLib import and deferred them as a separate network-behaviour task until tests and OVH-compatible configuration are reviewed.
+- Reviewed PowerNukkitX RakNet pacing and cookie configuration drift as reference-only evidence for the deferred RakLib anti-spoofing follow-up.
 - Reviewed PowerNukkitX commit `efd90f359f2ef6b7f80921b32afefa4761fe7082` as reference-only evidence for future cross-level entity ticking triage.
 
 ### Checks
@@ -69,3 +70,4 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 - For the `bedrock-block-upgrade-schema` import, package Composer validation, root PHPUnit (227 tests, 72,572 assertions), root PHPStan, PHP-CS-Fixer 3.75 dry-run, source audit, JSON and translation validation, code generation, generated-file collision check, Composer install dry-run, and `git diff --check` passed. Composer validation retains the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
 - For the `bedrock-protocol` import, its PHPUnit suite, package PHPStan, root PHPUnit (227 tests, 72,572 assertions), root PHPStan, PHP-CS-Fixer 3.75 dry-run, source audit, JSON and translation validation, code generation, generated-file collision check, Composer install dry-run, and `git diff --check` passed. Its create-method generator was executed and reviewed, but the generated fully-qualified type-hint churn was left uncommitted to preserve the canonical tag source. Composer validation retains the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
 - For the `snooze` import, package PHPStan, root PHPUnit (227 tests, 72,572 assertions), root PHPStan, PHP-CS-Fixer 3.75 dry-run, source audit, JSON and translation validation, code generation, generated-file collision check, Composer install dry-run, and `git diff --check` passed. Composer validation retains the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
+- For the `raklib` import, package PHPStan, root PHPUnit (227 tests, 72,572 assertions), root PHPStan, PHP-CS-Fixer 3.75 dry-run, source audit, JSON and translation validation, code generation, generated-file collision check, Composer install dry-run, and `git diff --check` passed. Composer validation only reports deprecated SPDX identifier warnings for RakLib's `GPL-3.0` and the root `LGPL-3.0`.
