@@ -16,6 +16,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Fork CI health is the top active gate; the latest red runs were PHP-CS-Fixer import order, PHPStan CLI argv handling, and Docker missing local `packages/` path repositories.
 - User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
 - Release automation is intentionally conservative: source builds and local phars only; GitHub Releases, Docker publishing, updater metadata, Discord, Crowdin, branch sync, and upstream RestrictedActions-style workflows are disabled until fork-owned destinations are configured.
+- Protocol verification on 2026-07-02 found the fork current for Bedrock `1.26.30` / protocol `1001`; `BossEventPacket` now has root PHPUnit fixtures for the 1.26.30 fixed-field wire format.
 
 ## Priority
 
@@ -46,13 +47,17 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
 
 ### 3. Perform A Real Protocol Update
 
-- [ ] Verify the current Bedrock version and protocol number from current sources.
-- [ ] Refresh source monitoring and record exact evidence commits.
+- [x] Verify the current Bedrock version and protocol number from current sources.
+- [x] Refresh source monitoring and record exact evidence commits.
 - [ ] Use packet evidence or two independent implementations for high-risk fields.
+  - 2026-07-02: PMMP BedrockProtocol `b7863bd60042723b91c3cb87ac37309a4fec1309`, Endstone protocol-docs `f00805e98363c6c3024ffd73a56caa5a723cca3a`, and Cloudburst Protocol `f8295d3258fcb4e5c707d852dac981e964b336aa` agree on Bedrock `1.26.30` / protocol `1001`; PMMP and Cloudburst agree on the v1001 `BossEventPacket` fixed-field layout.
 - [ ] Update local protocol/data packages and root integration separately from cleanup.
+  - No BedrockProtocol bump is available yet because the installed package is already at canonical branch head. Continue watching for the next BedrockProtocol or BedrockData drift before editing protocol code.
 - [ ] Regenerate data with `composer run update-codegen` and review generated diffs.
 - [ ] Run PHPStan, PHPUnit, phar build, version check, and client smoke tests.
+  - 2026-07-02 checks completed: targeted `BossEventPacketTest`, full `tests/phpunit`, and full PHPStan on PHP 8.2. Phar build, version check, and client smoke test were skipped because no protocol or data package changed.
 - [ ] Record packet/API/plugin/world risks and rollback guidance.
+  - Current risk: protocol compatibility appears current, but no live client smoke test has been performed in this unit.
 
 ### 4. Triage One Upstream Item
 

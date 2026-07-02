@@ -24,6 +24,11 @@
       "note": "The branch-only change updates actions/setup-node; package data is unchanged."
     },
     {
+      "repository": "pmmp/BedrockProtocol",
+      "classification": "already-covered",
+      "note": "2026-07-02 protocol check: installed 58.0.0+bedrock-1.26.30 at b7863bd60042723b91c3cb87ac37309a4fec1309 exposes protocol 1001 and network version 1.26.30. Endstone protocol-docs r26_u3 f00805e98363c6c3024ffd73a56caa5a723cca3a reports Minecraft 1.26.30.32 and network 1001; Cloudburst Protocol 3.0 f8295d3258fcb4e5c707d852dac981e964b336aa maps Bedrock_v1001 to 1.26.30. BossEventPacket fixture tests now cover the 1.26.30 fixed-field format."
+    },
+    {
       "repository": "pmmp/Log",
       "classification": "defer",
       "note": "Post-pin commits only update CI and static-analysis development dependencies."
