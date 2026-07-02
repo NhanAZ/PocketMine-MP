@@ -20,6 +20,10 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Recorded the non-blocking `pmmp/setup-php-action@3.2.0` Node.js 20 deprecation warning for a focused workflow maintenance follow-up.
 - For #5463, targeted channel-resolution coverage (1 test, 7 assertions), full PHPUnit (234 tests, 72,613 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks passed. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `5179fb448`.
 
+### Reviewed Or Deferred
+
+- Reviewed upstream issue #7035 and rejected the unsupported suggestion to raise the LevelDB world NetworkVersion ceiling without an affected world or matching chunk, blockstate, and upgrade-schema evidence. Current network protocol `1001` does not imply safe support for worlds newer than the deliberate `924` storage ceiling.
+
 ## 2026-07-02
 
 Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c78bb0b0`.
