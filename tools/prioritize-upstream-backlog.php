@@ -26,6 +26,7 @@ namespace pocketmine\tools\prioritize_upstream_backlog;
 use DateTimeImmutable;
 use Throwable;
 use function array_count_values;
+use function array_is_list;
 use function array_map;
 use function count;
 use function date;
@@ -35,6 +36,9 @@ use function fwrite;
 use function implode;
 use function in_array;
 use function is_array;
+use function is_bool;
+use function is_int;
+use function is_string;
 use function json_decode;
 use function json_encode;
 use function max;
@@ -59,20 +63,60 @@ if($input === false){
 	exit(1);
 }
 
-$snapshot = json_decode($input, true);
-if(!is_array($snapshot)){
-	fwrite(STDERR, "Failed to decode $inputPath" . PHP_EOL);
-	exit(1);
+/** @return array<string, mixed> */
+function requireObject(mixed $value, string $source) : array{
+	if(!is_array($value) || array_is_list($value)){
+		throw new \RuntimeException("Expected a JSON object in $source");
+	}
+	/** @var array<string, mixed> $value */
+	return $value;
 }
 
+/** @param array<string, mixed> $data */
+function stringField(array $data, string $key, string $default = "") : string{
+	$value = $data[$key] ?? null;
+	return is_string($value) ? $value : $default;
+}
+
+/** @param array<string, mixed> $data */
+function intField(array $data, string $key) : int{
+	$value = $data[$key] ?? null;
+	return is_int($value) ? $value : 0;
+}
+
+/** @param array<string, mixed> $data */
+function boolField(array $data, string $key) : bool{
+	$value = $data[$key] ?? null;
+	return is_bool($value) && $value;
+}
+
+/** @return list<string> */
+function stringList(mixed $value) : array{
+	if(!is_array($value) || !array_is_list($value)){
+		return [];
+	}
+	$result = [];
+	foreach($value as $item){
+		if(is_string($item)){
+			$result[] = $item;
+		}
+	}
+	return $result;
+}
+
+/** @param list<string> $labels
+ * @return list<string>
+ */
 function normalizeLabels(array $labels) : array{
-	return array_map(static fn(mixed $label) => strtolower((string) $label), $labels);
+	return array_map(static fn(string $label) : string => strtolower($label), $labels);
 }
 
+/** @param list<string> $labels */
 function hasLabel(array $labels, string $needle) : bool{
 	return in_array(strtolower($needle), normalizeLabels($labels), true);
 }
 
+/** @param list<string> $needles */
 function containsAny(string $haystack, array $needles) : bool{
 	foreach($needles as $needle){
 		if(str_contains($haystack, $needle)){
@@ -93,12 +137,15 @@ function daysSince(string $date) : int{
 	return (int) ((time() - $timestamp) / 86400);
 }
 
+/** @param array<string, mixed> $item
+ * @return array{int, list<string>}
+ */
 function scoreItem(array $item) : array{
-	$lane = (string) ($item["lane"] ?? "general-triage");
-	$type = (string) ($item["type"] ?? "issue");
-	$title = (string) ($item["title"] ?? "");
-	$labels = is_array($item["labels"] ?? null) ? $item["labels"] : [];
-	$comments = (int) ($item["comments"] ?? 0);
+	$lane = stringField($item, "lane", "general-triage");
+	$type = stringField($item, "type", "issue");
+	$title = stringField($item, "title");
+	$labels = stringList($item["labels"] ?? null);
+	$comments = intField($item, "comments");
 	$text = strtolower($title . " " . implode(" ", $labels));
 
 	$score = match($lane){
@@ -118,7 +165,7 @@ function scoreItem(array $item) : array{
 		$score += 10;
 		$reasons[] = "open-pr";
 	}
-	if((bool) ($item["draft"] ?? false)){
+	if(boolField($item, "draft")){
 		$score -= 30;
 		$reasons[] = "draft-pr";
 	}
@@ -180,7 +227,7 @@ function scoreItem(array $item) : array{
 		$reasons[] = "discussion-heavy";
 	}
 
-	$ageDays = daysSince((string) ($item["updatedAt"] ?? ""));
+	$ageDays = daysSince(stringField($item, "updatedAt"));
 	if($ageDays <= 30){
 		$score += 25;
 		$reasons[] = "recent";
@@ -209,15 +256,22 @@ function scoreItem(array $item) : array{
 	return [$score, $reasons];
 }
 
+try{
+	$snapshot = requireObject(json_decode($input, true), $inputPath);
+}catch(\RuntimeException $e){
+	fwrite(STDERR, $e->getMessage() . PHP_EOL);
+	exit(1);
+}
+
+/** @var list<array<string, mixed>> $items */
 $items = [];
 foreach(["issues", "pullRequests"] as $bucket){
-	if(!is_array($snapshot[$bucket] ?? null)){
+	$bucketItems = $snapshot[$bucket] ?? null;
+	if(!is_array($bucketItems) || !array_is_list($bucketItems)){
 		continue;
 	}
-	foreach($snapshot[$bucket] as $item){
-		if(!is_array($item)){
-			continue;
-		}
+	foreach($bucketItems as $index => $item){
+		$item = requireObject($item, "$bucket item $index");
 		[$score, $reasons] = scoreItem($item);
 		$item["score"] = $score;
 		$item["scoreReasons"] = $reasons;
@@ -226,9 +280,10 @@ foreach(["issues", "pullRequests"] as $bucket){
 }
 
 usort($items, static function(array $a, array $b) : int{
-	return [$b["score"], $a["updatedAt"], $b["number"]] <=> [$a["score"], $b["updatedAt"], $a["number"]];
+	return [intField($b, "score"), stringField($a, "updatedAt"), intField($b, "number")] <=> [intField($a, "score"), stringField($b, "updatedAt"), intField($a, "number")];
 });
 
+/** @var list<array<string, mixed>> $shortlist */
 $shortlist = [];
 foreach($items as $item){
 	$shortlist[] = $item;
@@ -237,11 +292,11 @@ foreach($items as $item){
 	}
 }
 
-$counts = array_count_values(array_map(static fn(array $item) => (string) ($item["lane"] ?? "general-triage"), $items));
+$counts = array_count_values(array_map(static fn(array $item) : string => stringField($item, "lane", "general-triage"), $items));
 $counts["total"] = count($items);
 
 $generatedAt = date("c");
-$source = (string) ($snapshot["source"] ?? "pmmp/PocketMine-MP");
+$source = stringField($snapshot, "source", "pmmp/PocketMine-MP");
 $output = [
 	"source" => $source,
 	"generatedAt" => $generatedAt,

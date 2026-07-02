@@ -12,8 +12,7 @@ vendor\bin\phpstan.bat analyse --no-progress
 vendor\bin\phpunit.bat tests\phpunit
 ```
 
-PHPStan currently has known backlog-tool errors tracked in `ROADMAP.md`.
-Do not treat those as permission to add new errors; targeted analysis for changed code must pass.
+Full PHPStan and targeted analysis for changed code must pass before merging.
 
 ## Phar Build
 

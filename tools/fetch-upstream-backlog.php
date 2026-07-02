@@ -24,7 +24,7 @@ declare(strict_types=1);
 namespace pocketmine\tools\fetch_upstream_backlog;
 
 use function array_key_exists;
-use function array_map;
+use function array_is_list;
 use function count;
 use function date;
 use function explode;
@@ -34,7 +34,10 @@ use function fwrite;
 use function getenv;
 use function implode;
 use function is_array;
+use function is_bool;
 use function is_dir;
+use function is_int;
+use function is_string;
 use function json_decode;
 use function json_encode;
 use function mkdir;
@@ -55,18 +58,54 @@ $argv ??= [];
 $source = $argv[1] ?? "pmmp/PocketMine-MP";
 $outputDir = $argv[2] ?? ".github/upstream-intake";
 
-if(!preg_match('/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/', $source)){
+if(preg_match('/^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+$/', $source) !== 1){
 	fwrite(STDERR, "Invalid repository name. Use owner/repo, for example pmmp/PocketMine-MP" . PHP_EOL);
 	exit(1);
 }
 
-if(!is_dir($outputDir) && !mkdir($outputDir, 0777, true)){
+if(!is_dir($outputDir) && mkdir($outputDir, 0777, true) === false){
 	fwrite(STDERR, "Failed to create output directory $outputDir" . PHP_EOL);
 	exit(1);
 }
 
 [$owner, $repo] = explode("/", $source, 2);
 
+/** @return array<string, mixed> */
+function requireObject(mixed $value, string $source) : array{
+	if(!is_array($value) || array_is_list($value)){
+		throw new \RuntimeException("Expected a JSON object in $source");
+	}
+	/** @var array<string, mixed> $value */
+	return $value;
+}
+
+/** @param array<string, mixed> $data */
+function stringField(array $data, string $key) : string{
+	$value = $data[$key] ?? null;
+	return is_string($value) ? $value : "";
+}
+
+/** @param array<string, mixed> $data */
+function intField(array $data, string $key) : int{
+	$value = $data[$key] ?? null;
+	return is_int($value) ? $value : 0;
+}
+
+/** @param array<string, mixed> $data */
+function boolField(array $data, string $key) : bool{
+	$value = $data[$key] ?? null;
+	return is_bool($value) && $value;
+}
+
+/** @param array<string, mixed> $data
+ * @return array<string, mixed>|null
+ */
+function objectField(array $data, string $key) : ?array{
+	$value = $data[$key] ?? null;
+	return is_array($value) && !array_is_list($value) ? requireObject($value, $key) : null;
+}
+
+/** @return list<array<string, mixed>> */
 function fetchGithubJson(string $url) : array{
 	$headers = [
 		"Accept: application/vnd.github+json",
@@ -94,7 +133,7 @@ function fetchGithubJson(string $url) : array{
 	}
 
 	$statusLine = $http_response_header[0] ?? "";
-	if(!preg_match('/\s([0-9]{3})\s/', $statusLine, $matches)){
+	if(preg_match('/\s([0-9]{3})\s/', $statusLine, $matches) !== 1){
 		fwrite(STDERR, "Could not read HTTP status for $url" . PHP_EOL);
 		exit(1);
 	}
@@ -107,14 +146,19 @@ function fetchGithubJson(string $url) : array{
 	}
 
 	$decoded = json_decode($response, true);
-	if(!is_array($decoded)){
+	if(!is_array($decoded) || !array_is_list($decoded)){
 		fwrite(STDERR, "GitHub API returned invalid JSON for $url" . PHP_EOL);
 		exit(1);
 	}
 
-	return $decoded;
+	$result = [];
+	foreach($decoded as $index => $item){
+		$result[] = requireObject($item, "$url item $index");
+	}
+	return $result;
 }
 
+/** @return list<array<string, mixed>> */
 function fetchPaged(string $owner, string $repo, string $endpoint) : array{
 	$result = [];
 	for($page = 1; ; ++$page){
@@ -137,17 +181,29 @@ function fetchPaged(string $owner, string $repo, string $endpoint) : array{
 	return $result;
 }
 
-function labelNames(array $labels) : array{
-	return array_map(static fn(array $label) => (string) ($label["name"] ?? ""), $labels);
+/** @return list<string> */
+function labelNames(mixed $labels) : array{
+	if(!is_array($labels) || !array_is_list($labels)){
+		return [];
+	}
+	$result = [];
+	foreach($labels as $index => $label){
+		$name = stringField(requireObject($label, "label $index"), "name");
+		if($name !== ""){
+			$result[] = $name;
+		}
+	}
+	return $result;
 }
 
+/** @param list<string> $labels */
 function classifyItem(string $type, string $title, array $labels) : string{
 	$text = strtolower($title . " " . implode(" ", $labels));
 
 	if(str_contains($text, "security") || str_contains($text, "exploit") || str_contains($text, "vulnerability")){
 		return "security-sensitive-review";
 	}
-	if(preg_match('/protocol|bedrock|packet|network|mcpe|raklib|runtime id|block state|blockstate|leveldb|serializer|serialization|login|client|query|gs4/', $text)){
+	if(preg_match('/protocol|bedrock|packet|network|mcpe|raklib|runtime id|block state|blockstate|leveldb|serializer|serialization|login|client|query|gs4/', $text) === 1){
 		return "protocol-and-network";
 	}
 	if(str_contains($text, "crash") || str_contains($text, "regression") || str_contains($text, "bug")){
@@ -166,50 +222,62 @@ function classifyItem(string $type, string $title, array $labels) : string{
 	return "general-triage";
 }
 
+/** @param array<string, mixed> $item
+ * @param array<string, mixed>|null $pullDetails
+ * @return array<string, mixed>
+ */
 function normalizeIssue(array $item, string $type, ?array $pullDetails = null) : array{
-	$labels = labelNames($item["labels"] ?? []);
-	$title = (string) ($item["title"] ?? "");
+	$labels = labelNames($item["labels"] ?? null);
+	$title = stringField($item, "title");
+	$user = objectField($item, "user");
 	$normalized = [
 		"type" => $type,
-		"number" => (int) ($item["number"] ?? 0),
+		"number" => intField($item, "number"),
 		"title" => $title,
-		"url" => (string) ($item["html_url"] ?? ""),
-		"author" => (string) ($item["user"]["login"] ?? ""),
+		"url" => stringField($item, "html_url"),
+		"author" => $user !== null ? stringField($user, "login") : "",
 		"labels" => $labels,
-		"createdAt" => (string) ($item["created_at"] ?? ""),
-		"updatedAt" => (string) ($item["updated_at"] ?? ""),
-		"comments" => (int) ($item["comments"] ?? 0),
+		"createdAt" => stringField($item, "created_at"),
+		"updatedAt" => stringField($item, "updated_at"),
+		"comments" => intField($item, "comments"),
 		"lane" => classifyItem($type, $title, $labels)
 	];
 
 	if($pullDetails !== null){
-		$normalized["draft"] = (bool) ($pullDetails["draft"] ?? false);
-		$normalized["baseRef"] = (string) ($pullDetails["base"]["ref"] ?? "");
-		$normalized["headRef"] = (string) ($pullDetails["head"]["ref"] ?? "");
-		$normalized["headRepo"] = (string) ($pullDetails["head"]["repo"]["full_name"] ?? "");
+		$base = objectField($pullDetails, "base");
+		$head = objectField($pullDetails, "head");
+		$headRepo = $head !== null ? objectField($head, "repo") : null;
+		$normalized["draft"] = boolField($pullDetails, "draft");
+		$normalized["baseRef"] = $base !== null ? stringField($base, "ref") : "";
+		$normalized["headRef"] = $head !== null ? stringField($head, "ref") : "";
+		$normalized["headRepo"] = $headRepo !== null ? stringField($headRepo, "full_name") : "";
 	}
 
 	return $normalized;
 }
 
+/** @param list<array<string, mixed>> $items */
 function sortItems(array &$items) : void{
 	usort($items, static function(array $a, array $b) : int{
-		return [$a["lane"], $b["updatedAt"], $b["number"]] <=> [$b["lane"], $a["updatedAt"], $a["number"]];
+		return [stringField($a, "lane"), stringField($b, "updatedAt"), intField($b, "number")] <=> [stringField($b, "lane"), stringField($a, "updatedAt"), intField($a, "number")];
 	});
 }
 
 $issuesEndpointItems = fetchPaged($owner, $repo, "issues");
 $pullEndpointItems = fetchPaged($owner, $repo, "pulls");
 
+/** @var array<int, array<string, mixed>> $pullDetailsByNumber */
 $pullDetailsByNumber = [];
 foreach($pullEndpointItems as $pull){
-	$pullDetailsByNumber[(int) ($pull["number"] ?? 0)] = $pull;
+	$pullDetailsByNumber[intField($pull, "number")] = $pull;
 }
 
+/** @var list<array<string, mixed>> $issues */
 $issues = [];
+/** @var list<array<string, mixed>> $pullRequests */
 $pullRequests = [];
 foreach($issuesEndpointItems as $item){
-	$number = (int) ($item["number"] ?? 0);
+	$number = intField($item, "number");
 	if(array_key_exists("pull_request", $item)){
 		$pullRequests[] = normalizeIssue($item, "pull_request", $pullDetailsByNumber[$number] ?? null);
 	}else{

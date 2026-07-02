@@ -12,7 +12,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 - The source audit has 19 entries and eight reviewed package-drift signals.
 - RakLib anti-spoofing cookies were reviewed and deferred until a tagged release or the planned local RakLib import.
 - The upstream backlog snapshot contains 450 open items and a scored top-40 shortlist.
-- Full PHPStan currently has 21 known errors in the two upstream backlog tools after removing Markdown renderers.
+- Full repository PHPStan is clean after typing the JSON backlog tools.
 
 ## Priority
 
@@ -28,15 +28,7 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
 
 ## Ready Queue
 
-### 1. Restore Full PHPStan
-
-- [ ] Type the JSON structures in `tools/fetch-upstream-backlog.php`.
-- [ ] Type the JSON structures in `tools/prioritize-upstream-backlog.php`.
-- [ ] Replace integer-or-false conditions with explicit comparisons.
-- [ ] Confirm both JSON generators remain valid.
-- [ ] Run `vendor\bin\phpstan.bat analyse --no-progress` with no errors.
-
-### 2. Import `pocketmine/log`
+### 1. Import `pocketmine/log`
 
 - [ ] Import locked commit `e6c912c` from `pmmp/Log` into `packages/log` with history.
 - [ ] Add a Composer path repository without changing the package version.
@@ -44,19 +36,19 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
 - [ ] Run Composer validation, PHPStan, PHPUnit, and a phar build.
 - [ ] Update the source manifest and this roadmap.
 
-### 3. Review Remaining Upstream Links
+### 2. Review Remaining Upstream Links
 
 - [ ] Classify `pmmp.io`, `github.com/pmmp`, Discord, and PocketMine links as ecosystem, upstream, or fork-owned.
 - [ ] Keep useful ecosystem links, label upstream support clearly, and use fork links for fork-specific actions.
 
-### 4. Decide Fork Release Automation
+### 3. Decide Fork Release Automation
 
 - [ ] Decide whether the fork needs GitHub Releases, phars, Docker images, updater metadata, or source builds only.
 - [ ] Remove unused upstream-only workflows.
 - [ ] Enable publishing only with fork-owned credentials and destinations.
 - [ ] Add a compact release checklist and rollback note.
 
-### 5. Perform A Real Protocol Update
+### 4. Perform A Real Protocol Update
 
 - [ ] Verify the current Bedrock version and protocol number from current sources.
 - [ ] Refresh source monitoring and record exact evidence commits.
@@ -66,7 +58,7 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
 - [ ] Run PHPStan, PHPUnit, phar build, version check, and client smoke tests.
 - [ ] Record packet/API/plugin/world risks and rollback guidance.
 
-### 6. Triage One Upstream Item
+### 5. Triage One Upstream Item
 
 - [ ] Refresh `open-items.json` and `priority-shortlist.json` with the two backlog tools.
 - [ ] Open one high-scoring original issue or PR.
@@ -93,7 +85,7 @@ Re-evaluate RakLib commit `765501863` during its import or when a release contai
 
 ## Milestones
 
-- **Foundation hardening: active.** Remaining: links, disabled workflows, release checklist, changelog habit, clean PHPStan.
+- **Foundation hardening: active.** Remaining: links, disabled workflows, release checklist, and changelog habit.
 - **Self-contained dependencies: active.** Three packages are local; protocol and network packages remain.
 - **Protocol velocity: active.** Evidence rules are ready; one real verified protocol update is still required.
 - **Fork releases: planned.** Naming, artifacts, automation, notes, and rollback policy remain.
