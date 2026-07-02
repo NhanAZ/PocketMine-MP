@@ -30,6 +30,7 @@ Agents may be asked to work from:
 - A maintainer's direct idea or experiment.
 
 Issue and pull request triage must follow [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md).
+Upstream backlog triage must follow [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md).
 Sustainable maintenance audits must follow [SUSTAINABLE_MAINTENANCE.md](SUSTAINABLE_MAINTENANCE.md), and intentional fork drift must be recorded in [FORK_DEVIATIONS.md](FORK_DEVIATIONS.md).
 
 ## AI-Assisted Code Rules
@@ -68,6 +69,7 @@ Do not assume the latest Minecraft: Bedrock Edition version from memory; verify 
 When syncing from upstream:
 
 - Record the upstream commit, PR, or issue reference.
+- Use the upstream backlog snapshot when selecting issue or pull request work.
 - Preserve original authorship where practical.
 - Prefer cherry-pick or subtree-style history over copy-paste when possible.
 - Document conflicts and fork-specific deviations.

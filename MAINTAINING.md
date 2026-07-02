@@ -66,6 +66,7 @@ Protocol update PRs should include generated diffs, automated check results, cli
 ## Community Intake
 
 Use [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md) for issue triage, pull request review expectations, label meanings, changelog habits, and kind closure text.
+Use [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md) when turning upstream PocketMine-MP issues or pull requests into fork work.
 
 ## Sustainable Maintenance
 

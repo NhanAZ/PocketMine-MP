@@ -11,6 +11,7 @@ The goal is to respond practically and keep useful reports moving without creati
 - Keep public security details out of issues and pull requests.
 - Close unsupported or duplicate reports kindly and with a short reason.
 - Move useful ideas into small, reviewable issues or pull requests.
+- Use [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md) before turning upstream issues or pull requests into fork work.
 
 ## Label Taxonomy
 
@@ -116,4 +117,3 @@ Security:
 This may be security-sensitive, so it should not be discussed in a public issue.
 Please follow SECURITY.md and send a private report with reproduction details.
 ```
-

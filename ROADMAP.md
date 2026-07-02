@@ -14,6 +14,7 @@ Completed foundation:
 - AI agent rules are documented in [AGENTS.md](AGENTS.md).
 - Baseline verification and release command notes are documented in [MAINTAINING.md](MAINTAINING.md).
 - Community issue and PR intake is documented in [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md).
+- Upstream issue and pull request intake is documented in [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md).
 - Protocol update workflow is documented in [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md).
 - Sustainable maintenance audits are documented in [SUSTAINABLE_MAINTENANCE.md](SUSTAINABLE_MAINTENANCE.md).
 - Intentional fork drift is tracked in [FORK_DEVIATIONS.md](FORK_DEVIATIONS.md).
@@ -35,8 +36,9 @@ When choosing the next task, prefer work in this order:
 2. Restore compatibility with the current Minecraft: Bedrock Edition protocol after verifying the target version at task time.
 3. Import or stabilize one PMMP-owned dependency.
 4. Sync one useful upstream fix.
-5. Improve community intake, release notes, or maintenance clarity.
-6. Delete stale experiments or reduce confusing fork drift.
+5. Triage one useful upstream issue or pull request into fork work.
+6. Improve community intake, release notes, or maintenance clarity.
+7. Delete stale experiments or reduce confusing fork drift.
 
 Do not combine unrelated high-risk work.
 Protocol updates, dependency imports, and broad cleanup should be separate commits or PRs.
@@ -139,6 +141,8 @@ Status: planned.
 Deliverables:
 
 - [ ] Use labels from `.github/labels.yml` consistently.
+- [ ] Refresh the upstream backlog snapshot regularly using [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md).
+- [ ] Convert useful upstream issues and pull requests into small fork issues or PRs.
 - [ ] Keep issue responses short, neutral, and action-oriented.
 - [ ] Convert good plugin compatibility reports into reproducible tests or documented compatibility notes.
 - [ ] Accept small PRs quickly when checks pass and risk is clear.

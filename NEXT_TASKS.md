@@ -49,6 +49,18 @@ Checklist:
 - Remove workflows that will not be used.
 - Re-enable only workflows backed by fork-owned secrets and infrastructure.
 
+### Triage Upstream Backlog
+
+Reason: upstream issues and pull requests can seed useful fork work without copying the whole discussion into this tracker.
+
+Checklist:
+
+- Refresh `.github/upstream-intake/open-items.md` with `php tools/fetch-upstream-backlog.php`.
+- Pick one `protocol-and-network`, `bug-regression-crash`, or `upstream-pr-review` item.
+- Open the upstream item and decide whether it is actionable for this fork.
+- Create a small fork issue or implementation plan with an upstream source link.
+- Do not mass-create fork issues.
+
 ## Needs Current Information
 
 ### Perform A Real Protocol Update
