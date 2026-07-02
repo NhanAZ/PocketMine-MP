@@ -31,6 +31,7 @@ use pocketmine\data\bedrock\BiomeIds;
 use pocketmine\data\bedrock\LegacyBiomeIdToStringIdMap;
 use pocketmine\nbt\TreeRoot;
 use pocketmine\network\mcpe\convert\BlockTranslator;
+use pocketmine\network\mcpe\convert\TypeConverter;
 use pocketmine\network\mcpe\protocol\serializer\NetworkNbtSerializer;
 use pocketmine\network\mcpe\protocol\types\DimensionIds;
 use pocketmine\world\format\Chunk;
@@ -83,7 +84,7 @@ final class ChunkSerializer{
 	/**
 	 * @phpstan-param DimensionIds::* $dimensionId
 	 */
-	public static function serializeFullChunk(Chunk $chunk, int $dimensionId, BlockTranslator $blockTranslator, ?string $tiles = null) : string{
+	public static function serializeFullChunk(Chunk $chunk, int $dimensionId, BlockTranslator $blockTranslator, TypeConverter $typeConverter, ?string $tiles = null) : string{
 		$stream = new ByteBufferWriter();
 
 		$subChunkCount = self::getSubChunkCount($chunk, $dimensionId);
@@ -106,7 +107,7 @@ final class ChunkSerializer{
 		if($tiles !== null){
 			$stream->writeByteArray($tiles);
 		}else{
-			$stream->writeByteArray(self::serializeTiles($chunk));
+			$stream->writeByteArray(self::serializeTiles($chunk, $typeConverter));
 		}
 		return $stream->getData();
 	}
@@ -167,11 +168,11 @@ final class ChunkSerializer{
 		}
 	}
 
-	public static function serializeTiles(Chunk $chunk) : string{
+	public static function serializeTiles(Chunk $chunk, TypeConverter $typeConverter) : string{
 		$stream = new ByteBufferWriter();
 		foreach($chunk->getTiles() as $tile){
 			if($tile instanceof Spawnable){
-				$stream->writeByteArray($tile->getSerializedSpawnCompound()->getEncodedNbt());
+				$stream->writeByteArray($tile->getSerializedSpawnCompound($typeConverter)->getEncodedNbt());
 			}
 		}
 

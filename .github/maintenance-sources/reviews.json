@@ -55,8 +55,8 @@
     },
     {
       "repository": "protocol-references",
-      "classification": "already-covered",
-      "note": "Current peer branch heads establish the initial observation baseline; future changes are evidence, not automatic ports."
+      "classification": "defer",
+      "note": "Peer projects remain evidence only. The 2026-07-02 audit saw PowerNukkitX advance to bbfe76ac8adb03e7f65bfb6c84aaacf541893330 for voxel shape encoding; it is unrelated to upstream issue #6284 and should be reviewed only during future block-shape or protocol-shape work."
     }
   ]
 }

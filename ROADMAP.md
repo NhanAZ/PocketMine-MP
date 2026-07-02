@@ -10,9 +10,11 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Source monitoring covers the PMMP root, PMMP-owned dependencies, and four protocol reference projects.
 - The current root matches `upstream/stable` at `fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff`.
 - The source audit has 19 entries and eight reviewed package-drift signals.
+- PowerNukkitX advanced one reference-only voxel-shape commit on 2026-07-02; it was deferred as unrelated to the active TypeConverter task.
 - RakLib anti-spoofing cookies were reviewed and deferred until a tagged release or the planned local RakLib import.
 - The upstream backlog snapshot contains 450 open items and a scored top-40 shortlist.
-- Full repository PHPStan is clean after typing the JSON backlog tools.
+- Upstream issue #6284 was triaged and implemented: spawnable tile network NBT now receives a `TypeConverter` context and converter-scoped serialized cache.
+- Full repository PHPStan is clean after the TypeConverter tile-spawn work.
 - Fork CI health is the top active gate; the latest red runs were PHP-CS-Fixer import order, PHPStan CLI argv handling, and Docker missing local `packages/` path repositories.
 - User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
 - Release automation is intentionally conservative: source builds and local phars only; GitHub Releases, Docker publishing, updater metadata, Discord, Crowdin, branch sync, and upstream RestrictedActions-style workflows are disabled until fork-owned destinations are configured.
@@ -61,10 +63,15 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
 
 ### 4. Triage One Upstream Item
 
-- [ ] Refresh `open-items.json` and `priority-shortlist.json` with the two backlog tools.
-- [ ] Open one high-scoring original issue or PR.
-- [ ] Classify relevance and create only the smallest actionable fork task or port.
-- [ ] Preserve source links and authorship; do not copy whole discussions.
+- [x] Refresh `open-items.json` and `priority-shortlist.json` with the two backlog tools.
+  - 2026-07-02: refreshed 419 open issues and 31 open pull requests from `pmmp/PocketMine-MP`; top shortlist remains 40 items.
+- [x] Open one high-scoring original issue or PR.
+  - Opened issue #6284, "Tile network NBT serialization needs a TypeConverter context".
+- [x] Classify relevance and create only the smallest actionable fork task or port.
+  - Classified as actionable network/protocol architecture work and implemented the smallest local change: pass `TypeConverter` through tile spawn NBT serialization and cache serialized spawn compounds per converter.
+- [x] Preserve source links and authorship; do not copy whole discussions.
+  - Source: https://github.com/pmmp/PocketMine-MP/issues/6284 by dktapps; the issue has no comments. The next shortlist candidate is #6711, but it must be opened and reviewed before any work is added.
+  - Checks: targeted `SpawnableTest`, full PHPUnit, full PHPStan, PHP-CS-Fixer dry-run, JSON validation, `git diff --check`, and generated-file collision check.
 
 ## Dependency Track
 

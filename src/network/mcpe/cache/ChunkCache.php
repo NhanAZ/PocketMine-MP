@@ -27,6 +27,7 @@ use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\ChunkRequestTask;
 use pocketmine\network\mcpe\compression\CompressBatchPromise;
 use pocketmine\network\mcpe\compression\Compressor;
+use pocketmine\network\mcpe\convert\TypeConverter;
 use pocketmine\network\mcpe\protocol\types\DimensionIds;
 use pocketmine\world\ChunkListener;
 use pocketmine\world\ChunkListenerNoOpTrait;
@@ -40,39 +41,44 @@ use function strlen;
  * This class is used by the current MCPE protocol system to store cached chunk packets for fast resending.
  */
 class ChunkCache implements ChunkListener{
-	/** @var self[][] */
+	/** @var self[][][] */
 	private static array $instances = [];
 
 	/**
 	 * Fetches the ChunkCache instance for the given world. This lazily creates cache systems as needed.
 	 */
-	public static function getInstance(World $world, Compressor $compressor) : self{
+	public static function getInstance(World $world, Compressor $compressor, TypeConverter $typeConverter) : self{
 		$worldId = spl_object_id($world);
 		$compressorId = spl_object_id($compressor);
+		$typeConverterId = spl_object_id($typeConverter);
 		if(!isset(self::$instances[$worldId])){
 			self::$instances[$worldId] = [];
 			$world->addOnUnloadCallback(static function() use ($worldId) : void{
-				foreach(self::$instances[$worldId] as $cache){
-					$cache->caches = [];
+				foreach(self::$instances[$worldId] as $compressorMap){
+					foreach($compressorMap as $cache){
+						$cache->caches = [];
+					}
 				}
 				unset(self::$instances[$worldId]);
 				\GlobalLogger::get()->debug("Destroyed chunk packet caches for world#$worldId");
 			});
 		}
-		if(!isset(self::$instances[$worldId][$compressorId])){
-			\GlobalLogger::get()->debug("Created new chunk packet cache (world#$worldId, compressor#$compressorId)");
-			self::$instances[$worldId][$compressorId] = new self($world, $compressor);
+		if(!isset(self::$instances[$worldId][$compressorId][$typeConverterId])){
+			\GlobalLogger::get()->debug("Created new chunk packet cache (world#$worldId, compressor#$compressorId, typeConverter#$typeConverterId)");
+			self::$instances[$worldId][$compressorId][$typeConverterId] = new self($world, $compressor, $typeConverter);
 		}
-		return self::$instances[$worldId][$compressorId];
+		return self::$instances[$worldId][$compressorId][$typeConverterId];
 	}
 
 	public static function pruneCaches() : void{
 		foreach(self::$instances as $compressorMap){
-			foreach($compressorMap as $chunkCache){
-				foreach($chunkCache->caches as $chunkHash => $promise){
-					if(is_string($promise)){
-						//Do not clear promises that are not yet fulfilled; they will have requesters waiting on them
-						unset($chunkCache->caches[$chunkHash]);
+			foreach($compressorMap as $typeConverterMap){
+				foreach($typeConverterMap as $chunkCache){
+					foreach($chunkCache->caches as $chunkHash => $promise){
+						if(is_string($promise)){
+							//Do not clear promises that are not yet fulfilled; they will have requesters waiting on them
+							unset($chunkCache->caches[$chunkHash]);
+						}
 					}
 				}
 			}
@@ -94,6 +100,7 @@ class ChunkCache implements ChunkListener{
 	private function __construct(
 		private World $world,
 		private Compressor $compressor,
+		private TypeConverter $typeConverter,
 		private int $dimensionId = DimensionIds::OVERWORLD
 	){}
 
@@ -115,6 +122,7 @@ class ChunkCache implements ChunkListener{
 					$chunkZ,
 					$this->dimensionId,
 					$chunk,
+					$this->typeConverter,
 					$promise,
 					$this->compressor
 				)

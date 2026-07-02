@@ -1092,7 +1092,8 @@ class World implements ChunkManager{
 	public function createBlockUpdatePackets(array $blocks) : array{
 		$packets = [];
 
-		$blockTranslator = TypeConverter::getInstance()->getBlockTranslator();
+		$typeConverter = TypeConverter::getInstance();
+		$blockTranslator = $typeConverter->getBlockTranslator();
 
 		foreach($blocks as $b){
 			if(!($b instanceof Vector3)){
@@ -1128,7 +1129,7 @@ class World implements ChunkManager{
 			);
 
 			if($tile instanceof Spawnable){
-				$packets[] = BlockActorDataPacket::create($blockPosition, $tile->getSerializedSpawnCompound());
+				$packets[] = BlockActorDataPacket::create($blockPosition, $tile->getSerializedSpawnCompound($typeConverter));
 			}
 		}
 
