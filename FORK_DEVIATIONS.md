@@ -110,6 +110,20 @@ The fork is moving PMMP-owned dependencies into this repository using Composer p
 The math package is pinned to upstream commit `dc132d93595b32e9f210d78b3c8d43c662a5edbf` (version `1.0.0`).
 Risk is low because its public package version and autoload namespace are unchanged; rollback is the math subtree import plus its path-repository wiring commit.
 
+### Source Monitoring
+
+Files:
+
+- `SOURCE_MONITORING.md`
+- `.github/maintenance-sources/`
+- `.github/workflows/maintenance-source-audit.yml`
+- `tools/audit-maintenance-sources.php`
+
+Reason:
+
+The fork monitors canonical root, dependency, and peer protocol repositories without automatically adopting their changes.
+Risk is low because the audit is read-only; rollback is removal of the report, manifest, tool, and scheduled workflow.
+
 ## Review Later
 
 - Remaining upstream links in docs should be reviewed and either kept as ecosystem links or marked as upstream resources.

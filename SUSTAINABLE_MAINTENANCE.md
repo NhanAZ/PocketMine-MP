@@ -10,7 +10,7 @@ Last audit: 2026-07-02 on `stable`.
 Local snapshot:
 
 - Tracked files: 1864
-- Imported local packages under `packages/`: `color`, `errorhandler`
+- Imported local packages under `packages/`: `color`, `errorhandler`, `math`
 - GitHub workflow files: 18
 - PHP `TODO`/`FIXME`/`HACK` markers in `src/` and `packages/`: 570
 - PHP `TODO`/`FIXME`/`HACK` markers in `src/network/mcpe` and `src/data/bedrock`: 147
@@ -53,6 +53,7 @@ git rev-list --left-right --count upstream/stable...HEAD
 
 Use `--first-parent` for fork-level history.
 Use normal history when auditing imported package history.
+Then refresh [SOURCE_MONITORING.md](SOURCE_MONITORING.md) so canonical dependency and protocol-reference changes are not hidden by a clean root comparison.
 
 3. Check intentional deviations:
 
@@ -96,6 +97,7 @@ composer validate
 ```
 
 Local package imports should match [DEPENDENCY_CONSOLIDATION.md](DEPENDENCY_CONSOLIDATION.md).
+Their source pins should also match `.github/maintenance-sources/sources.json`.
 
 7. Run verification proportional to risk:
 

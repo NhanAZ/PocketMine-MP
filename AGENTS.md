@@ -33,6 +33,7 @@ Agents may be asked to work from:
 
 Issue and pull request triage must follow [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md).
 Upstream backlog triage must follow [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md).
+Root, dependency, and protocol-reference drift must follow [SOURCE_MONITORING.md](SOURCE_MONITORING.md).
 Sustainable maintenance audits must follow [SUSTAINABLE_MAINTENANCE.md](SUSTAINABLE_MAINTENANCE.md), and intentional fork drift must be recorded in [FORK_DEVIATIONS.md](FORK_DEVIATIONS.md).
 
 ## AI-Assisted Code Rules
@@ -46,6 +47,7 @@ Agents must:
 - Call out assumptions and uncertain behaviour.
 - Avoid inventing APIs or protocol details.
 - Prefer source-backed changes for Minecraft protocol updates.
+- Translate behaviour from peer implementations into PocketMine-MP architecture; never perform mechanical code conversion.
 - Add or update tests when behaviour can be tested automatically.
 - Provide manual test steps for gameplay or client compatibility changes.
 
@@ -77,6 +79,7 @@ When syncing from upstream:
 - Document conflicts and fork-specific deviations.
 - Run checks related to the touched area.
 - Update [NEXT_TASKS.md](NEXT_TASKS.md) when the sync creates or resolves follow-up work.
+- Refresh the source-monitoring report so root and dependency drift are reviewed separately.
 
 ## Dependency Consolidation Tasks
 
@@ -87,6 +90,8 @@ When importing a dependency into this repository:
 - Prefer an import method that preserves useful history.
 - Update autoloading and build scripts in the same PR.
 - Keep one dependency import per PR unless there is a strong reason to combine them.
+- Compare the pinned version with the canonical package branch and recent tags before importing.
+- Add or update the package entry in `.github/maintenance-sources/sources.json`.
 
 ## Security Tasks
 

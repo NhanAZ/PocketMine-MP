@@ -1,0 +1,30 @@
+name: Maintenance source audit
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    name: Detect source drift
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@2.37.1
+        with:
+          php-version: 8.3
+
+      - name: Refresh source report
+        run: php tools/audit-maintenance-sources.php
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Require source review when the snapshot changes
+        run: git diff --exit-code -- .github/maintenance-sources/report.md .github/maintenance-sources/report.json

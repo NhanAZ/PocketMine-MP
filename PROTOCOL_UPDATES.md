@@ -5,6 +5,7 @@ Protocol work is high risk: it touches login, packet serialization, item/block r
 
 Do not assume that the version in an issue, message, or old branch is the latest version.
 At the start of each protocol update, verify the current target version from release notes, Bedrock client versions, upstream package tags, or upstream commits.
+Refresh [SOURCE_MONITORING.md](SOURCE_MONITORING.md) before selecting implementation evidence.
 
 ## Current Baseline
 
@@ -32,6 +33,50 @@ Protocol updates may require changes from these sources:
 
 When the fork imports Bedrock packages into `packages/`, keep the logical source names above.
 The working paths may change from `vendor/pocketmine/...` to local Composer path packages, but the update phases stay the same.
+
+## Evidence Hierarchy
+
+Protocol details are often incomplete in any single project.
+Use evidence in this order:
+
+1. Reproducible vanilla client or Bedrock Dedicated Server observations, including decoded packet captures.
+2. Canonical PMMP BedrockProtocol, BedrockData, and PocketMine-MP changes.
+3. Official Minecraft release information for version and feature context.
+4. Cloudburst Protocol for an independent protocol-library interpretation.
+5. PowerNukkitX, Dragonfly, and Endstone for independent server behaviour and integration evidence.
+
+No peer implementation is a drop-in specification.
+For a high-risk packet field, require either reproducible packet evidence or agreement between at least two independent implementations before changing serialization.
+
+## Cross-Implementation Translation
+
+Agents may study reputable implementations listed in [SOURCE_MONITORING.md](SOURCE_MONITORING.md), but must translate semantics rather than convert code mechanically.
+
+For each borrowed protocol insight:
+
+1. Record the repository, commit, file, and target Bedrock version.
+2. Describe the observed wire behaviour: field order, scalar type, optional condition, default, enum value, and version guard.
+3. Corroborate it with another source or a packet capture when the change affects login, encryption, StartGame, inventory, world data, or packet framing.
+4. Implement the behaviour using PocketMine-MP naming, serializers, types, and architecture.
+5. Add encode/decode, round-trip, fixture, or integration tests where practical.
+6. Record disagreements between sources instead of choosing the most convenient implementation silently.
+
+Do not copy code across repositories unless the license, attribution, and project policy clearly permit it.
+Even when licenses are compatible, prefer an independent implementation from documented behaviour because Java, Go, C++, and PHP projects have different invariants.
+
+Use this evidence record in the issue or PR:
+
+```text
+Protocol evidence:
+- Target Bedrock version/protocol:
+- Primary observation or PMMP source:
+- Corroborating project and commit:
+- File or symbol inspected:
+- Wire behaviour inferred:
+- Source disagreements or uncertainty:
+- PMMP-native implementation choice:
+- Tests or packet fixtures added:
+```
 
 ## Generated Outputs
 
@@ -65,6 +110,7 @@ Use one issue or PR per protocol target version.
    - Confirm the target Minecraft: Bedrock Edition version and protocol number.
    - Record sources checked and the date checked.
    - Confirm whether the update is stable, preview/beta, or emergency compatibility.
+   - Refresh the maintenance source report and record relevant peer-reference commits.
 
 2. Update dependencies or local packages:
    - Update `pocketmine/bedrock-protocol`.
@@ -175,9 +221,10 @@ Agents working on protocol updates must:
 
 - Read this file before editing protocol, data, or generated files.
 - Verify the target version using current sources at task time.
+- Use the evidence hierarchy and record cross-implementation sources.
+- Never mechanically translate code from another server project.
 - Avoid mixing protocol updates with unrelated refactors.
 - Keep generated diffs visible.
 - Run at least PHPStan, PHPUnit, and phar build unless blocked.
 - Document skipped checks and why they were skipped.
 - End with the final report shape required by [AGENTS.md](AGENTS.md).
-

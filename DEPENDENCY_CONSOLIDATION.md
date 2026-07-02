@@ -54,6 +54,11 @@ Each imported package should keep:
 - original README when present
 - original source layout
 - an import note in the PR or commit message with source repository and commit
+- a source-monitoring manifest entry with canonical repository, branch, and pinned commit
+
+Before each import, refresh [SOURCE_MONITORING.md](SOURCE_MONITORING.md) and review changes after the lockfile pin.
+Importing a package locally changes where it is maintained, not whether its canonical PMMP repository remains relevant.
+If a newer branch head or tag exists, explicitly choose between preserving the lock pin and updating the package; do not make that choice silently.
 
 ## Import Method
 
@@ -109,6 +114,7 @@ Pilot checklist:
 5. [x] Run PHPStan and PHPUnit.
 6. [x] Build a phar.
 7. [x] Commit and push the import separately from unrelated changes.
+8. [x] Record imported package pins in the source-monitoring manifest.
 
 ## Suggested Import Order
 

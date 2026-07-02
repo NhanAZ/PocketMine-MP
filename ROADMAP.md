@@ -16,9 +16,11 @@ Completed foundation:
 - Community issue and PR intake is documented in [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md).
 - Upstream issue and pull request intake is documented in [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md).
 - Protocol update workflow is documented in [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md).
+- Root, dependency, and peer protocol drift is monitored through [SOURCE_MONITORING.md](SOURCE_MONITORING.md).
 - Sustainable maintenance audits are documented in [SUSTAINABLE_MAINTENANCE.md](SUSTAINABLE_MAINTENANCE.md).
 - Intentional fork drift is tracked in [FORK_DEVIATIONS.md](FORK_DEVIATIONS.md).
 - `pocketmine/color`, `pocketmine/errorhandler`, and `pocketmine/math` are imported as local Composer path packages.
+- The initial source audit covers 19 repositories; root upstream is current and all eight package drift signals have review classifications.
 
 Current direction:
 
@@ -27,6 +29,7 @@ Current direction:
 - Merge useful outside reports and PRs quickly when they are small, reproducible, and reviewable.
 - Move PMMP-owned dependencies into this repository gradually.
 - Make protocol updates faster, but only with source-backed verification.
+- Keep canonical PMMP and dependency changes visible without surrendering fork-specific decisions.
 
 ## Decision Rules
 
@@ -39,6 +42,9 @@ When choosing the next task, prefer work in this order:
 5. Triage one useful upstream issue or pull request into fork work.
 6. Improve community intake, release notes, or maintenance clarity.
 7. Delete stale experiments or reduce confusing fork drift.
+
+Before source-sensitive work, refresh the maintenance source report.
+The current fork root is the implementation authority; canonical PMMP is the primary change feed; peer projects are corroborating evidence only.
 
 Do not combine unrelated high-risk work.
 Protocol updates, dependency imports, and broad cleanup should be separate commits or PRs.
@@ -56,6 +62,7 @@ Deliverables:
 - [ ] Add a lightweight release checklist for fork builds.
 - [ ] Add a changelog habit for merged user-facing changes.
 - [ ] Run a sustainable maintenance audit after every large agent session.
+- [x] Monitor canonical root, dependency, and protocol-reference repositories for drift.
 
 Done when:
 
@@ -86,6 +93,7 @@ Rules:
 - Use Composer path repositories first.
 - Run broader checks for packages touching protocol, NBT, threading, networking, or generated data.
 - Update [DEPENDENCY_CONSOLIDATION.md](DEPENDENCY_CONSOLIDATION.md) and [FORK_DEVIATIONS.md](FORK_DEVIATIONS.md) after each import.
+- Review the tracked RakLib anti-spoofing cookie change separately before the later RakLib import.
 
 Done when:
 
@@ -99,6 +107,7 @@ Status: planned, with workflow ready.
 
 Deliverables:
 
+- [x] Define a cross-implementation protocol evidence and translation workflow.
 - [ ] Perform one real protocol update using [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md).
 - [ ] Record the exact Bedrock version, protocol number, sources used, generated files changed, and smoke-test result.
 - [ ] Keep generated data diffs reviewable by separating them from unrelated cleanup.
@@ -110,6 +119,8 @@ Rules:
 - Do not rely on remembered protocol numbers or Minecraft versions.
 - Verify current target information at task time.
 - Prefer source-backed changes from BedrockProtocol, BedrockData, upstream commits, official release information, or reproducible packet/data observations.
+- Use Cloudburst Protocol, PowerNukkitX, Dragonfly, and Endstone only as documented corroborating evidence.
+- Translate wire behaviour into PMMP-native code instead of converting another project's implementation mechanically.
 
 Done when:
 
@@ -168,7 +179,7 @@ Revisit the organization question only after the fork has sustained real outside
 
 ## Default Continuation
 
-When the maintainer says `continue ROADMAP.md`, `Tiếp tục thực hiện ROADMAP.md`, or a similar short instruction, agents should:
+When the maintainer asks an agent to continue this roadmap, the agent should:
 
 1. Read this file, [NEXT_TASKS.md](NEXT_TASKS.md), and the workflow document for the likely task.
 2. Choose the smallest task that moves an active milestone forward using the decision rules above.
@@ -184,3 +195,4 @@ Detailed task rules live in the focused workflow documents instead of prompt tem
 - [DEPENDENCY_CONSOLIDATION.md](DEPENDENCY_CONSOLIDATION.md) for PMMP-owned dependency imports.
 - [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md) for Minecraft: Bedrock Edition protocol updates.
 - [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md) for upstream issue and pull request triage.
+- [SOURCE_MONITORING.md](SOURCE_MONITORING.md) for root, dependency, and protocol-reference drift.

@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "sources": [
+    {
+      "kind": "root",
+      "name": "PocketMine-MP upstream",
+      "repository": "pmmp/PocketMine-MP",
+      "branch": "stable",
+      "pinned_ref": "fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff"
+    },
+    {
+      "kind": "imported-package",
+      "name": "pocketmine/color",
+      "repository": "pmmp/Color",
+      "branch": "master",
+      "pinned_ref": "a0421f1e9e0b0c619300fb92d593283378f6a5e1",
+      "path": "packages/color"
+    },
+    {
+      "kind": "imported-package",
+      "name": "pocketmine/errorhandler",
+      "repository": "pmmp/ErrorHandler",
+      "branch": "master",
+      "pinned_ref": "84c9ec829163f21ced425d8f3b27d32f908e87fb",
+      "path": "packages/errorhandler"
+    },
+    {
+      "kind": "imported-package",
+      "name": "pocketmine/math",
+      "repository": "pmmp/Math",
+      "branch": "stable",
+      "pinned_ref": "dc132d93595b32e9f210d78b3c8d43c662a5edbf",
+      "path": "packages/math"
+    },
+    {
+      "kind": "protocol-reference",
+      "name": "Cloudburst Protocol",
+      "repository": "CloudburstMC/Protocol",
+      "branch": "3.0",
+      "role": "Protocol structure and serializer corroboration"
+    },
+    {
+      "kind": "protocol-reference",
+      "name": "PowerNukkitX",
+      "repository": "PowerNukkitX/PowerNukkitX",
+      "branch": "master",
+      "role": "Independent server handling and gameplay corroboration"
+    },
+    {
+      "kind": "protocol-reference",
+      "name": "Dragonfly",
+      "repository": "df-mc/dragonfly",
+      "branch": "master",
+      "role": "Independent Go protocol and server behaviour corroboration"
+    },
+    {
+      "kind": "protocol-reference",
+      "name": "Endstone",
+      "repository": "EndstoneMC/endstone",
+      "branch": "main",
+      "role": "Cross-architecture behaviour and version-support observations"
+    }
+  ]
+}

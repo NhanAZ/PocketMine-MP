@@ -5,6 +5,18 @@ Keep tasks small enough for one focused PR unless explicitly marked otherwise.
 
 ## Ready
 
+### Review RakLib Anti-Spoofing Cookies
+
+Reason: the initial source audit found one unpinned runtime/network change, upstream RakLib commit `765501863`, which adds stateless cookies to the RakNet handshake.
+
+Checklist:
+
+- Read the upstream commit and its packet/server changes.
+- Check compatibility with the locked RakLib version and PocketMine-MP's current RakLib integration.
+- Review the documented OVH compatibility caveat and default rotation behaviour.
+- Decide whether to port now, defer until a RakLib release, or import RakLib before adapting it.
+- Keep any implementation separate from unrelated dependency imports.
+
 ### Restore Full PHPStan Baseline
 
 Reason: the upstream backlog tools added after the last clean baseline currently produce 33 PHPStan errors, which hides regressions in later work.
@@ -86,6 +98,18 @@ Checklist:
 - Record conflicts and deviations.
 
 ## Maintenance
+
+### Review Maintenance Source Drift
+
+Reason: root, dependency, and peer protocol changes must remain visible before source-sensitive work.
+
+Checklist:
+
+- Run `php tools/audit-maintenance-sources.php` with `GITHUB_TOKEN` set.
+- Inspect every changed branch head, then review relevant tags and releases instead of committing the report blindly.
+- Record `adopt`, `adapt`, `already-covered`, `defer`, or `reject-with-reason` in `.github/maintenance-sources/review-notes.md`.
+- Create a focused task for actionable changes.
+- Commit the refreshed report only after review.
 
 ### Run Sustainable Maintenance Audit
 
