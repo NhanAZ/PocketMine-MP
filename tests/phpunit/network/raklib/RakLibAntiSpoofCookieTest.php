@@ -156,7 +156,6 @@ class RakLibAntiSpoofCookieTest extends TestCase{
 
 	/**
 	 * @param list<Packet> $sentPackets
-	 * @return RakServer&MockObject
 	 */
 	private function createServerMock(array &$sentPackets, int $sendPacketCount) : RakServer&MockObject{
 		$server = $this->getMockBuilder(RakServer::class)
