@@ -57,7 +57,7 @@ Todo:
 - [x] Create one pilot import plan, likely for a small package before BedrockProtocol.
 
 The consolidation strategy is documented in [DEPENDENCY_CONSOLIDATION.md](DEPENDENCY_CONSOLIDATION.md).
-The `pocketmine/color` pilot import has been completed using a local Composer path package.
+The `pocketmine/color` pilot import and the follow-up `pocketmine/errorhandler` import have been completed using local Composer path packages.
 
 Agent prompt:
 

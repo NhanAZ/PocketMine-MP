@@ -17,7 +17,7 @@ Source references are taken from `composer.lock`.
 | `pocketmine/binaryutils` | `0.2.7` | `LGPL-3.0` | `14c044a` | Medium | Import before NBT, protocol, and RakLib direct-root work. |
 | `pocketmine/callback-validator` | `1.0.4` | `MIT` | `143fa6e` | Low | Import as a small utility package if eliminating all PMMP-owned fetches. |
 | `pocketmine/color` | `0.3.1` | `LGPL-3.0` | `a0421f1` | Low | Best pilot import: one source file, no package dependencies. |
-| `pocketmine/errorhandler` | `0.7.1` | `LGPL-3.0` | `84c9ec8` | Low | Import after the pilot; small and low churn. |
+| `pocketmine/errorhandler` | `0.7.1` | `LGPL-3.0` | `84c9ec8` | Low | Imported and wired through a local path package. |
 | `pocketmine/log` | `0.4.0` | `LGPL-3.0` | `e6c912c` | Low | Import early, but note it uses classmap autoloading. |
 | `pocketmine/math` | `1.0.0` | `LGPL-3.0` | `dc132d9` | Low | Import early; small and stable. |
 | `pocketmine/nbt` | `1.2.0` | `LGPL-3.0` | `51b8d6a` | Medium | Import after `binaryutils`; used by protocol and world/data paths. |
@@ -113,7 +113,7 @@ Pilot checklist:
 ## Suggested Import Order
 
 1. `pocketmine/color` as the pilot.
-2. Small utilities: `errorhandler`, `log`, `math`, `callback-validator`.
+2. Small utilities: `log`, `math`, `callback-validator`.
 3. Binary/data foundations: `binaryutils`, `nbt`.
 4. Bedrock data/schema packages: `bedrock-data`, `bedrock-block-upgrade-schema`, `bedrock-item-upgrade-schema`.
 5. `bedrock-protocol`.

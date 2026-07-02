@@ -14,6 +14,16 @@
                "pocketmine/color": "0.3.1"
             }
          }
+      },
+      {
+         "type": "path",
+         "url": "packages/errorhandler",
+         "options": {
+            "symlink": false,
+            "versions": {
+               "pocketmine/errorhandler": "0.7.1"
+            }
+         }
       }
    ],
    "require": {
