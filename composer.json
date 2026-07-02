@@ -7,6 +7,16 @@
    "repositories": [
       {
          "type": "path",
+         "url": "packages/bedrock-data",
+         "options": {
+            "symlink": false,
+            "versions": {
+               "pocketmine/bedrock-data": "6.7.0+bedrock-1.26.30"
+            }
+         }
+      },
+      {
+         "type": "path",
          "url": "packages/binaryutils",
          "options": {
             "symlink": false,

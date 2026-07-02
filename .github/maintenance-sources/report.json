@@ -14,6 +14,19 @@
     },
     {
         "kind": "imported-package",
+        "name": "pocketmine/bedrock-data",
+        "repository": "pmmp/BedrockData",
+        "branch": "master",
+        "pinned_ref": "bdb44a48fb6beffb6e9f6864f06d2232eb62b6a3",
+        "latest_ref": "bdb44a48fb6beffb6e9f6864f06d2232eb62b6a3",
+        "license": "CC0-1.0",
+        "url": "https://github.com/pmmp/BedrockData",
+        "path": "packages/bedrock-data",
+        "role": null,
+        "signal": "at-branch-head"
+    },
+    {
+        "kind": "imported-package",
         "name": "pocketmine/binaryutils",
         "repository": "pmmp/BinaryUtils",
         "branch": "stable",
@@ -115,19 +128,6 @@
         "path": "vendor/pocketmine/bedrock-block-upgrade-schema",
         "role": "Composer-managed PMMP dependency",
         "signal": "review-needed"
-    },
-    {
-        "kind": "composer-package",
-        "name": "pocketmine/bedrock-data",
-        "repository": "pmmp/BedrockData",
-        "branch": "master",
-        "pinned_ref": "bdb44a48fb6beffb6e9f6864f06d2232eb62b6a3",
-        "latest_ref": "bdb44a48fb6beffb6e9f6864f06d2232eb62b6a3",
-        "license": "CC0-1.0",
-        "url": "https://github.com/pmmp/BedrockData",
-        "path": "vendor/pocketmine/bedrock-data",
-        "role": "Composer-managed PMMP dependency",
-        "signal": "at-branch-head"
     },
     {
         "kind": "composer-package",
