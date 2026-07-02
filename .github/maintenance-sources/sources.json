@@ -10,6 +10,14 @@
     },
     {
       "kind": "imported-package",
+      "name": "pocketmine/bedrock-block-upgrade-schema",
+      "repository": "pmmp/BedrockBlockUpgradeSchema",
+      "branch": "master",
+      "pinned_ref": "5d7889c9a1cdf9e3cd814d2a104ad69b75116ec7",
+      "path": "packages/bedrock-block-upgrade-schema"
+    },
+    {
+      "kind": "imported-package",
       "name": "pocketmine/bedrock-data",
       "repository": "pmmp/BedrockData",
       "branch": "master",

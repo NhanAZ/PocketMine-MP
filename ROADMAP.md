@@ -7,7 +7,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 
 - Fork governance, contribution, security, and production-risk warnings are established.
 - Fork-specific changelog tracking is established in `changelogs/fork.md` and backfilled from `a170743de838581487bcf91bc7026fe786de752b` through `6c78bb0b0`.
-- `pocketmine/bedrock-data`, `pocketmine/bedrock-item-upgrade-schema`, `pocketmine/binaryutils`, `pocketmine/callback-validator`, `pocketmine/color`, `pocketmine/errorhandler`, `pocketmine/log`, `pocketmine/math`, and `pocketmine/nbt` are local Composer path packages.
+- `pocketmine/bedrock-block-upgrade-schema`, `pocketmine/bedrock-data`, `pocketmine/bedrock-item-upgrade-schema`, `pocketmine/binaryutils`, `pocketmine/callback-validator`, `pocketmine/color`, `pocketmine/errorhandler`, `pocketmine/log`, `pocketmine/math`, and `pocketmine/nbt` are local Composer path packages.
 - Source monitoring covers the PMMP root, PMMP-owned dependencies, and four protocol reference projects.
 - The current root matches `upstream/stable` at `fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff`.
 - The source audit has 19 entries and eight reviewed package-drift signals.
@@ -24,8 +24,8 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Upstream issue #6130 was triaged and implemented: dedicated Query socket startup failures now use `NetworkInterfaceStartException` and receive the server's localized, controlled network-start failure path instead of producing a crash dump.
 - Upstream issue #5342 was triaged and implemented by adapting canonical commit `c4fb8832fe99e042801dca60f124b7938c94036f`: translated messages can now restore a base format around formatted parameters, and `/give` contains custom item-name formatting for both the sender and operator audit output.
 - Upstream issue #4830 was triaged and implemented: generic entities now invoke block landing behaviour, while slime bounce is limited to living entities and dropped items without adding landing sounds to non-living entities.
-- Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, code generation, translation validation, and `git diff --check` are clean after the `bedrock-item-upgrade-schema` import.
-- Fork CI health is the top active gate; the latest checked stable runs were green before the `bedrock-item-upgrade-schema` import.
+- Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, code generation, translation validation, and `git diff --check` are clean after the `bedrock-block-upgrade-schema` import.
+- Fork CI health is the top active gate; the latest checked stable runs were green before the `bedrock-block-upgrade-schema` import.
 - User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
 - Release automation is intentionally conservative: source builds and local phars only; GitHub Releases, Docker publishing, updater metadata, Discord, Crowdin, branch sync, and upstream RestrictedActions-style workflows are disabled until fork-owned destinations are configured.
 - Protocol verification on 2026-07-02 found the fork current for Bedrock `1.26.30` / protocol `1001`; `BossEventPacket` now has root PHPUnit fixtures for the 1.26.30 fixed-field wire format.
@@ -102,11 +102,11 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
 - [x] Preserve source links and authorship; do not copy whole discussions.
   - Sources: https://github.com/pmmp/PocketMine-MP/issues/6284, https://github.com/pmmp/PocketMine-MP/issues/6711, https://github.com/pmmp/PocketMine-MP/issues/6580, https://github.com/pmmp/PocketMine-MP/issues/6808 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/5632 by GH-PM with a dktapps root-cause comment, https://github.com/pmmp/PocketMine-MP/issues/6832 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/6750 by LeonMazzoli with private upstream crash dumps, https://github.com/pmmp/PocketMine-MP/issues/6861 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/6130 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/5342 plus canonical commit https://github.com/pmmp/PocketMine-MP/commit/c4fb8832fe99e042801dca60f124b7938c94036f by dktapps, and https://github.com/pmmp/PocketMine-MP/issues/4830 by NTT1906 with abandoned implementation evidence from PR #5095 by Swift-Strider and PR #6900 by siyFred; original discussions and review comments were read before implementation or deferral.
   - Checks: targeted `SpawnableTest`, targeted `BaseInventoryTest`, targeted `EntityFactoryTest`, targeted `BlockSerializerDeserializerTest`, targeted `WorldTest`, targeted `ItemTest`, full PHPUnit, full PHPStan, PHP-CS-Fixer 3.75 dry-run, JSON validation, translation validation, `git diff --check`, and generated-file collision check. For #4830 specifically, item, XP-orb, sneaking, sound, and living bounce regressions passed along with full PHPUnit (227 tests, 72,572 assertions), full PHPStan, and PHP-CS-Fixer 3.75. A live client gameplay smoke test remains pending.
-  - The preselected shortlist candidates have been reviewed. Refresh and read original items before adding another; the next ready non-backlog task is the focused Bedrock block upgrade schema dependency import.
+  - The preselected shortlist candidates have been reviewed. Refresh and read original items before adding another; the next ready non-backlog task is the focused BedrockProtocol dependency import.
 
 ## Dependency Track
 
-Completed: `bedrock-data`, `bedrock-item-upgrade-schema`, `binaryutils`, `callback-validator`, `color`, `errorhandler`, `log`, `math`, `nbt`.
+Completed: `bedrock-block-upgrade-schema`, `bedrock-data`, `bedrock-item-upgrade-schema`, `binaryutils`, `callback-validator`, `color`, `errorhandler`, `log`, `math`, `nbt`.
 
 `callback-validator` was imported from tag `1.0.4` / canonical head `143fa6e13254f1ab90c31b223982016f95635c37` with its MIT license, subtree history, package tests, and continued canonical source monitoring. Its 104 package tests / 499 assertions and package PHPStan passed; root PHPUnit remained at 227 tests / 72,572 assertions and all root gates passed. Composer validation only reports the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
 
@@ -118,11 +118,12 @@ Completed: `bedrock-data`, `bedrock-item-upgrade-schema`, `binaryutils`, `callba
 
 `bedrock-item-upgrade-schema` was imported from tag `1.17.0+bedrock-1.26.20` / canonical master head `e19685d2e7e76eb7446115c556df34e5d627d072` with its CC0-1.0 license, subtree history, package metadata, and continued canonical source monitoring. It has no package test suite; package Composer validation passed, and root PHPUnit remained at 227 tests / 72,572 assertions with all root gates passed. Composer validation only reports the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
 
+`bedrock-block-upgrade-schema` was imported from tag `5.2.0+bedrock-1.21.110` / root lock pin `5d7889c9a1cdf9e3cd814d2a104ad69b75116ec7` with its CC0-1.0 license, subtree history, package metadata, schema files, and continued canonical source monitoring. The later master commit `581e29ffecfc846e982203d473f5901e995f7165` only updates `actions/setup-node`, so it remains deferred. It has no package test suite; package Composer validation passed, and root PHPUnit remained at 227 tests / 72,572 assertions with all root gates passed. Composer validation only reports the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
+
 Remaining order:
 
-1. `bedrock-block-upgrade-schema`
-2. `bedrock-protocol`
-3. `snooze`, `raklib`, `raklib-ipc`
+1. `bedrock-protocol`
+2. `snooze`, `raklib`, `raklib-ipc`
 
 Import one package at a time. Preserve its license, source layout, Composer metadata, pin, and useful history.
 Local ownership does not stop monitoring its canonical PMMP repository.
@@ -131,7 +132,7 @@ Re-evaluate RakLib commit `765501863` during its import or when a release contai
 ## Milestones
 
 - **Foundation hardening: active.** Changelog habit is established; keep `changelogs/fork.md` current for each completed unit.
-- **Self-contained dependencies: active.** Nine packages are local; block upgrade schema, protocol, and network packages remain.
+- **Self-contained dependencies: active.** Ten packages are local; protocol and network packages remain.
 - **Protocol velocity: active.** Evidence rules are ready; one real verified protocol update is still required.
 - **Fork releases: planned.** Automated publishing is disabled; release naming and artifact policy remain before public releases.
 - **Community throughput: planned.** Keep intake neutral, focused, reproducible, and fast without mass-importing upstream noise.

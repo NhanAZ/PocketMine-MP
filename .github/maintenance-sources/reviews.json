@@ -40,8 +40,8 @@
     },
     {
       "repository": "pmmp/BedrockBlockUpgradeSchema",
-      "classification": "defer",
-      "note": "The branch-only change updates actions/setup-node; package data is unchanged."
+      "classification": "adopt",
+      "note": "Imported tag 5.2.0+bedrock-1.21.110 at the root lock pin 5d7889c9a1cdf9e3cd814d2a104ad69b75116ec7 as packages/bedrock-block-upgrade-schema with its CC0-1.0 license and full subtree history. The later master commit 581e29ffecfc846e982203d473f5901e995f7165 only updates actions/setup-node, so it remains deferred."
     },
     {
       "repository": "pmmp/BedrockProtocol",
