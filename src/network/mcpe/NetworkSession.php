@@ -1214,10 +1214,15 @@ class NetworkSession{
 	public function prepareClientTranslatableMessage(Translatable $message) : array{
 		//we can't send nested translations to the client, so make sure they are always pre-translated by the server
 		$language = $this->player->getLanguage();
-		$parameters = array_map(fn(string|Translatable $p) => $p instanceof Translatable ? $language->translate($p) : $p, $message->getParameters());
+		$baseFormat = $message->getBaseFormat();
+		$parameters = array_map(fn(string|Translatable $p) : string => $p instanceof Translatable ? $language->translate($p) : $p, $message->getParameters());
 		$untranslatedParameterCount = 0;
-		$translated = $language->translateString($message->getText(), $parameters, "pocketmine.", $untranslatedParameterCount);
-		return [$translated, array_slice($parameters, 0, $untranslatedParameterCount)];
+		$translated = $language->translateString($message->getText(), $parameters, "pocketmine.", $untranslatedParameterCount, $baseFormat);
+		$parameters = array_slice($parameters, 0, $untranslatedParameterCount);
+		if($baseFormat !== ""){
+			$parameters = array_map(fn(string $p) : string => TextFormat::addBase($baseFormat, $p) . TextFormat::RESET, $parameters);
+		}
+		return [$translated, $parameters];
 	}
 
 	public function onChatMessage(Translatable|string $message) : void{

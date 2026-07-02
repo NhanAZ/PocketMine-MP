@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace pocketmine\lang;
 
+use pocketmine\utils\TextFormat;
 use pocketmine\utils\Utils;
 use Symfony\Component\Filesystem\Path;
 use function array_filter;
@@ -153,13 +154,13 @@ class Language{
 	/**
 	 * @param (float|int|string|Translatable)[] $params
 	 */
-	public function translateString(string $str, array $params = [], ?string $onlyPrefix = null, int &$untranslatedParameterCount = 0) : string{
+	public function translateString(string $str, array $params = [], ?string $onlyPrefix = null, int &$untranslatedParameterCount = 0, string $baseFormat = "") : string{
 		$baseText = $this->internalGet($str);
 		$parameterCount = count($params);
 		if($baseText !== null){
 			if($onlyPrefix !== null && !str_starts_with($str, $onlyPrefix)){ //client side translation
 				$untranslatedParameterCount = $this->getUsedParameterCount($baseText, $parameterCount);
-				return $str;
+				return $baseFormat !== "" ? TextFormat::addBase($baseFormat, "%" . $str) : $str;
 			}
 		}else{ //key not found or embedded inside format string
 			$baseText = $this->parseTranslation($str, $onlyPrefix, $parameterCount);
@@ -168,10 +169,13 @@ class Language{
 
 		foreach(Utils::promoteKeys($params) as $i => $p){
 			$replacement = $p instanceof Translatable ? $this->translate($p) : (string) $p;
+			if($baseFormat !== ""){
+				$replacement = TextFormat::addBase($baseFormat, $replacement) . TextFormat::RESET;
+			}
 			$baseText = str_replace("{%$i}", $replacement, $baseText);
 		}
 
-		return $baseText;
+		return $baseFormat !== "" ? TextFormat::addBase($baseFormat, $baseText) : $baseText;
 	}
 
 	public function translate(Translatable $c) : string{
@@ -180,12 +184,17 @@ class Language{
 			$baseText = $this->parseTranslation($c->getText());
 		}
 
+		$baseFormat = $c->getBaseFormat();
+
 		foreach(Utils::promoteKeys($c->getParameters()) as $i => $p){
 			$replacement = $p instanceof Translatable ? $this->translate($p) : $p;
+			if($baseFormat !== ""){
+				$replacement = TextFormat::addBase($baseFormat, $replacement) . TextFormat::RESET;
+			}
 			$baseText = str_replace("{%$i}", $replacement, $baseText);
 		}
 
-		return $baseText;
+		return $baseFormat !== "" ? TextFormat::addBase($baseFormat, $baseText) : $baseText;
 	}
 
 	protected function internalGet(string $id) : ?string{
