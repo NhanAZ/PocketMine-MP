@@ -7,11 +7,11 @@ Update it during every completed maintenance unit; do not create separate task-c
 
 - Fork governance, contribution, security, and production-risk warnings are established.
 - Fork-specific changelog tracking is established in `changelogs/fork.md` and backfilled from `a170743de838581487bcf91bc7026fe786de752b` through `6c78bb0b0`.
-- `pocketmine/bedrock-block-upgrade-schema`, `pocketmine/bedrock-data`, `pocketmine/bedrock-item-upgrade-schema`, `pocketmine/bedrock-protocol`, `pocketmine/binaryutils`, `pocketmine/callback-validator`, `pocketmine/color`, `pocketmine/errorhandler`, `pocketmine/log`, `pocketmine/math`, and `pocketmine/nbt` are local Composer path packages.
+- `pocketmine/bedrock-block-upgrade-schema`, `pocketmine/bedrock-data`, `pocketmine/bedrock-item-upgrade-schema`, `pocketmine/bedrock-protocol`, `pocketmine/binaryutils`, `pocketmine/callback-validator`, `pocketmine/color`, `pocketmine/errorhandler`, `pocketmine/log`, `pocketmine/math`, `pocketmine/nbt`, and `pocketmine/snooze` are local Composer path packages.
 - Source monitoring covers the PMMP root, PMMP-owned dependencies, and four protocol reference projects.
 - The current root matches `upstream/stable` at `fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff`.
 - The source audit has 19 entries and eight reviewed package-drift signals.
-- PowerNukkitX advanced through `f2cdff7eed3a0ad79099bd6adcc1f97ab31e7143` on 2026-07-02; its RakNet pacing and cookie settings remain reference-only evidence for the planned RakLib import.
+- PowerNukkitX advanced through `efd90f359f2ef6b7f80921b32afefa4761fe7082` on 2026-07-02; its RakNet pacing/cookie settings and later level-thread/entity tick fix remain reference-only evidence for planned network imports and future cross-level ticking triage.
 - RakLib anti-spoofing cookies were reviewed and deferred until a tagged release or the planned local RakLib import.
 - The upstream backlog snapshot contains 450 open items and a scored top-40 shortlist.
 - Upstream issue #6284 was triaged and implemented: spawnable tile network NBT now receives a `TypeConverter` context and converter-scoped serialized cache.
@@ -24,8 +24,8 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Upstream issue #6130 was triaged and implemented: dedicated Query socket startup failures now use `NetworkInterfaceStartException` and receive the server's localized, controlled network-start failure path instead of producing a crash dump.
 - Upstream issue #5342 was triaged and implemented by adapting canonical commit `c4fb8832fe99e042801dca60f124b7938c94036f`: translated messages can now restore a base format around formatted parameters, and `/give` contains custom item-name formatting for both the sender and operator audit output.
 - Upstream issue #4830 was triaged and implemented: generic entities now invoke block landing behaviour, while slime bounce is limited to living entities and dropped items without adding landing sounds to non-living entities.
-- Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, code generation, translation validation, and `git diff --check` are clean after the `bedrock-protocol` import.
-- Fork CI health is the top active gate; the latest checked stable runs were green before the `bedrock-protocol` import.
+- Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, code generation, translation validation, and `git diff --check` are clean after the `snooze` import.
+- Fork CI health is the top active gate; the latest checked stable runs were green before the `snooze` import.
 - User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
 - Release automation is intentionally conservative: source builds and local phars only; GitHub Releases, Docker publishing, updater metadata, Discord, Crowdin, branch sync, and upstream RestrictedActions-style workflows are disabled until fork-owned destinations are configured.
 - Protocol verification on 2026-07-02 found the fork current for Bedrock `1.26.30` / protocol `1001`; `BossEventPacket` now has root PHPUnit fixtures for the 1.26.30 fixed-field wire format.
@@ -106,7 +106,7 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
 
 ## Dependency Track
 
-Completed: `bedrock-block-upgrade-schema`, `bedrock-data`, `bedrock-item-upgrade-schema`, `bedrock-protocol`, `binaryutils`, `callback-validator`, `color`, `errorhandler`, `log`, `math`, `nbt`.
+Completed: `bedrock-block-upgrade-schema`, `bedrock-data`, `bedrock-item-upgrade-schema`, `bedrock-protocol`, `binaryutils`, `callback-validator`, `color`, `errorhandler`, `log`, `math`, `nbt`, `snooze`.
 
 `callback-validator` was imported from tag `1.0.4` / canonical head `143fa6e13254f1ab90c31b223982016f95635c37` with its MIT license, subtree history, package tests, and continued canonical source monitoring. Its 104 package tests / 499 assertions and package PHPStan passed; root PHPUnit remained at 227 tests / 72,572 assertions and all root gates passed. Composer validation only reports the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
 
@@ -122,11 +122,12 @@ Completed: `bedrock-block-upgrade-schema`, `bedrock-data`, `bedrock-item-upgrade
 
 `bedrock-protocol` was imported from tag `58.0.0+bedrock-1.26.30` / canonical master head `b7863bd60042723b91c3cb87ac37309a4fec1309` with its LGPL-3.0 license, subtree history, package metadata, protocol sources, tests, tools, and continued canonical source monitoring. This is a local ownership import of the already-installed protocol package, not a Bedrock wire-format bump. Its package PHPUnit suite and package PHPStan passed; the package create-method generator was executed and reviewed, but its fully-qualified type-hint churn was left uncommitted to preserve the canonical tag source. Root PHPUnit remained at 227 tests / 72,572 assertions with all root gates passed. Composer validation only reports the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
 
+`snooze` was imported from tag `0.5.0` / root lock pin `a86d9ee60ce44755d166d3c7ba4b8b8be8360915` with its LGPL-3.0 license, subtree history, package metadata, static-analysis config, and thread-notification sources. The later master commits through `fd249c13569bb7b7d564f331684cdfaeba24d388` only update CI, PHPStan config, and one PHPStan-only inline `@var` comment in `SleeperHandler`, so they remain deferred. It has no package PHPUnit suite; package PHPStan passed, and root PHPUnit remained at 227 tests / 72,572 assertions with all root gates passed. Composer validation only reports the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
+
 Remaining order:
 
-1. `snooze`
-2. `raklib`
-3. `raklib-ipc`
+1. `raklib`
+2. `raklib-ipc`
 
 Import one package at a time. Preserve its license, source layout, Composer metadata, pin, and useful history.
 Local ownership does not stop monitoring its canonical PMMP repository.
@@ -135,7 +136,7 @@ Re-evaluate RakLib commit `765501863` during its import or when a release contai
 ## Milestones
 
 - **Foundation hardening: active.** Changelog habit is established; keep `changelogs/fork.md` current for each completed unit.
-- **Self-contained dependencies: active.** Eleven packages are local; network packages remain.
+- **Self-contained dependencies: active.** Twelve packages are local; RakLib packages remain.
 - **Protocol velocity: active.** Evidence rules are ready; one real verified protocol update is still required.
 - **Fork releases: planned.** Automated publishing is disabled; release naming and artifact policy remain before public releases.
 - **Community throughput: planned.** Keep intake neutral, focused, reproducible, and fast without mass-importing upstream noise.

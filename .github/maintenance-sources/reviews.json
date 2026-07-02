@@ -70,13 +70,13 @@
     },
     {
       "repository": "pmmp/Snooze",
-      "classification": "defer",
-      "note": "Post-pin commits update CI and static-analysis configuration only."
+      "classification": "adopt",
+      "note": "Imported tag 0.5.0 at the root lock pin a86d9ee60ce44755d166d3c7ba4b8b8be8360915 as packages/snooze with its LGPL-3.0 license, static-analysis config, thread-notification sources, and full subtree history. The post-tag commits through fd249c13569bb7b7d564f331684cdfaeba24d388 update CI, PHPStan config, and one PHPStan-only inline @var comment in SleeperHandler, so they remain deferred."
     },
     {
       "repository": "protocol-references",
       "classification": "defer",
-      "note": "Peer projects remain evidence only. The 2026-07-02 audit saw PowerNukkitX advance through f2cdff7eed3a0ad79099bd6adcc1f97ab31e7143; the latest change exposes RakNet pacing and cookie settings and is deferred as corroborating evidence for the planned RakLib import, not source for upstream issue #6130."
+      "note": "Peer projects remain evidence only. The 2026-07-02 audit saw PowerNukkitX advance through efd90f359f2ef6b7f80921b32afefa4761fe7082. The older f2cdff7eed3a0ad79099bd6adcc1f97ab31e7143 RakNet pacing and cookie settings remain corroborating evidence for the planned RakLib import; the newer efd90f359f2ef6b7f80921b32afefa4761fe7082 level-thread/entity tick fix is reference-only evidence for future cross-level ticking triage."
     }
   ]
 }

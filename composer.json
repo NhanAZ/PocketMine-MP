@@ -114,6 +114,16 @@
                "pocketmine/nbt": "1.2.0"
             }
          }
+      },
+      {
+         "type": "path",
+         "url": "packages/snooze",
+         "options": {
+            "symlink": false,
+            "versions": {
+               "pocketmine/snooze": "0.5.0"
+            }
+         }
       }
    ],
    "require": {

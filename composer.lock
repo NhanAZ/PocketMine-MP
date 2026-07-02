@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccfe09605a2c6b7d8172d63d5ee09677",
+    "content-hash": "85309ada8236b7149bfcc5426f88b300",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -629,16 +629,10 @@
         {
             "name": "pocketmine/snooze",
             "version": "0.5.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pmmp/Snooze.git",
-                "reference": "a86d9ee60ce44755d166d3c7ba4b8b8be8360915"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/Snooze/zipball/a86d9ee60ce44755d166d3c7ba4b8b8be8360915",
-                "reference": "a86d9ee60ce44755d166d3c7ba4b8b8be8360915",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/snooze",
+                "reference": "2cb6a1eef95834d68696692f7d993fc7324d4a6b"
             },
             "require": {
                 "ext-pmmpthread": "^6.0",
@@ -655,16 +649,14 @@
                     "pocketmine\\snooze\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "LGPL-3.0"
             ],
             "description": "Thread notification management library for code using the pthreads extension",
-            "support": {
-                "issues": "https://github.com/pmmp/Snooze/issues",
-                "source": "https://github.com/pmmp/Snooze/tree/0.5.0"
-            },
-            "time": "2023-05-22T23:43:01+00:00"
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "ramsey/collection",

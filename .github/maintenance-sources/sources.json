@@ -97,6 +97,14 @@
       "path": "packages/nbt"
     },
     {
+      "kind": "imported-package",
+      "name": "pocketmine/snooze",
+      "repository": "pmmp/Snooze",
+      "branch": "master",
+      "pinned_ref": "a86d9ee60ce44755d166d3c7ba4b8b8be8360915",
+      "path": "packages/snooze"
+    },
+    {
       "kind": "protocol-reference",
       "name": "Cloudburst Protocol",
       "repository": "CloudburstMC/Protocol",
