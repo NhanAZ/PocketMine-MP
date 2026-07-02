@@ -10,6 +10,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Source monitoring covers the PMMP root, PMMP-owned dependencies, and four protocol reference projects.
 - The current root matches `upstream/stable` at `fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff`.
 - The source audit has 19 entries and eight reviewed package-drift signals.
+- RakLib anti-spoofing cookies were reviewed and deferred until a tagged release or the planned local RakLib import.
 - The upstream backlog snapshot contains 450 open items and a scored top-40 shortlist.
 - Full PHPStan currently has 21 known errors in the two upstream backlog tools after removing Markdown renderers.
 
@@ -27,17 +28,7 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
 
 ## Ready Queue
 
-### 1. Review RakLib Anti-Spoofing Cookies
-
-Upstream commit: `7655018631147f0b5d473326fddc2faea105dffe`.
-
-- [ ] Review packet serializer and server handshake changes.
-- [ ] Check compatibility with the locked RakLib version and current root integration.
-- [ ] Evaluate the OVH compatibility caveat and rotation defaults.
-- [ ] Decide to port, defer until release, or import RakLib before adapting it.
-- [ ] Keep implementation separate from unrelated imports.
-
-### 2. Restore Full PHPStan
+### 1. Restore Full PHPStan
 
 - [ ] Type the JSON structures in `tools/fetch-upstream-backlog.php`.
 - [ ] Type the JSON structures in `tools/prioritize-upstream-backlog.php`.
@@ -45,7 +36,7 @@ Upstream commit: `7655018631147f0b5d473326fddc2faea105dffe`.
 - [ ] Confirm both JSON generators remain valid.
 - [ ] Run `vendor\bin\phpstan.bat analyse --no-progress` with no errors.
 
-### 3. Import `pocketmine/log`
+### 2. Import `pocketmine/log`
 
 - [ ] Import locked commit `e6c912c` from `pmmp/Log` into `packages/log` with history.
 - [ ] Add a Composer path repository without changing the package version.
@@ -53,19 +44,19 @@ Upstream commit: `7655018631147f0b5d473326fddc2faea105dffe`.
 - [ ] Run Composer validation, PHPStan, PHPUnit, and a phar build.
 - [ ] Update the source manifest and this roadmap.
 
-### 4. Review Remaining Upstream Links
+### 3. Review Remaining Upstream Links
 
 - [ ] Classify `pmmp.io`, `github.com/pmmp`, Discord, and PocketMine links as ecosystem, upstream, or fork-owned.
 - [ ] Keep useful ecosystem links, label upstream support clearly, and use fork links for fork-specific actions.
 
-### 5. Decide Fork Release Automation
+### 4. Decide Fork Release Automation
 
 - [ ] Decide whether the fork needs GitHub Releases, phars, Docker images, updater metadata, or source builds only.
 - [ ] Remove unused upstream-only workflows.
 - [ ] Enable publishing only with fork-owned credentials and destinations.
 - [ ] Add a compact release checklist and rollback note.
 
-### 6. Perform A Real Protocol Update
+### 5. Perform A Real Protocol Update
 
 - [ ] Verify the current Bedrock version and protocol number from current sources.
 - [ ] Refresh source monitoring and record exact evidence commits.
@@ -75,7 +66,7 @@ Upstream commit: `7655018631147f0b5d473326fddc2faea105dffe`.
 - [ ] Run PHPStan, PHPUnit, phar build, version check, and client smoke tests.
 - [ ] Record packet/API/plugin/world risks and rollback guidance.
 
-### 7. Triage One Upstream Item
+### 6. Triage One Upstream Item
 
 - [ ] Refresh `open-items.json` and `priority-shortlist.json` with the two backlog tools.
 - [ ] Open one high-scoring original issue or PR.
@@ -98,6 +89,7 @@ Remaining order:
 
 Import one package at a time. Preserve its license, source layout, Composer metadata, pin, and useful history.
 Local ownership does not stop monitoring its canonical PMMP repository.
+Re-evaluate RakLib commit `765501863` during its import or when a release containing it is tagged; retain a configurable cookie interval because of the documented OVH caveat.
 
 ## Milestones
 

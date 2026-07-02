@@ -35,8 +35,8 @@
     },
     {
       "repository": "pmmp/RakLib",
-      "classification": "adapt",
-      "note": "Commit 7655018631147f0b5d473326fddc2faea105dffe adds stateless anti-spoofing cookies and requires focused compatibility review."
+      "classification": "defer",
+      "note": "Commit 7655018631147f0b5d473326fddc2faea105dffe is source-compatible through an optional constructor parameter but changes an unreleased handshake path without tests and has an OVH caveat. Re-evaluate at a tagged release or local RakLib import."
     },
     {
       "repository": "pmmp/RakLibIpc",
