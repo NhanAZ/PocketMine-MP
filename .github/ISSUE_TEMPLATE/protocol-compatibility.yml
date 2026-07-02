@@ -1,0 +1,62 @@
+name: Protocol compatibility
+description: Report Minecraft Bedrock client connection or protocol compatibility problems
+labels:
+  - "Category: Protocol"
+  - "Status: Unconfirmed"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for Minecraft: Bedrock Edition client compatibility issues, protocol mismatch problems, packet handling regressions, or generated Bedrock data problems.
+
+        > [!WARNING]
+        > If this can be used to crash or exploit public servers, do not report it here. Follow SECURITY.md instead.
+
+  - type: input
+    attributes:
+      label: PocketMine-MP fork version
+      description: Use /version and include the commit hash if this is a development build.
+      placeholder: e.g. 5.44.3+dev, commit abc123
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Minecraft Bedrock client version
+      description: Include exact client version and platform.
+      placeholder: e.g. 1.21.xxx on Windows, Android, iOS, Xbox, etc.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Problem description
+      description: Describe what fails and when it fails.
+      placeholder: e.g. client cannot join, disconnects after resource packs, item runtime IDs are wrong
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Reproduction steps
+      description: Give the smallest server/client steps that reproduce the issue.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Logs or packet details
+      description: Paste relevant logs, crashdump links, or packet details. Do not include private exploit details.
+    validations:
+      required: false
+
+  - type: dropdown
+    attributes:
+      label: Plugin involvement
+      options:
+        - Reproduces without plugins
+        - Only happens with plugins
+        - Not tested without plugins
+    validations:
+      required: true
+

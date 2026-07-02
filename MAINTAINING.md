@@ -62,3 +62,7 @@ Fork-owned release publishing should be configured before enabling Docker image 
 
 Use [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md) for Minecraft: Bedrock Edition protocol updates.
 Protocol update PRs should include generated diffs, automated check results, client smoke-test notes, and plugin compatibility risk notes.
+
+## Community Intake
+
+Use [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md) for issue triage, pull request review expectations, label meanings, changelog habits, and kind closure text.

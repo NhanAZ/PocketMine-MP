@@ -1,0 +1,23 @@
+- name: "Category: Protocol"
+  color: "00aaaa"
+  description: "Related to Minecraft: Bedrock Edition protocol compatibility, packets, or generated Bedrock data"
+
+- name: "Type: Regression"
+  color: "d73a4a"
+  description: "Behaviour worked in an earlier known version or commit and now fails"
+
+- name: "Category: Plugin Compatibility"
+  color: "5319e7"
+  description: "Related to plugin loading, plugin API expectations, or common plugin compatibility patterns"
+
+- name: "Category: Upstream Sync"
+  color: "1d76db"
+  description: "Ports, cherry-picks, or conflict resolution from upstream PocketMine-MP or PMMP-owned packages"
+
+- name: "Agent Task"
+  color: "c5def5"
+  description: "Small, well-scoped work suitable for an AI agent to investigate or implement"
+
+- name: "Security: Private Report Needed"
+  color: "b60205"
+  description: "Potentially security-sensitive public report; move details to private reporting"

@@ -91,11 +91,13 @@ Goal: accept outside issues and PRs without turning maintenance into chaos.
 
 Todo:
 
-- [ ] Tune issue templates for fork-specific bug reports.
-- [ ] Add labels for protocol, regression, security, plugin compatibility, upstream sync, and agent task.
-- [ ] Add review expectations for small, medium, and high-risk PRs.
-- [ ] Add a changelog habit for merged user-facing changes.
-- [ ] Decide how to close duplicate or unsupported requests kindly.
+- [x] Tune issue templates for fork-specific bug reports.
+- [x] Add labels for protocol, regression, security, plugin compatibility, upstream sync, and agent task.
+- [x] Add review expectations for small, medium, and high-risk PRs.
+- [x] Add a changelog habit for merged user-facing changes.
+- [x] Decide how to close duplicate or unsupported requests kindly.
+
+Community intake workflow is documented in [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md).
 
 Agent prompt:
 

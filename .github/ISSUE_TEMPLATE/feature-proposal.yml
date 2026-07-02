@@ -1,5 +1,7 @@
 name: Feature addition, change, or removal
 description: Propose adding new features, or changing/removing existing ones
+labels:
+  - "Type: Enhancement"
 body:
   - type: textarea
     attributes:
@@ -17,3 +19,18 @@ body:
     attributes:
       label: "Alternative solutions or workarounds"
       description: "Describe other ways you've explored to achieve your goal"
+  - type: dropdown
+    attributes:
+      label: Scope
+      options:
+        - Small, focused change
+        - Medium behaviour/API change
+        - Large feature or architecture change
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Compatibility impact
+      description: Describe plugin, world, protocol, or configuration compatibility risks.
+    validations:
+      required: false

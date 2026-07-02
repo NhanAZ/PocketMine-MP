@@ -1,6 +1,16 @@
 name: Bug report
-description: Report a feature of PocketMine-MP not working as expected
+description: Report fork behaviour not working as expected
+labels:
+  - "Type: Fix"
+  - "Status: Unconfirmed"
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for actionable bugs in this fork.
+        For Minecraft Bedrock client compatibility, use the protocol compatibility template.
+        For plugin compatibility regressions, use the plugin compatibility template.
+
   - type: markdown
     attributes:
       value: |
@@ -52,6 +62,18 @@ body:
       description: What did you expect to happen?
     validations:
       required: true
+  - type: textarea
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest set of steps needed to reproduce this bug.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Last known working version or commit
+      description: If this is a regression, include the last known working version or commit.
+    validations:
+      required: false
 
   - type: markdown
     attributes:

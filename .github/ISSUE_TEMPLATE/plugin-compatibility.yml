@@ -1,0 +1,55 @@
+name: Plugin compatibility
+description: Report a plugin compatibility regression or API behaviour problem
+labels:
+  - "Category: Plugin Compatibility"
+  - "Status: Unconfirmed"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when a plugin worked on an earlier commit/version or upstream PocketMine-MP version but fails on this fork.
+
+        Please reduce the report to the smallest plugin or code snippet possible.
+
+  - type: input
+    attributes:
+      label: PocketMine-MP fork version
+      placeholder: Use /version and include commit hash if possible
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Plugin name and version
+      placeholder: e.g. ExamplePlugin 1.0.0, commit abc123
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Last known working version
+      description: Include upstream/fork version or commit if known.
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Problem description
+      description: Explain what changed or broke.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Minimal reproduction
+      description: Provide plugin code, a small test plugin, or steps to reproduce.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Logs or errors
+      description: Include stack traces, server logs, or crashdump links.
+    validations:
+      required: false
+

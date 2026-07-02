@@ -23,9 +23,15 @@
 <!-- Any possible backwards incompatible changes? How are they solved, or how can they be solved? -->
 <!-- If not, you can delete this section -->
 
+## Risk
+<!-- Low / medium / high. Mention protocol, world data, security, plugin API, networking, threading, or dependency risks. -->
+
 ## Follow-up
 <!-- Suggest any actions to be done before/after merging this pull request -->
 <!-- For example, future changes that this PR lays the groundwork for -->
+
+## Release notes
+<!-- If this is user-facing, write a short changelog/release-note draft. Otherwise say "Not user-facing". -->
 
 ## Tests
 <!--

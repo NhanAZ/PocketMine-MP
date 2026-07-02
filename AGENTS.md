@@ -29,6 +29,8 @@ Agents may be asked to work from:
 - Private security reports, emails, or DMs summarized by the maintainer.
 - A maintainer's direct idea or experiment.
 
+Issue and pull request triage must follow [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md).
+
 ## AI-Assisted Code Rules
 
 AI assistance is allowed in this fork.

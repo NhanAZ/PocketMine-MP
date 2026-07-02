@@ -1,5 +1,8 @@
 blank_issues_enabled: false
 contact_links:
+  - name: Private security report
+    url: https://github.com/NhanAZ/PocketMine-MP/security/advisories/new
+    about: Report exploitable vulnerabilities privately. Do not open public security issues.
   - name: Fork policy
     url: https://github.com/NhanAZ/PocketMine-MP/blob/stable/FORK_POLICY.md
     about: Read the fork's maintenance goals and contribution rules before opening large requests.

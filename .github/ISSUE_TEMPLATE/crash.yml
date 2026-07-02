@@ -1,6 +1,9 @@
 name: Crash
 description: Report a crash in PocketMine-MP (not plugins)
 title: Server crashed
+labels:
+  - "Type: Fix"
+  - "Status: Unconfirmed"
 body:
   - type: markdown
     attributes:
@@ -20,6 +23,20 @@ body:
     id: crashdump-url
     attributes:
       label: Link to crashdump
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: PocketMine-MP fork version
+      placeholder: Use /version and include commit hash if possible
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: PHP version and OS
+      placeholder: e.g. PHP 8.2.30 on Windows Server 2022
     validations:
       required: true
 
