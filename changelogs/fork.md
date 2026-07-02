@@ -15,6 +15,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 ### Maintenance
 
 - Refreshed the upstream intake snapshot to 419 open issues and 31 open pull requests, retaining a scored 40-item shortlist.
+- Implemented upstream issue #5638: `PlayerAuthInputPacket` now reports timing breakdowns for input flags, movement, item-use transactions, item-stack requests, and block actions.
 
 ### Checks
 
@@ -23,6 +24,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #5463, targeted channel-resolution coverage (1 test, 7 assertions), full PHPUnit (234 tests, 72,613 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks passed. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `5179fb448`.
 - For #6712, targeted hunger-data coverage (5 tests, 12 assertions), full PHPUnit (239 tests, 72,625 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks passed. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `9f43f9497`.
 - For #6714, targeted projectile-close coverage (2 tests, 8 assertions), full PHPUnit (241 tests, 72,633 assertions), touched-file and full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks passed. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for style follow-up commit `9270fb248` after the initial implementation run failed only PHP-CS-Fixer import ordering.
+- For #5638, syntax checks, touched-file PHPStan, full PHPStan, full PHPUnit (241 tests, 72,633 assertions), code generation, translation validation, generated-file collision, and whitespace checks passed locally.
 
 ### Reviewed Or Deferred
 

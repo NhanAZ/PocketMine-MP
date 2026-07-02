@@ -58,6 +58,12 @@ abstract class Timings{
 	public static TimingsHandler $playerNetworkReceive;
 	public static TimingsHandler $playerNetworkReceiveDecompress;
 	public static TimingsHandler $playerNetworkReceiveDecrypt;
+	public static TimingsHandler $playerAuthInput;
+	public static TimingsHandler $playerAuthInputInputFlags;
+	public static TimingsHandler $playerAuthInputMovement;
+	public static TimingsHandler $playerAuthInputItemUse;
+	public static TimingsHandler $playerAuthInputItemStackRequest;
+	public static TimingsHandler $playerAuthInputBlockActions;
 	public static TimingsHandler $playerChunkOrder;
 	public static TimingsHandler $playerChunkSend;
 	public static TimingsHandler $connection;
@@ -161,6 +167,12 @@ abstract class Timings{
 		self::$playerNetworkReceive = new TimingsHandler("Player Network Receive", self::$connection);
 		self::$playerNetworkReceiveDecompress = new TimingsHandler("Player Network Receive - Decompression", self::$playerNetworkReceive);
 		self::$playerNetworkReceiveDecrypt = new TimingsHandler("Player Network Receive - Decryption", self::$playerNetworkReceive);
+		self::$playerAuthInput = new TimingsHandler("PlayerAuthInputPacket", self::$playerNetworkReceive);
+		self::$playerAuthInputInputFlags = new TimingsHandler("PlayerAuthInputPacket - Input Flags", self::$playerAuthInput);
+		self::$playerAuthInputMovement = new TimingsHandler("PlayerAuthInputPacket - Movement", self::$playerAuthInput);
+		self::$playerAuthInputItemUse = new TimingsHandler("PlayerAuthInputPacket - Item Use Transaction", self::$playerAuthInput);
+		self::$playerAuthInputItemStackRequest = new TimingsHandler("PlayerAuthInputPacket - Item Stack Request", self::$playerAuthInput);
+		self::$playerAuthInputBlockActions = new TimingsHandler("PlayerAuthInputPacket - Block Actions", self::$playerAuthInput);
 
 		self::$broadcastPackets = new TimingsHandler("Broadcast Packets", self::$playerNetworkSend);
 

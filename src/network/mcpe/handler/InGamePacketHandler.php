@@ -94,6 +94,7 @@ use pocketmine\network\mcpe\protocol\types\PlayerBlockActionStopBreak;
 use pocketmine\network\mcpe\protocol\types\PlayerBlockActionWithBlockInfo;
 use pocketmine\network\PacketHandlingException;
 use pocketmine\player\Player;
+use pocketmine\timings\Timings;
 use pocketmine\utils\AssumptionFailedError;
 use pocketmine\utils\Limits;
 use pocketmine\utils\TextFormat;
@@ -216,80 +217,109 @@ class InGamePacketHandler extends PacketHandler{
 
 		$inputFlags = $packet->getInputFlags();
 		if($this->lastPlayerAuthInputFlags === null || !$inputFlags->equals($this->lastPlayerAuthInputFlags)){
-			$this->lastPlayerAuthInputFlags = $inputFlags;
+			Timings::$playerAuthInputInputFlags->startTiming();
+			try{
+				$this->lastPlayerAuthInputFlags = $inputFlags;
 
-			$sneakPressed = $inputFlags->get(PlayerAuthInputFlags::SNEAKING);
+				$sneakPressed = $inputFlags->get(PlayerAuthInputFlags::SNEAKING);
 
-			$sneaking = $this->resolveOnOffInputFlags($inputFlags, PlayerAuthInputFlags::START_SNEAKING, PlayerAuthInputFlags::STOP_SNEAKING);
-			$sprinting = $this->resolveOnOffInputFlags($inputFlags, PlayerAuthInputFlags::START_SPRINTING, PlayerAuthInputFlags::STOP_SPRINTING);
-			$swimming = $this->resolveOnOffInputFlags($inputFlags, PlayerAuthInputFlags::START_SWIMMING, PlayerAuthInputFlags::STOP_SWIMMING);
-			$gliding = $this->resolveOnOffInputFlags($inputFlags, PlayerAuthInputFlags::START_GLIDING, PlayerAuthInputFlags::STOP_GLIDING);
-			$flying = $this->resolveOnOffInputFlags($inputFlags, PlayerAuthInputFlags::START_FLYING, PlayerAuthInputFlags::STOP_FLYING);
-			$mismatch =
-				(!$this->player->toggleSneak($sneaking ?? $this->player->isSneaking(), $sneakPressed)) |
-				($sprinting !== null && !$this->player->toggleSprint($sprinting)) |
-				($swimming !== null && !$this->player->toggleSwim($swimming)) |
-				($gliding !== null && !$this->player->toggleGlide($gliding)) |
-				($flying !== null && !$this->player->toggleFlight($flying));
-			if((bool) $mismatch){
-				$this->player->sendData([$this->player]);
-			}
+				$sneaking = $this->resolveOnOffInputFlags($inputFlags, PlayerAuthInputFlags::START_SNEAKING, PlayerAuthInputFlags::STOP_SNEAKING);
+				$sprinting = $this->resolveOnOffInputFlags($inputFlags, PlayerAuthInputFlags::START_SPRINTING, PlayerAuthInputFlags::STOP_SPRINTING);
+				$swimming = $this->resolveOnOffInputFlags($inputFlags, PlayerAuthInputFlags::START_SWIMMING, PlayerAuthInputFlags::STOP_SWIMMING);
+				$gliding = $this->resolveOnOffInputFlags($inputFlags, PlayerAuthInputFlags::START_GLIDING, PlayerAuthInputFlags::STOP_GLIDING);
+				$flying = $this->resolveOnOffInputFlags($inputFlags, PlayerAuthInputFlags::START_FLYING, PlayerAuthInputFlags::STOP_FLYING);
+				$mismatch =
+					(!$this->player->toggleSneak($sneaking ?? $this->player->isSneaking(), $sneakPressed)) |
+					($sprinting !== null && !$this->player->toggleSprint($sprinting)) |
+					($swimming !== null && !$this->player->toggleSwim($swimming)) |
+					($gliding !== null && !$this->player->toggleGlide($gliding)) |
+					($flying !== null && !$this->player->toggleFlight($flying));
+				if((bool) $mismatch){
+					$this->player->sendData([$this->player]);
+				}
 
-			if($inputFlags->get(PlayerAuthInputFlags::START_JUMPING)){
-				$this->player->jump();
-			}
-			if($inputFlags->get(PlayerAuthInputFlags::MISSED_SWING)){
-				$this->player->missSwing();
+				if($inputFlags->get(PlayerAuthInputFlags::START_JUMPING)){
+					$this->player->jump();
+				}
+				if($inputFlags->get(PlayerAuthInputFlags::MISSED_SWING)){
+					$this->player->missSwing();
+				}
+			}finally{
+				Timings::$playerAuthInputInputFlags->stopTiming();
 			}
 		}
 
 		if(!$this->forceMoveSync && $hasMoved){
 			$this->lastPlayerAuthInputPosition = $rawPos;
 			//TODO: this packet has WAYYYYY more useful information that we're not using
-			$this->player->handleMovement($newPos);
+			Timings::$playerAuthInputMovement->startTiming();
+			try{
+				$this->player->handleMovement($newPos);
+			}finally{
+				Timings::$playerAuthInputMovement->stopTiming();
+			}
 		}
 
 		$packetHandled = true;
 
 		$useItemTransaction = $packet->getItemInteractionData();
 		if($useItemTransaction !== null){
-			if(count($useItemTransaction->getTransactionData()->getActions()) > 100){
-				throw new PacketHandlingException("Too many actions in item use transaction");
-			}
+			Timings::$playerAuthInputItemUse->startTiming();
+			try{
+				if(count($useItemTransaction->getTransactionData()->getActions()) > 100){
+					throw new PacketHandlingException("Too many actions in item use transaction");
+				}
 
-			$this->inventoryManager->setCurrentItemStackRequestId($useItemTransaction->getRequestId());
-			$this->inventoryManager->addRawPredictedSlotChanges($useItemTransaction->getTransactionData()->getActions());
-			if(!$this->handleUseItemTransaction($useItemTransaction->getTransactionData())){
-				$packetHandled = false;
-				$this->session->getLogger()->debug("Unhandled transaction in PlayerAuthInputPacket (type " . $useItemTransaction->getTransactionData()->getActionType() . ")");
-			}else{
-				$this->inventoryManager->syncMismatchedPredictedSlotChanges();
+				$this->inventoryManager->setCurrentItemStackRequestId($useItemTransaction->getRequestId());
+				$this->inventoryManager->addRawPredictedSlotChanges($useItemTransaction->getTransactionData()->getActions());
+				if(!$this->handleUseItemTransaction($useItemTransaction->getTransactionData())){
+					$packetHandled = false;
+					$this->session->getLogger()->debug("Unhandled transaction in PlayerAuthInputPacket (type " . $useItemTransaction->getTransactionData()->getActionType() . ")");
+				}else{
+					$this->inventoryManager->syncMismatchedPredictedSlotChanges();
+				}
+				$this->inventoryManager->setCurrentItemStackRequestId(null);
+			}finally{
+				Timings::$playerAuthInputItemUse->stopTiming();
 			}
-			$this->inventoryManager->setCurrentItemStackRequestId(null);
 		}
 
 		$itemStackRequest = $packet->getItemStackRequest();
-		$itemStackResponseBuilder = $itemStackRequest !== null ? $this->handleSingleItemStackRequest($itemStackRequest) : null;
+		if($itemStackRequest !== null){
+			Timings::$playerAuthInputItemStackRequest->startTiming();
+			try{
+				$itemStackResponseBuilder = $this->handleSingleItemStackRequest($itemStackRequest);
+			}finally{
+				Timings::$playerAuthInputItemStackRequest->stopTiming();
+			}
+		}else{
+			$itemStackResponseBuilder = null;
+		}
 
 		//itemstack request or transaction may set predictions for the outcome of these actions, so these need to be
 		//processed last
 		$blockActions = $packet->getBlockActions();
 		if($blockActions !== null){
-			if(count($blockActions) > 100){
-				throw new PacketHandlingException("Too many block actions in PlayerAuthInputPacket");
-			}
-			foreach(Utils::promoteKeys($blockActions) as $k => $blockAction){
-				$actionHandled = false;
-				if($blockAction instanceof PlayerBlockActionStopBreak){
-					$actionHandled = $this->handlePlayerActionFromData($blockAction->getActionType(), new BlockPosition(0, 0, 0), Facing::DOWN);
-				}elseif($blockAction instanceof PlayerBlockActionWithBlockInfo){
-					$actionHandled = $this->handlePlayerActionFromData($blockAction->getActionType(), $blockAction->getBlockPosition(), $blockAction->getFace());
+			Timings::$playerAuthInputBlockActions->startTiming();
+			try{
+				if(count($blockActions) > 100){
+					throw new PacketHandlingException("Too many block actions in PlayerAuthInputPacket");
 				}
+				foreach(Utils::promoteKeys($blockActions) as $k => $blockAction){
+					$actionHandled = false;
+					if($blockAction instanceof PlayerBlockActionStopBreak){
+						$actionHandled = $this->handlePlayerActionFromData($blockAction->getActionType(), new BlockPosition(0, 0, 0), Facing::DOWN);
+					}elseif($blockAction instanceof PlayerBlockActionWithBlockInfo){
+						$actionHandled = $this->handlePlayerActionFromData($blockAction->getActionType(), $blockAction->getBlockPosition(), $blockAction->getFace());
+					}
 
-				if(!$actionHandled){
-					$packetHandled = false;
-					$this->session->getLogger()->debug("Unhandled player block action at offset $k in PlayerAuthInputPacket");
+					if(!$actionHandled){
+						$packetHandled = false;
+						$this->session->getLogger()->debug("Unhandled player block action at offset $k in PlayerAuthInputPacket");
+					}
 				}
+			}finally{
+				Timings::$playerAuthInputBlockActions->stopTiming();
 			}
 		}
 
