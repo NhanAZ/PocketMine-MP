@@ -50,11 +50,13 @@ Goal: prepare the all-in-one direction without dumping code into the tree blindl
 
 Todo:
 
-- [ ] Inventory Composer dependencies owned by pmmp.
-- [ ] Classify each dependency as keep-external, import-later, or import-now.
-- [ ] Decide the repository layout for imported packages.
-- [ ] Pick an import method that preserves history where practical.
-- [ ] Create one pilot import plan, likely for a small package before BedrockProtocol.
+- [x] Inventory Composer dependencies owned by pmmp.
+- [x] Classify each dependency as keep-external, import-later, or import-now.
+- [x] Decide the repository layout for imported packages.
+- [x] Pick an import method that preserves history where practical.
+- [x] Create one pilot import plan, likely for a small package before BedrockProtocol.
+
+The consolidation strategy is documented in [DEPENDENCY_CONSOLIDATION.md](DEPENDENCY_CONSOLIDATION.md).
 
 Agent prompt:
 
