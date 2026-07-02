@@ -28,6 +28,7 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 
 - Imported `pocketmine/callback-validator` 1.0.4 at canonical commit `143fa6e13254f1ab90c31b223982016f95635c37` as a local Composer path package with its MIT license, package metadata, tests, subtree history, and canonical source monitoring.
 - Imported `pocketmine/binaryutils` 0.2.7 at canonical commit `14c044afa33cb581b4a6d1ea04a87e0bc99e824b` as a local Composer path package with its LGPL-3.0 license, package metadata, tests, subtree history, and canonical source monitoring.
+- Imported `pocketmine/nbt` 1.2.0 at canonical commit `51b8d6a97065fb93e0b4f660b65164b6e1ed2fff` as a local Composer path package with its LGPL-3.0 license, package metadata, tests, subtree history, and canonical source monitoring.
 - Previously imported `pocketmine/color`, `pocketmine/errorhandler`, `pocketmine/math`, and `pocketmine/log` remain local Composer path packages.
 
 ### Maintenance
@@ -42,6 +43,7 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 
 - Reviewed upstream issue #6580 and deferred it because the LevelDB compaction fix needs a world-format or region-sharded DB design, migration path, rollback plan, and benchmarks.
 - Reviewed upstream issue #6750 and deferred it because the public report is unconfirmed and the useful crash dumps are private to upstream maintainers.
+- Reviewed NBT stable commit `5429a21c9321eb154f7fcdaa789d2b5ccbcc6ea3` and deferred it because it only updates PHP 8.5 CI and PHPStan after the imported 1.2.0 lock pin.
 - Reviewed RakLib anti-spoofing cookies and deferred them until a tagged release or the planned local RakLib import.
 - Reviewed PowerNukkitX RakNet pacing and cookie configuration drift as reference-only evidence for the planned RakLib import.
 
@@ -55,3 +57,4 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 - For #4830, targeted item/XP-orb/sneaking/sound bounce tests, full PHPUnit (227 tests, 72,572 assertions), full PHPStan, PHP-CS-Fixer 3.75 dry-run, translation validation, generated-file collision check, PHP lint, and `git diff --check` passed; live client gameplay testing remains pending.
 - For the `callback-validator` import, its PHPUnit suite (104 tests, 499 assertions), package and root PHPStan, root PHPUnit (227 tests, 72,572 assertions), PHP-CS-Fixer 3.75 dry-run, Composer validation, source audit, JSON and translation validation, code generation, generated-file collision check, and `git diff --check` passed. Composer validation retains the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
 - For the `binaryutils` import, its PHPUnit suite (4 tests, 4 assertions), package and root PHPStan, root PHPUnit (227 tests, 72,572 assertions), PHP-CS-Fixer 3.75 dry-run, source audit, JSON and translation validation, code generation, generated-file collision check, Composer install dry-run, and `git diff --check` passed. Composer validation retains the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
+- For the `nbt` import, its PHPUnit suite (75 tests, 151 assertions), package and root PHPStan, root PHPUnit (227 tests, 72,572 assertions), PHP-CS-Fixer 3.75 dry-run, source audit, JSON and translation validation, code generation, generated-file collision check, Composer install dry-run, and `git diff --check` passed. Composer validation retains the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.

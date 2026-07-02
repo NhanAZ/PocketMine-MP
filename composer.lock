@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c42e168bc5947348d089eea245513e1e",
+    "content-hash": "f3c7c4bf00b7f16834513915036b3c05",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -527,16 +527,10 @@
         {
             "name": "pocketmine/nbt",
             "version": "1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pmmp/NBT.git",
-                "reference": "51b8d6a97065fb93e0b4f660b65164b6e1ed2fff"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/NBT/zipball/51b8d6a97065fb93e0b4f660b65164b6e1ed2fff",
-                "reference": "51b8d6a97065fb93e0b4f660b65164b6e1ed2fff",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/nbt",
+                "reference": "04e07f6cb79a73ef0d9b80a72199f9fe5a2a7e81"
             },
             "require": {
                 "php": "^7.4 || ^8.0",
@@ -556,16 +550,19 @@
                     "pocketmine\\nbt\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "pocketmine\\nbt\\": "tests/phpunit/"
+                }
+            },
             "license": [
                 "LGPL-3.0"
             ],
             "description": "PHP library for working with Named Binary Tags",
-            "support": {
-                "issues": "https://github.com/pmmp/NBT/issues",
-                "source": "https://github.com/pmmp/NBT/tree/1.2.0"
-            },
-            "time": "2025-09-19T18:09:30+00:00"
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "pocketmine/raklib",

@@ -64,6 +64,16 @@
                "pocketmine/math": "1.0.0"
             }
          }
+      },
+      {
+         "type": "path",
+         "url": "packages/nbt",
+         "options": {
+            "symlink": false,
+            "versions": {
+               "pocketmine/nbt": "1.2.0"
+            }
+         }
       }
    ],
    "require": {

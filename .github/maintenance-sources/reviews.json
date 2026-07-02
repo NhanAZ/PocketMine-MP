@@ -45,8 +45,8 @@
     },
     {
       "repository": "pmmp/NBT",
-      "classification": "defer",
-      "note": "The branch-only change updates PHP 8.5 CI and PHPStan."
+      "classification": "adopt",
+      "note": "Imported tag 1.2.0 at the root lock pin 51b8d6a97065fb93e0b4f660b65164b6e1ed2fff as packages/nbt with its LGPL-3.0 license and full subtree history. The later stable commit 5429a21c9321eb154f7fcdaa789d2b5ccbcc6ea3 only updates PHP 8.5 CI and PHPStan, so it remains deferred."
     },
     {
       "repository": "pmmp/RakLib",

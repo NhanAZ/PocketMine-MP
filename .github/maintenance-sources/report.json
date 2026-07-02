@@ -91,6 +91,19 @@
         "signal": "review-needed"
     },
     {
+        "kind": "imported-package",
+        "name": "pocketmine/nbt",
+        "repository": "pmmp/NBT",
+        "branch": "stable",
+        "pinned_ref": "51b8d6a97065fb93e0b4f660b65164b6e1ed2fff",
+        "latest_ref": "5429a21c9321eb154f7fcdaa789d2b5ccbcc6ea3",
+        "license": "LGPL-3.0",
+        "url": "https://github.com/pmmp/NBT",
+        "path": "packages/nbt",
+        "role": null,
+        "signal": "review-needed"
+    },
+    {
         "kind": "composer-package",
         "name": "pocketmine/bedrock-block-upgrade-schema",
         "repository": "pmmp/BedrockBlockUpgradeSchema",
@@ -141,19 +154,6 @@
         "path": "vendor/pocketmine/bedrock-protocol",
         "role": "Composer-managed PMMP dependency",
         "signal": "at-branch-head"
-    },
-    {
-        "kind": "composer-package",
-        "name": "pocketmine/nbt",
-        "repository": "pmmp/NBT",
-        "branch": "stable",
-        "pinned_ref": "51b8d6a97065fb93e0b4f660b65164b6e1ed2fff",
-        "latest_ref": "5429a21c9321eb154f7fcdaa789d2b5ccbcc6ea3",
-        "license": "LGPL-3.0",
-        "url": "https://github.com/pmmp/NBT",
-        "path": "vendor/pocketmine/nbt",
-        "role": "Composer-managed PMMP dependency",
-        "signal": "review-needed"
     },
     {
         "kind": "composer-package",

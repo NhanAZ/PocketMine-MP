@@ -57,6 +57,14 @@
       "path": "packages/math"
     },
     {
+      "kind": "imported-package",
+      "name": "pocketmine/nbt",
+      "repository": "pmmp/NBT",
+      "branch": "stable",
+      "pinned_ref": "51b8d6a97065fb93e0b4f660b65164b6e1ed2fff",
+      "path": "packages/nbt"
+    },
+    {
       "kind": "protocol-reference",
       "name": "Cloudburst Protocol",
       "repository": "CloudburstMC/Protocol",
