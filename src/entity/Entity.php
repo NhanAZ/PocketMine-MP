@@ -1111,7 +1111,16 @@ abstract class Entity{
 	 * Called when a falling entity hits the ground.
 	 */
 	protected function onHitGround() : ?float{
-		return null;
+		return $this->getLandingBlock()->onEntityLand($this);
+	}
+
+	protected function getLandingBlock() : Block{
+		$fallBlockPos = $this->location->floor();
+		$fallBlock = $this->getWorld()->getBlock($fallBlockPos);
+		if(count($fallBlock->getCollisionBoxes()) === 0){
+			$fallBlock = $this->getWorld()->getBlock($fallBlockPos->down());
+		}
+		return $fallBlock;
 	}
 
 	public function getEyeHeight() : float{

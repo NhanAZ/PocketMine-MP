@@ -384,13 +384,8 @@ abstract class Living extends Entity{
 	}
 
 	protected function onHitGround() : ?float{
-		$fallBlockPos = $this->location->floor();
-		$fallBlock = $this->getWorld()->getBlock($fallBlockPos);
-		if(count($fallBlock->getCollisionBoxes()) === 0){
-			$fallBlockPos = $fallBlockPos->down();
-			$fallBlock = $this->getWorld()->getBlock($fallBlockPos);
-		}
-		$newVerticalVelocity = $fallBlock->onEntityLand($this);
+		$landingBlock = $this->getLandingBlock();
+		$newVerticalVelocity = $landingBlock->onEntityLand($this);
 
 		$damage = $this->calculateFallDamage($this->fallDistance);
 		if($damage > 0){
@@ -401,8 +396,8 @@ abstract class Living extends Entity{
 				new EntityLongFallSound($this) :
 				new EntityShortFallSound($this)
 			);
-		}elseif($fallBlock->getTypeId() !== BlockTypeIds::AIR){
-			$this->broadcastSound(new EntityLandSound($this, $fallBlock));
+		}elseif($landingBlock->getTypeId() !== BlockTypeIds::AIR){
+			$this->broadcastSound(new EntityLandSound($this, $landingBlock));
 		}
 		return $newVerticalVelocity;
 	}
