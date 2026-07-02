@@ -25,6 +25,7 @@ Larger contributions like feature additions should be preceded by a [Change Prop
 ## List of `pocketmine` namespaces which are in other repos
 PocketMine-MP has several dependencies which are independent from the main server code. Most of them use the `pocketmine` namespace.
 Some of these add extra classes to packages which already exist in PocketMine-MP.
+The PMMP links below are canonical upstream references. In this fork, imported packages such as `color`, `errorhandler`, `log`, and `math` also live under `packages/` and are installed through Composer path repositories.
 
 Take a look at the table below if you can't find the class or function you're looking for.
 
@@ -147,7 +148,7 @@ The following are required as a minimum for pull requests. PRs that don't meet t
 - **Create a new branch on your fork for each pull request.** This allows you to use the same fork to make multiple pull requests at the same time.
 - **Run quality tools like PHPStan locally before you commit.** See the section above about [tests and quality tools](#tests-and-quality-checks).
 
-**Thanks for contributing to PocketMine-MP!**
+**Thanks for contributing to this fork!**
 
 ## RFCs / Change Proposals
 Change Proposals are issues or discussions which describe a new feature proposal or behavioural change.

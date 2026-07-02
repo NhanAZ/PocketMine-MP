@@ -6,6 +6,6 @@ contact_links:
   - name: Fork policy
     url: https://github.com/NhanAZ/PocketMine-MP/blob/stable/FORK_POLICY.md
     about: Read the fork's maintenance goals and contribution rules before opening large requests.
-  - name: Documentation
+  - name: Upstream documentation
     url: https://pmmp.rtfd.io
-    about: Upstream PocketMine-MP documentation
+    about: General PocketMine-MP documentation. Use this repository for fork-specific bugs.

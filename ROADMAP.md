@@ -14,6 +14,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 - The upstream backlog snapshot contains 450 open items and a scored top-40 shortlist.
 - Full repository PHPStan is clean after typing the JSON backlog tools.
 - Fork CI health is the top active gate; the latest red runs were PHP-CS-Fixer import order, PHPStan CLI argv handling, and Docker missing local `packages/` path repositories.
+- User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
 
 ## Priority
 
@@ -32,8 +33,8 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
 
 ### 1. Review Remaining Upstream Links
 
-- [ ] Classify `pmmp.io`, `github.com/pmmp`, Discord, and PocketMine links as ecosystem, upstream, or fork-owned.
-- [ ] Keep useful ecosystem links, label upstream support clearly, and use fork links for fork-specific actions.
+- [x] Classify `pmmp.io`, `github.com/pmmp`, Discord, and PocketMine links as ecosystem, upstream, or fork-owned.
+- [x] Keep useful ecosystem links, label upstream support clearly, and use fork links for fork-specific actions.
 
 ### 2. Decide Fork Release Automation
 

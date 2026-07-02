@@ -1,11 +1,11 @@
 <p align="center">
 	<a href="https://github.com/NhanAZ/PocketMine-MP">
 		<!--[if IE]>
-			<img src="https://github.com/pmmp/PocketMine-MP/blob/stable/.github/readme/pocketmine.png" alt="The PocketMine-MP logo" title="PocketMine" loading="eager" />
+			<img src=".github/readme/legacy-pocketmine.png" alt="The PocketMine-MP logo" title="PocketMine" loading="eager" />
 		<![endif]-->
 		<picture>
-			<source srcset="https://raw.githubusercontent.com/pmmp/PocketMine-MP/stable/.github/readme/pocketmine-dark-rgb.gif" media="(prefers-color-scheme: dark)">
-			<img src="https://raw.githubusercontent.com/pmmp/PocketMine-MP/stable/.github/readme/pocketmine-rgb.gif" loading="eager" />
+			<source srcset=".github/readme/pocketmine-dark-rgb.gif" media="(prefers-color-scheme: dark)">
+			<img src=".github/readme/pocketmine-rgb.gif" loading="eager" />
 		</picture>
 	</a><br>
 	<b>A highly customisable, open source server software for Minecraft: Bedrock Edition written in PHP</b>
@@ -52,10 +52,11 @@ If you just want to play **vanilla survival multiplayer**, consider using the [o
 If that's not an option for you, you may be able to add some of PocketMine-MP's missing features using plugins from [Poggit](https://poggit.pmmp.io/plugins), or write plugins to implement them yourself.
 
 ## Getting Started
-- [Documentation](http://pmmp.readthedocs.org/)
-- [Installation instructions](https://pmmp.readthedocs.io/en/rtfd/installation.html)
-- [Upstream Docker image](https://github.com/pmmp/PocketMine-MP/pkgs/container/pocketmine-mp)
-- [Plugin repository](https://poggit.pmmp.io/plugins)
+- [Fork source build instructions](BUILDING.md)
+- [Upstream documentation](http://pmmp.readthedocs.org/) - General PocketMine-MP usage docs
+- [Upstream installation instructions](https://pmmp.readthedocs.io/en/rtfd/installation.html) - May mention official PMMP releases, not this fork
+- [Upstream Docker image](https://github.com/pmmp/PocketMine-MP/pkgs/container/pocketmine-mp) - Official PMMP image, not fork-specific
+- [Plugin repository](https://poggit.pmmp.io/plugins) - PMMP ecosystem plugins
 
 ## Community & Support
 This fork does not currently have an official support server.
@@ -69,11 +70,11 @@ You can also post questions on [StackOverflow](https://stackoverflow.com/tags/po
 If you want to write your own plugins, the following resources may be useful.
 For fork-specific behaviour, include the fork version and commit hash when asking for help or reporting issues.
 
- * [Developer documentation](https://devdoc.pmmp.io) - General documentation for PocketMine-MP plugin developers
- * [Latest release API documentation](https://apidoc.pmmp.io) - Doxygen API documentation generated for each release
- * [Latest bleeding-edge API documentation](https://apidoc-dev.pmmp.io) - Doxygen API documentation generated weekly from `major-next` branch
- * [DevTools](https://github.com/pmmp/DevTools/) - Development tools plugin for creating plugins
- * [ExamplePlugin](https://github.com/pmmp/ExamplePlugin/) - Example plugin demonstrating some basic API features
+ * [Upstream developer documentation](https://devdoc.pmmp.io) - General documentation for PocketMine-MP plugin developers
+ * [Upstream release API documentation](https://apidoc.pmmp.io) - Doxygen API documentation generated for official PMMP releases
+ * [Upstream bleeding-edge API documentation](https://apidoc-dev.pmmp.io) - Doxygen API documentation generated weekly from upstream `major-next`
+ * [Upstream DevTools](https://github.com/pmmp/DevTools/) - Development tools plugin for creating plugins
+ * [Upstream ExamplePlugin](https://github.com/pmmp/ExamplePlugin/) - Example plugin demonstrating some basic API features
 
 ## Contributing to this fork
 This fork accepts community contributions on a best-effort basis.
