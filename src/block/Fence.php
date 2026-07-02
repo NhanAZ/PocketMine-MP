@@ -37,6 +37,10 @@ class Fence extends Transparent{
 		return 0.25;
 	}
 
+	protected function canConnectToFence(Fence $fence) : bool{
+		return $fence::class === static::class;
+	}
+
 	public function readStateFromWorld() : Block{
 		parent::readStateFromWorld();
 
@@ -44,7 +48,7 @@ class Fence extends Transparent{
 
 		foreach(Facing::HORIZONTAL as $facing){
 			$block = $this->getSide($facing);
-			if($block instanceof static || $block instanceof FenceGate || $block->getSupportType(Facing::opposite($facing)) === SupportType::FULL){
+			if(($block instanceof Fence && $this->canConnectToFence($block)) || $block instanceof FenceGate || $block->getSupportType(Facing::opposite($facing)) === SupportType::FULL){
 				$this->connections[$facing] = true;
 			}else{
 				unset($this->connections[$facing]);

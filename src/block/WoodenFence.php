@@ -29,6 +29,10 @@ use pocketmine\block\utils\WoodTypeTrait;
 class WoodenFence extends Fence implements WoodMaterial{
 	use WoodTypeTrait;
 
+	protected function canConnectToFence(Fence $fence) : bool{
+		return $fence instanceof self;
+	}
+
 	public function getFuelTime() : int{
 		return $this->woodType->isFlammable() ? 300 : 0;
 	}

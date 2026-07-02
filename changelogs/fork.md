@@ -3,6 +3,20 @@
 This file tracks NhanAZ fork-specific maintenance and implementation changes.
 Upstream PocketMine-MP release notes remain in the numbered changelog files.
 
+## 2026-07-03
+
+### Fixes
+
+- Implemented upstream issue #5603: nether-brick fences no longer extend collision boxes toward wooden fences, while different wooden fence variants continue connecting to each other.
+
+### Maintenance
+
+- Refreshed the upstream intake snapshot to 419 open issues and 31 open pull requests, retaining a scored 40-item shortlist.
+
+### Checks
+
+- Targeted fence-family regression coverage passed (1 test, 5 assertions), along with full PHPUnit (233 tests, 72,606 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks. PHP-CS-Fixer 3.75 was unavailable locally and remains covered by fork CI.
+
 ## 2026-07-02
 
 Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c78bb0b0`.
