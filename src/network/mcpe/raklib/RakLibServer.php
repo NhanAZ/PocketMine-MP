@@ -59,6 +59,7 @@ class RakLibServer extends Thread{
 		protected int $serverId,
 		protected int $maxMtuSize,
 		protected int $protocolVersion,
+		protected int $cookieRotationIntervalSeconds,
 		protected SleeperHandlerEntry $sleeperEntry
 	){
 		$this->mainPath = \pocketmine\PATH;
@@ -100,7 +101,8 @@ class RakLibServer extends Thread{
 			new UserToRakLibThreadMessageReceiver(new PthreadsChannelReader($this->mainToThreadBuffer)),
 			new RakLibToUserThreadMessageSender(new SnoozeAwarePthreadsChannelWriter($this->threadToMainBuffer, $this->sleeperEntry->createNotifier())),
 			new ExceptionTraceCleaner($this->mainPath),
-			recvMaxSplitParts: 512
+			recvMaxSplitParts: 512,
+			cookieRotationIntervalSeconds: $this->cookieRotationIntervalSeconds
 		);
 		$this->synchronized(function() : void{
 			$this->ready = true;

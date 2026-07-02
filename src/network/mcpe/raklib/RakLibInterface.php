@@ -53,6 +53,7 @@ use raklib\utils\InternetAddress;
 use function addcslashes;
 use function base64_encode;
 use function implode;
+use function max;
 use function mt_rand;
 use function rtrim;
 use function substr;
@@ -124,6 +125,7 @@ class RakLibInterface implements ServerEventListener, AdvancedNetworkInterface{
 			$this->rakServerId,
 			$this->server->getConfigGroup()->getPropertyInt(YmlServerProperties::NETWORK_MAX_MTU_SIZE, 1492),
 			self::MCPE_RAKNET_PROTOCOL_VERSION,
+			max(0, $this->server->getConfigGroup()->getPropertyInt(YmlServerProperties::NETWORK_RAKLIB_COOKIE_ROTATION_INTERVAL, 0)),
 			$sleeperEntry
 		);
 		$this->eventReceiver = new RakLibToUserThreadMessageReceiver(

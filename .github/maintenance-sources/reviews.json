@@ -60,8 +60,8 @@
     },
     {
       "repository": "pmmp/RakLib",
-      "classification": "adopt",
-      "note": "Imported tag 1.2.1 at the root lock pin 669eb4d1e644f91437323ef24ce3ee985182b829 as packages/raklib with its GPL-3.0 license, protocol/server sources, static-analysis config, and full subtree history. The later stable commit 7655018631147f0b5d473326fddc2faea105dffe adds anti-spoofing cookies to the offline handshake; keep it deferred as a separate network-behaviour task until tests and OVH-compatible configuration are reviewed."
+      "classification": "adapt",
+      "note": "Imported tag 1.2.1 at the root lock pin 669eb4d1e644f91437323ef24ce3ee985182b829 as packages/raklib with its GPL-3.0 license, protocol/server sources, static-analysis config, and full subtree history. Adapted stable commit 7655018631147f0b5d473326fddc2faea105dffe for anti-spoofing cookies with the PMMP root config key network.raklib-cookie-rotation-interval disabled by default for OVH-sensitive compatibility, plus root handshake regression tests and package/root static analysis."
     },
     {
       "repository": "pmmp/RakLibIpc",
@@ -76,7 +76,7 @@
     {
       "repository": "protocol-references",
       "classification": "defer",
-      "note": "Peer projects remain evidence only. The 2026-07-02 audit saw PowerNukkitX advance through efd90f359f2ef6b7f80921b32afefa4761fe7082. The older f2cdff7eed3a0ad79099bd6adcc1f97ab31e7143 RakNet pacing and cookie settings remain corroborating evidence for the deferred RakLib anti-spoofing follow-up; the newer efd90f359f2ef6b7f80921b32afefa4761fe7082 level-thread/entity tick fix is reference-only evidence for future cross-level ticking triage."
+      "note": "Peer projects remain evidence only. The 2026-07-02 audit saw PowerNukkitX advance through efd90f359f2ef6b7f80921b32afefa4761fe7082. The older f2cdff7eed3a0ad79099bd6adcc1f97ab31e7143 RakNet pacing and cookie settings corroborated the RakLib anti-spoofing follow-up; the newer efd90f359f2ef6b7f80921b32afefa4761fe7082 level-thread/entity tick fix is reference-only evidence for future cross-level ticking triage."
     }
   ]
 }

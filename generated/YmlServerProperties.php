@@ -90,6 +90,7 @@ final class YmlServerProperties{
 	public const NETWORK_COMPRESSION_LEVEL = 'network.compression-level';
 	public const NETWORK_ENABLE_ENCRYPTION = 'network.enable-encryption';
 	public const NETWORK_MAX_MTU_SIZE = 'network.max-mtu-size';
+	public const NETWORK_RAKLIB_COOKIE_ROTATION_INTERVAL = 'network.raklib-cookie-rotation-interval';
 	public const NETWORK_UPNP_FORWARDING = 'network.upnp-forwarding';
 	public const PLAYER = 'player';
 	public const PLAYER_SAVE_PLAYER_DATA = 'player.save-player-data';

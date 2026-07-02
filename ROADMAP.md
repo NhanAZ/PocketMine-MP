@@ -11,8 +11,8 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Source monitoring covers the PMMP root, PMMP-owned dependencies, and four protocol reference projects.
 - The current root matches `upstream/stable` at `fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff`.
 - The source audit has 19 entries and eight reviewed package-drift signals.
-- PowerNukkitX advanced through `efd90f359f2ef6b7f80921b32afefa4761fe7082` on 2026-07-02; its RakNet pacing/cookie settings and later level-thread/entity tick fix remain reference-only evidence for future network follow-ups and cross-level ticking triage.
-- RakLib anti-spoofing cookies were reviewed during the local RakLib import and remain deferred as a separate network-behaviour task until tests and OVH-compatible configuration are reviewed.
+- PowerNukkitX advanced through `efd90f359f2ef6b7f80921b32afefa4761fe7082` on 2026-07-02; its RakNet pacing/cookie settings corroborated the RakLib cookie follow-up, and its later level-thread/entity tick fix remains reference-only evidence for future cross-level ticking triage.
+- RakLib anti-spoofing cookies from canonical commit `7655018631147f0b5d473326fddc2faea105dffe` were adapted behind the opt-in `network.raklib-cookie-rotation-interval` config, which defaults to `0` to preserve OVH-sensitive compatibility.
 - The upstream backlog snapshot contains 450 open items and a scored top-40 shortlist.
 - Upstream issue #6284 was triaged and implemented: spawnable tile network NBT now receives a `TypeConverter` context and converter-scoped serialized cache.
 - Upstream issue #6711 was triaged and implemented: inventories now reject plain `Item` instances using block-item type IDs before they can crash later during serialization.
@@ -24,7 +24,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Upstream issue #6130 was triaged and implemented: dedicated Query socket startup failures now use `NetworkInterfaceStartException` and receive the server's localized, controlled network-start failure path instead of producing a crash dump.
 - Upstream issue #5342 was triaged and implemented by adapting canonical commit `c4fb8832fe99e042801dca60f124b7938c94036f`: translated messages can now restore a base format around formatted parameters, and `/give` contains custom item-name formatting for both the sender and operator audit output.
 - Upstream issue #4830 was triaged and implemented: generic entities now invoke block landing behaviour, while slime bounce is limited to living entities and dropped items without adding landing sounds to non-living entities.
-- Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, code generation, translation validation, and `git diff --check` are clean after the `raklib-ipc` import.
+- Full repository PHPUnit, PHPStan, code generation, translation validation, source audit, generated-file collision check, Composer validation, Composer install dry-run, JSON validation, syntax checks, and `git diff --check` are clean after the RakLib cookie follow-up. PHP-CS-Fixer 3.75 dry-run was skipped locally because `php-cs-fixer` is not installed in this workspace.
 - Fork CI health is the top active gate; the latest checked stable runs were green before the `raklib-ipc` import.
 - User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
 - Release automation is intentionally conservative: source builds and local phars only; GitHub Releases, Docker publishing, updater metadata, Discord, Crowdin, branch sync, and upstream RestrictedActions-style workflows are disabled until fork-owned destinations are configured.
@@ -124,7 +124,7 @@ Completed: `bedrock-block-upgrade-schema`, `bedrock-data`, `bedrock-item-upgrade
 
 `snooze` was imported from tag `0.5.0` / root lock pin `a86d9ee60ce44755d166d3c7ba4b8b8be8360915` with its LGPL-3.0 license, subtree history, package metadata, static-analysis config, and thread-notification sources. The later master commits through `fd249c13569bb7b7d564f331684cdfaeba24d388` only update CI, PHPStan config, and one PHPStan-only inline `@var` comment in `SleeperHandler`, so they remain deferred. It has no package PHPUnit suite; package PHPStan passed, and root PHPUnit remained at 227 tests / 72,572 assertions with all root gates passed. Composer validation only reports the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
 
-`raklib` was imported from tag `1.2.1` / root lock pin `669eb4d1e644f91437323ef24ce3ee985182b829` with its GPL-3.0 license, subtree history, package metadata, protocol/server sources, tools, and static-analysis config. The later stable commit `7655018631147f0b5d473326fddc2faea105dffe` adds anti-spoofing cookies to the offline handshake; keep it deferred as a separate network-behaviour task until tests and OVH-compatible configuration are reviewed. It has no package PHPUnit suite; package PHPStan passed, and root PHPUnit remained at 227 tests / 72,572 assertions with all root gates passed. Composer validation only reports deprecated SPDX identifier warnings for `GPL-3.0` in RakLib and the pre-existing root `LGPL-3.0`.
+`raklib` was imported from tag `1.2.1` / root lock pin `669eb4d1e644f91437323ef24ce3ee985182b829` with its GPL-3.0 license, subtree history, package metadata, protocol/server sources, tools, and static-analysis config. Canonical stable commit `7655018631147f0b5d473326fddc2faea105dffe` was adapted as a focused follow-up: offline handshake cookies are supported, cookie mismatches are counted between rotations, PMMP exposes `network.raklib-cookie-rotation-interval`, and the setting defaults to `0` so legacy/OVH-sensitive deployments remain unchanged unless explicitly enabled. It has no package PHPUnit suite; package PHPStan, root RakLib cookie tests, full root PHPUnit, and root PHPStan passed. Composer validation only reports deprecated SPDX identifier warnings for `GPL-3.0` in RakLib and the pre-existing root `LGPL-3.0`.
 
 `raklib-ipc` was imported from tag `1.0.1` / root lock pin `ce632ef2c6743e71eddb5dc329c49af6555f90bc` with its GPL-3.0 license, subtree history, package metadata, IPC channel sources, and static-analysis config. The PHPStan-only type assertion from later master commit `dd79c4344640ab0d086f08ad47fe83f52b7d3371` was adapted so package and root static analysis stay clean; the remaining post-tag commits only update CI and dev PHPStan dependencies, so they remain deferred. It has no package PHPUnit suite; package PHPStan passed, and root PHPUnit remained at 227 tests / 72,572 assertions with all root gates passed. Composer validation only reports deprecated SPDX identifier warnings for `GPL-3.0` in RakLib IPC and the pre-existing root `LGPL-3.0`.
 
@@ -132,8 +132,8 @@ The dependency import queue is complete for the current PMMP-owned package list.
 
 Import one package at a time. Preserve its license, source layout, Composer metadata, pin, and useful history.
 Local ownership does not stop monitoring its canonical PMMP repository.
-Re-evaluate RakLib commit `765501863` as a focused follow-up or when a release containing it is tagged; retain a configurable cookie interval because of the documented OVH caveat.
-Next ready order after this dependency pass: RakLib anti-spoofing cookie design/tests if you want the network follow-up now, otherwise refresh the upstream backlog and triage one actionable item.
+Continue monitoring future RakLib tags and network-behaviour commits through source audit before importing more.
+Next ready order after this dependency pass: refresh the upstream backlog and triage one actionable item, unless Actions turn red or a protocol/security issue appears first.
 
 ## Milestones
 

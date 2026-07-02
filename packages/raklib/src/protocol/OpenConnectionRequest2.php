@@ -16,17 +16,28 @@ declare(strict_types=1);
 
 namespace raklib\protocol;
 
+use pocketmine\utils\Binary;
 use raklib\utils\InternetAddress;
+use function strlen;
 
 class OpenConnectionRequest2 extends OfflineMessage{
 	public static $ID = MessageIdentifiers::ID_OPEN_CONNECTION_REQUEST_2;
 
+	private const TAIL_FIELDS_SIZE_COMMON = 2 + 8; //mtu + client ID
+	private const TAIL_FIELDS_SIZE_IPV4 = self::TAIL_FIELDS_SIZE_COMMON + PacketSerializer::IPV4_SIZE;
+	private const TAIL_FIELDS_SIZE_IPV6 = self::TAIL_FIELDS_SIZE_COMMON + PacketSerializer::IPV6_SIZE;
+
 	public int $clientID;
 	public InternetAddress $serverAddress;
+	public ?int $cookie = null;
 	public int $mtuSize;
 
 	protected function encodePayload(PacketSerializer $out) : void{
 		$this->writeMagic($out);
+		if($this->cookie !== null){
+			$out->putInt($this->cookie);
+			$out->putByte(0); //TODO: encryption challenge - not supported for now.
+		}
 		$out->putAddress($this->serverAddress);
 		$out->putShort($this->mtuSize);
 		$out->putLong($this->clientID);
@@ -34,6 +45,15 @@ class OpenConnectionRequest2 extends OfflineMessage{
 
 	protected function decodePayload(PacketSerializer $in) : void{
 		$this->readMagic($in);
+
+		$remaining = strlen($in->getBuffer()) - $in->getOffset();
+		if($remaining !== self::TAIL_FIELDS_SIZE_IPV4 && $remaining !== self::TAIL_FIELDS_SIZE_IPV6){
+			$this->cookie = $in->getInt();
+			if($this->cookie < 0){
+				$this->cookie = Binary::unsignInt($this->cookie);
+			}
+			$in->getByte(); //TODO: encryption challenge - not supported for now.
+		}
 		$this->serverAddress = $in->getAddress();
 		$this->mtuSize = $in->getShort();
 		$this->clientID = $in->getLong();
