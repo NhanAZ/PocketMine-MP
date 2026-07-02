@@ -58,3 +58,7 @@ For non-interactive startup smoke tests, prefer GitHub Actions, Docker CI, or a 
 The main CI workflows remain enabled.
 Fork-owned release publishing should be configured before enabling Docker image publishing, Discord release notifications, Crowdin sync, updater API publishing, or upstream-style RestrictedActions dispatches.
 
+## Protocol Updates
+
+Use [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md) for Minecraft: Bedrock Edition protocol updates.
+Protocol update PRs should include generated diffs, automated check results, client smoke-test notes, and plugin compatibility risk notes.

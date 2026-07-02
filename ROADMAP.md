@@ -71,11 +71,13 @@ Goal: make Minecraft: Bedrock Edition protocol updates fast, reviewable, and rep
 
 Todo:
 
-- [ ] Document protocol update inputs and generated outputs.
-- [ ] Map codegen commands and required data files.
-- [ ] Create a protocol update checklist.
-- [ ] Add smoke-test notes for joining with a real Bedrock client.
-- [ ] Track plugin compatibility risks for each protocol update.
+- [x] Document protocol update inputs and generated outputs.
+- [x] Map codegen commands and required data files.
+- [x] Create a protocol update checklist.
+- [x] Add smoke-test notes for joining with a real Bedrock client.
+- [x] Track plugin compatibility risks for each protocol update.
+
+Protocol update workflow is documented in [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md).
 
 Agent prompt:
 

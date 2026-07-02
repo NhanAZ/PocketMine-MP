@@ -57,6 +57,9 @@ Be extra careful with:
 
 High-risk changes should include a rollback plan or a clear reason why rollback is simple.
 
+Protocol updates must follow [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md).
+Do not assume the latest Minecraft: Bedrock Edition version from memory; verify it at task time and record the source used.
+
 ## Upstream Sync Tasks
 
 When syncing from upstream:
@@ -99,4 +102,3 @@ Risks:
 Next:
 - ...
 ```
-
