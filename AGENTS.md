@@ -19,6 +19,8 @@ Agents must keep wording neutral, preserve attribution, and avoid hostile refere
 6. Run the narrowest useful checks first, then broader checks when risk is high.
 7. End every task with a concise report: what changed, tests run, remaining risks, and suggested next tasks.
 
+When the maintainer asks to continue [ROADMAP.md](ROADMAP.md), agents should use the roadmap's default continuation rules instead of waiting for a detailed prompt.
+
 ## Allowed Inputs
 
 Agents may be asked to work from:

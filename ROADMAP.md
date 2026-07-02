@@ -165,22 +165,21 @@ Ideas that should not distract from active milestones yet:
 
 Revisit the organization question only after the fork has sustained real outside activity, repeated releases, or multiple trusted maintainers.
 
-## Agent Prompts
+## Default Continuation
 
-Roadmap selection:
+When the maintainer says `continue ROADMAP.md`, `Tiếp tục thực hiện ROADMAP.md`, or a similar short instruction, agents should:
 
-```text
-Choose the next task from ROADMAP.md and NEXT_TASKS.md. Prefer the smallest task that moves an active milestone forward. Do not combine protocol updates, dependency imports, and broad cleanup. Report why this task is next, what files changed, checks run, and the next useful follow-up.
-```
+1. Read this file, [NEXT_TASKS.md](NEXT_TASKS.md), and the workflow document for the likely task.
+2. Choose the smallest task that moves an active milestone forward using the decision rules above.
+3. Prefer ready tasks unless a security issue, crash regression, or current protocol breakage is clearly more urgent.
+4. Do not combine protocol updates, dependency imports, upstream triage, and broad cleanup in one change.
+5. Run checks proportional to risk.
+6. Update roadmap-adjacent docs when the task changes future work.
+7. Commit and push the completed unit of work when the maintainer has asked for that workflow.
 
-Dependency import:
+Detailed task rules live in the focused workflow documents instead of prompt templates:
 
-```text
-Import one PMMP-owned dependency using DEPENDENCY_CONSOLIDATION.md. Preserve license and source metadata, use a Composer path repository, update the lock file narrowly, run appropriate checks, and update FORK_DEVIATIONS.md and NEXT_TASKS.md.
-```
-
-Protocol update:
-
-```text
-Prepare a protocol update using PROTOCOL_UPDATES.md. Verify the current target Minecraft: Bedrock Edition version and protocol number at task time, identify source-backed data changes, keep generated diffs visible, run checks, and report manual client smoke-test steps.
-```
+- [AGENTS.md](AGENTS.md) for general AI-agent behaviour.
+- [DEPENDENCY_CONSOLIDATION.md](DEPENDENCY_CONSOLIDATION.md) for PMMP-owned dependency imports.
+- [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md) for Minecraft: Bedrock Edition protocol updates.
+- [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md) for upstream issue and pull request triage.
