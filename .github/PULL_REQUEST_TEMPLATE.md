@@ -1,8 +1,8 @@
 <!-- Summarize your PR here. Keep it short and simple. -->
 <!-- Explain existing problems or why this pull request is necessary -->
 
-<!-- DO NOT submit AI generated code or use AI to generate PR descriptions. -->
-<!-- These are a waste of our team's time and your PR will be closed immediately. -->
+<!-- AI-assisted work is allowed in this fork. -->
+<!-- If AI materially helped with the code or description, disclose that and explain what you reviewed/tested. -->
 
 ### Related issues & PRs
 <!--
@@ -33,3 +33,6 @@ If this PR affects gameplay or user experience in some way, it must be manually 
 Include any screenshots or videos of manual testing here.
 Any test plugin code should also be pasted here if it can't be adapted to a PHPUnit test.
 -->
+
+## AI assistance
+<!-- If AI tools materially helped, say which parts were assisted and how you reviewed the result. -->

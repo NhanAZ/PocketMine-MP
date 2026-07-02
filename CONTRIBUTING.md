@@ -1,4 +1,8 @@
-Code contributions must be submitted using [GitHub Pull Requests](https://github.com/pmmp/PocketMine-MP/pulls), where they will be reviewed by maintainers.
+Code contributions to this fork must be submitted using [GitHub Pull Requests](https://github.com/NhanAZ/PocketMine-MP/pulls), where they will be reviewed on a best-effort basis.
+
+> [!NOTE]
+> This repository is a personal fork of PocketMine-MP.
+> See [FORK_POLICY.md](FORK_POLICY.md) for fork-specific goals, risk expectations, and AI-assisted contribution rules.
 
 Small contributions (e.g. minor bug fixes) can be submitted as pull requests directly.
 
@@ -75,10 +79,10 @@ PocketMine-MP has three primary branches of development.
 
 ## Making a pull request
 The basic procedure to create a pull request is:
-1. [Fork the repository on GitHub](https://github.com/pmmp/PocketMine-MP/fork). This gives you your own copy of the repository to make changes to.
+1. [Fork the repository on GitHub](https://github.com/NhanAZ/PocketMine-MP/fork). This gives you your own copy of the repository to make changes to.
 2. Create a branch on your fork for your changes.
 3. Make the changes you want to make on this branch.
-4. You can then make a [pull request](https://github.com/pmmp/PocketMine-MP/pull/new) to the project.
+4. You can then make a [pull request](https://github.com/NhanAZ/PocketMine-MP/pull/new) to the project.
 
 ## Tests and quality checks
 
@@ -132,9 +136,9 @@ The following are required as a minimum for pull requests. PRs that don't meet t
 - **Be patient.** Maintainers are often unavailable or busy. Your PR might not receive attention for a while.
 - **Start small.**
   - This helps you get familiar with the codebase, the contribution process, and the expectations of maintainers.
-  - Check out ["Easy task" issues](https://github.com/pmmp/PocketMine-MP/issues?q=is%3Aissue+is%3Aopen+label%3A%22Easy+task%22) on the issues page for something that you could tackle without too much effort.
+  - Check out ["Easy task" issues](https://github.com/NhanAZ/PocketMine-MP/issues?q=is%3Aissue+is%3Aopen+label%3A%22Easy+task%22) on this fork when available, or use upstream easy tasks as implementation context.
 - **Try to keep your PR diff small.** Small PRs can be reviewed and merged much more quickly than bigger ones.
-- **Do not copy-paste other people's code (or code written by AIs like ChatGPT)**. You'll likely be asked to make changes by reviewers. If you don't understand the code you're submitting, your PR is likely to fail.
+- **Do not submit code you do not understand.** AI-assisted code is allowed in this fork, but you are responsible for reviewing it, testing it, and explaining it when asked.
 - **Do not edit code directly on github.com.** We recommend learning how to use [`git`](https://git-scm.com).
 - **Use an IDE, not a text editor.** We recommend PhpStorm or VSCode.
 - **Do not make large pull requests without an RFC.**

@@ -1,5 +1,5 @@
 <p align="center">
-	<a href="https://pmmp.io">
+	<a href="https://github.com/NhanAZ/PocketMine-MP">
 		<!--[if IE]>
 			<img src="https://github.com/pmmp/PocketMine-MP/blob/stable/.github/readme/pocketmine.png" alt="The PocketMine-MP logo" title="PocketMine" loading="eager" />
 		<![endif]-->
@@ -12,13 +12,25 @@
 </p>
 
 <p align="center">
-	<a href="https://github.com/pmmp/PocketMine-MP/actions/workflows/main.yml"><img src="https://github.com/pmmp/PocketMine-MP/actions/workflows/main.yml/badge.svg" alt="CI" /></a>
-	<a href="https://github.com/pmmp/PocketMine-MP/releases/latest"><img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/pmmp/PocketMine-MP?label=release&sort=semver"></a>
-	<a href="https://discord.gg/bmSAZBG"><img src="https://img.shields.io/discord/373199722573201408?label=discord&color=7289DA&logo=discord" alt="Discord" /></a>
+	<a href="https://github.com/NhanAZ/PocketMine-MP/actions/workflows/main.yml"><img src="https://github.com/NhanAZ/PocketMine-MP/actions/workflows/main.yml/badge.svg" alt="CI" /></a>
+	<a href="https://github.com/NhanAZ/PocketMine-MP/releases/latest"><img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/NhanAZ/PocketMine-MP?label=release&sort=semver"></a>
 	<br>
-	<a href="https://github.com/pmmp/PocketMine-MP/releases"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/pmmp/PocketMine-MP/total?label=downloads%40total"></a>
-	<a href="https://github.com/pmmp/PocketMine-MP/releases/latest"><img alt="GitHub release (latest by SemVer)" src="https://img.shields.io/github/downloads/pmmp/PocketMine-MP/latest/total?sort=semver"></a>
+	<a href="https://github.com/NhanAZ/PocketMine-MP/releases"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/NhanAZ/PocketMine-MP/total?label=downloads%40total"></a>
+	<a href="https://github.com/NhanAZ/PocketMine-MP/releases/latest"><img alt="GitHub release (latest by SemVer)" src="https://img.shields.io/github/downloads/NhanAZ/PocketMine-MP/latest/total?sort=semver"></a>
 </p>
+
+> [!WARNING]
+> This is a personal, experimental fork of PocketMine-MP maintained by NhanAZ.
+> It is not an official PocketMine-MP release and may contain unstable changes,
+> security issues, protocol bugs, or breaking behaviour. Review changes carefully
+> before production use.
+
+## Fork status
+This fork is maintained as a personal, community-oriented continuation focused on practical maintenance, faster protocol updates, and open contribution.
+It is not affiliated with or endorsed by the upstream PocketMine-MP project, and should not be read as criticism of upstream maintainers or contributors.
+
+The original LGPL-3.0 license and attribution are retained.
+Fork-specific direction is documented in [FORK_POLICY.md](FORK_POLICY.md), planned work is tracked in [ROADMAP.md](ROADMAP.md), and AI agent workflow rules are documented in [AGENTS.md](AGENTS.md).
 
 ## What is this?
 PocketMine-MP is a highly customisable server software for Minecraft: Bedrock Edition, built from scratch in PHP, with over 10 years of history.
@@ -42,17 +54,20 @@ If that's not an option for you, you may be able to add some of PocketMine-MP's 
 ## Getting Started
 - [Documentation](http://pmmp.readthedocs.org/)
 - [Installation instructions](https://pmmp.readthedocs.io/en/rtfd/installation.html)
-- [Docker image](https://github.com/pmmp/PocketMine-MP/pkgs/container/pocketmine-mp)
+- [Upstream Docker image](https://github.com/pmmp/PocketMine-MP/pkgs/container/pocketmine-mp)
 - [Plugin repository](https://poggit.pmmp.io/plugins)
 
 ## Community & Support
-Join our [Discord](https://discord.gg/bmSAZBG) server to chat with other users and developers.
+This fork does not currently have an official support server.
+For fork-specific bugs, regressions, and contribution discussion, use this repository's GitHub issues and pull requests.
+
+The upstream PocketMine-MP community can be found on [Discord](https://discord.gg/bmSAZBG), but please do not ask them to support fork-specific changes.
 
 You can also post questions on [StackOverflow](https://stackoverflow.com/tags/pocketmine) under the tag `pocketmine`.
 
 ## Developing Plugins
 If you want to write your own plugins, the following resources may be useful.
-Don't forget you can always ask our community if you need help.
+For fork-specific behaviour, include the fork version and commit hash when asking for help or reporting issues.
 
  * [Developer documentation](https://devdoc.pmmp.io) - General documentation for PocketMine-MP plugin developers
  * [Latest release API documentation](https://apidoc.pmmp.io) - Doxygen API documentation generated for each release
@@ -60,17 +75,18 @@ Don't forget you can always ask our community if you need help.
  * [DevTools](https://github.com/pmmp/DevTools/) - Development tools plugin for creating plugins
  * [ExamplePlugin](https://github.com/pmmp/ExamplePlugin/) - Example plugin demonstrating some basic API features
 
-## Contributing to PocketMine-MP
-PocketMine-MP accepts community contributions! The following resources will be useful if you want to contribute to PocketMine-MP.
+## Contributing to this fork
+This fork accepts community contributions on a best-effort basis.
+The following resources will be useful if you want to contribute.
  * [Building and running PocketMine-MP from source](BUILDING.md)
  * [Contributing Guidelines](CONTRIBUTING.md)
+ * [Fork Policy](FORK_POLICY.md)
 
-New here? Check out [issues with the "Easy task" label](https://github.com/pmmp/PocketMine-MP/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22Easy%20task%22) for things you could work to familiarise yourself with the codebase.
+New here? Start with small issues, focused bug fixes, documentation improvements, or protocol compatibility reports.
 
-## Donate
-PocketMine-MP is free, but it requires a lot of time and effort from unpaid volunteers to develop. Donations enable us to keep delivering support for new versions and adding features your players love.
-
-You can support development using the following methods:
+## Upstream donations
+PocketMine-MP is free, but it requires a lot of time and effort from unpaid volunteers to develop.
+If you want to support the upstream PocketMine-MP project, you can use the following methods:
 
 - [Patreon](https://www.patreon.com/pocketminemp)
 - Bitcoin (BTC): `bc1q2v5ngyf8ugyd55kqa9ep35g2rv342ueqm6ks33`

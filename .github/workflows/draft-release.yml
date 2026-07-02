@@ -50,29 +50,14 @@ jobs:
     uses: ./.github/workflows/draft-release-pr-check.yml
 
   trigger-post-release-workflow:
-    name: Trigger post-release RestrictedActions workflow
+    name: Skip upstream post-release workflow
     needs: [check]
     if: needs.check.outputs.valid == 'true' && github.ref_type != 'tag' #can't do post-commit for a tag
 
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Generate access token
-        id: generate-token
-        uses: actions/create-github-app-token@v3
-        with:
-          app-id: ${{ vars.RESTRICTED_ACTIONS_DISPATCH_ID }}
-          private-key: ${{ secrets.RESTRICTED_ACTIONS_DISPATCH_KEY }}
-          owner: ${{ github.repository_owner }}
-          repositories: RestrictedActions
-
-      - name: Dispatch post-release restricted action
-        uses: peter-evans/repository-dispatch@v4
-        with:
-          token: ${{ steps.generate-token.outputs.token }}
-          repository: ${{ github.repository_owner }}/RestrictedActions
-          event-type: pocketmine_mp_post_release
-          client-payload: '{"branch": "${{ github.ref }}"}'
+      - run: echo "Disabled in this personal fork. Upstream post-release RestrictedActions automation is not configured here."
 
   draft:
     name: Create GitHub draft release
