@@ -111,11 +111,13 @@ Goal: prevent vibe-coded growth from making the project impossible to understand
 
 Todo:
 
-- [ ] Periodically audit large files, duplicated logic, and unclear generated code.
-- [ ] Track fork-specific deviations from upstream.
-- [ ] Keep an open "next useful tasks" list.
-- [ ] Prefer deleting stale experiments over carrying them forever.
-- [ ] Revisit whether a dedicated organization is useful after the fork has real activity.
+- [x] Periodically audit large files, duplicated logic, and unclear generated code.
+- [x] Track fork-specific deviations from upstream.
+- [x] Keep an open "next useful tasks" list.
+- [x] Prefer deleting stale experiments over carrying them forever.
+- [x] Document when to revisit whether a dedicated organization is useful after the fork has real activity.
+
+Sustainable maintenance is documented in [SUSTAINABLE_MAINTENANCE.md](SUSTAINABLE_MAINTENANCE.md), intentional drift is tracked in [FORK_DEVIATIONS.md](FORK_DEVIATIONS.md), and the open work queue is kept in [NEXT_TASKS.md](NEXT_TASKS.md).
 
 Agent prompt:
 

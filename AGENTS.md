@@ -30,6 +30,7 @@ Agents may be asked to work from:
 - A maintainer's direct idea or experiment.
 
 Issue and pull request triage must follow [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md).
+Sustainable maintenance audits must follow [SUSTAINABLE_MAINTENANCE.md](SUSTAINABLE_MAINTENANCE.md), and intentional fork drift must be recorded in [FORK_DEVIATIONS.md](FORK_DEVIATIONS.md).
 
 ## AI-Assisted Code Rules
 
@@ -71,6 +72,7 @@ When syncing from upstream:
 - Prefer cherry-pick or subtree-style history over copy-paste when possible.
 - Document conflicts and fork-specific deviations.
 - Run checks related to the touched area.
+- Update [NEXT_TASKS.md](NEXT_TASKS.md) when the sync creates or resolves follow-up work.
 
 ## Dependency Consolidation Tasks
 

@@ -66,3 +66,8 @@ Protocol update PRs should include generated diffs, automated check results, cli
 ## Community Intake
 
 Use [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md) for issue triage, pull request review expectations, label meanings, changelog habits, and kind closure text.
+
+## Sustainable Maintenance
+
+Use [SUSTAINABLE_MAINTENANCE.md](SUSTAINABLE_MAINTENANCE.md) for recurring audits.
+Intentional differences from upstream are tracked in [FORK_DEVIATIONS.md](FORK_DEVIATIONS.md), and the next small tasks are listed in [NEXT_TASKS.md](NEXT_TASKS.md).

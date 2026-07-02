@@ -1,0 +1,85 @@
+# Next Tasks
+
+This file keeps the next useful work visible so the fork does not drift into a large, unclear pile of experiments.
+Keep tasks small enough for one focused PR unless explicitly marked otherwise.
+
+## Ready
+
+### Import `pocketmine/math`
+
+Reason: low-risk next dependency consolidation step after `color` and `errorhandler`.
+
+Checklist:
+
+- Import `https://github.com/pmmp/Math.git` at the version in `composer.lock` into `packages/math`.
+- Add a Composer path repository for `packages/math`.
+- Update only `pocketmine/math` in `composer.lock`.
+- Run `composer validate`, PHPStan, PHPUnit, and phar build.
+- Update `DEPENDENCY_CONSOLIDATION.md` and `FORK_DEVIATIONS.md`.
+
+### Import `pocketmine/log`
+
+Reason: small PMMP-owned dependency, but it uses classmap autoloading and should be imported separately from `math`.
+
+Checklist:
+
+- Import `https://github.com/pmmp/Log.git` at the version in `composer.lock` into `packages/log`.
+- Add a Composer path repository for `packages/log`.
+- Confirm classmap autoload works after clean `composer install`.
+- Run checks and phar build.
+
+### Review Remaining Upstream Links
+
+Reason: Phase 0 left this as a known follow-up.
+
+Checklist:
+
+- Search docs and templates for `pmmp.io`, `github.com/pmmp`, `discord.gg`, and `pocketminemp`.
+- Keep ecosystem/resource links when useful.
+- Mark upstream-only links clearly.
+- Replace fork-specific links with `NhanAZ/PocketMine-MP`.
+
+### Replace Disabled Release Workflows
+
+Reason: several upstream-only workflows are intentionally disabled.
+
+Checklist:
+
+- Decide whether fork releases need Docker images, Discord announcements, updater JSON, or Crowdin sync.
+- Remove workflows that will not be used.
+- Re-enable only workflows backed by fork-owned secrets and infrastructure.
+
+## Needs Current Information
+
+### Perform A Real Protocol Update
+
+Reason: protocol velocity is the fork's main practical value.
+
+Checklist:
+
+- Verify the current target Minecraft: Bedrock Edition version and protocol number at task time.
+- Follow `PROTOCOL_UPDATES.md`.
+- Do not rely on remembered version information.
+
+### Sync Useful Upstream Commits
+
+Reason: upstream may still land fixes worth carrying.
+
+Checklist:
+
+- Fetch upstream.
+- Review commits since the last sync point.
+- Cherry-pick or port one coherent fix at a time.
+- Record conflicts and deviations.
+
+## Maintenance
+
+### Run Sustainable Maintenance Audit
+
+Reason: keep the fork comprehensible after repeated agent work.
+
+Checklist:
+
+- Follow `SUSTAINABLE_MAINTENANCE.md`.
+- Update `FORK_DEVIATIONS.md` if intentional drift changed.
+- Update this file with the next three useful tasks.
