@@ -24,7 +24,11 @@ declare(strict_types=1);
 namespace pocketmine\inventory;
 
 use PHPUnit\Framework\TestCase;
+use pocketmine\block\BlockTypeIds;
+use pocketmine\block\VanillaBlocks;
 use pocketmine\item\Item;
+use pocketmine\item\ItemIdentifier;
+use pocketmine\item\ItemTypeIds;
 use pocketmine\item\VanillaItems;
 
 class BaseInventoryTest extends TestCase{
@@ -105,5 +109,36 @@ class BaseInventoryTest extends TestCase{
 		$item = VanillaItems::APPLE();
 		$item->setCount($item->getMaxStackSize());
 		self::assertSame($item->getMaxStackSize(), $inventory->getAddableItemQuantity($item));
+	}
+
+	public function testRejectsPlainItemUsingBlockTypeIdOnSetItem() : void{
+		$inventory = new SimpleInventory(1);
+		$item = new Item(new ItemIdentifier(ItemTypeIds::fromBlockTypeId(BlockTypeIds::GRASS)), "Grass");
+
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage("reserved for ItemBlock instances");
+
+		$inventory->setItem(0, $item);
+	}
+
+	public function testRejectsPlainItemUsingBlockTypeIdOnSetContents() : void{
+		$inventory = new SimpleInventory(1);
+		$item = new Item(new ItemIdentifier(ItemTypeIds::fromBlockTypeId(BlockTypeIds::GRASS)), "Grass");
+
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage("reserved for ItemBlock instances");
+
+		$inventory->setContents([
+			0 => $item
+		]);
+	}
+
+	public function testAcceptsBlockItemUsingBlockTypeId() : void{
+		$inventory = new SimpleInventory(1);
+		$item = VanillaBlocks::GRASS()->asItem();
+
+		$inventory->setItem(0, $item);
+
+		self::assertTrue($item->equalsExact($inventory->getItem(0)));
 	}
 }

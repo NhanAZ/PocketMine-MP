@@ -14,7 +14,8 @@ Update it during every completed maintenance unit; do not create separate task-c
 - RakLib anti-spoofing cookies were reviewed and deferred until a tagged release or the planned local RakLib import.
 - The upstream backlog snapshot contains 450 open items and a scored top-40 shortlist.
 - Upstream issue #6284 was triaged and implemented: spawnable tile network NBT now receives a `TypeConverter` context and converter-scoped serialized cache.
-- Full repository PHPStan is clean after the TypeConverter tile-spawn work.
+- Upstream issue #6711 was triaged and implemented: inventories now reject plain `Item` instances using block-item type IDs before they can crash later during serialization.
+- Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, and `git diff --check` are clean after the #6711 inventory guard.
 - Fork CI health is the top active gate; the latest red runs were PHP-CS-Fixer import order, PHPStan CLI argv handling, and Docker missing local `packages/` path repositories.
 - User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
 - Release automation is intentionally conservative: source builds and local phars only; GitHub Releases, Docker publishing, updater metadata, Discord, Crowdin, branch sync, and upstream RestrictedActions-style workflows are disabled until fork-owned destinations are configured.
@@ -67,11 +68,14 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
   - 2026-07-02: refreshed 419 open issues and 31 open pull requests from `pmmp/PocketMine-MP`; top shortlist remains 40 items.
 - [x] Open one high-scoring original issue or PR.
   - Opened issue #6284, "Tile network NBT serialization needs a TypeConverter context".
+  - Opened issue #6711, "No serializer registered for pocketmine\item\Item (-10282) Grass".
 - [x] Classify relevance and create only the smallest actionable fork task or port.
   - Classified as actionable network/protocol architecture work and implemented the smallest local change: pass `TypeConverter` through tile spawn NBT serialization and cache serialized spawn compounds per converter.
+  - Classified #6711 as actionable core validation work and implemented the smallest local guard: `BaseInventory` rejects non-null plain `Item` objects whose type ID maps to a block type ID unless they are real `ItemBlock` instances.
 - [x] Preserve source links and authorship; do not copy whole discussions.
-  - Source: https://github.com/pmmp/PocketMine-MP/issues/6284 by dktapps; the issue has no comments. The next shortlist candidate is #6711, but it must be opened and reviewed before any work is added.
-  - Checks: targeted `SpawnableTest`, full PHPUnit, full PHPStan, PHP-CS-Fixer dry-run, JSON validation, `git diff --check`, and generated-file collision check.
+  - Sources: https://github.com/pmmp/PocketMine-MP/issues/6284 and https://github.com/pmmp/PocketMine-MP/issues/6711 by dktapps; original issue comments were reviewed before implementation.
+  - Checks: targeted `SpawnableTest`, targeted `BaseInventoryTest`, full PHPUnit, full PHPStan, PHP-CS-Fixer 3.75 dry-run, JSON validation, `git diff --check`, and generated-file collision check.
+  - The next shortlist candidate is #6580, but it must be opened and reviewed before any work is added.
 
 ## Dependency Track
 

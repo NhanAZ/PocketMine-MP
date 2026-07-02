@@ -24,12 +24,15 @@ declare(strict_types=1);
 namespace pocketmine\inventory;
 
 use pocketmine\item\Item;
+use pocketmine\item\ItemBlock;
+use pocketmine\item\ItemTypeIds;
 use pocketmine\item\VanillaItems;
 use pocketmine\player\Player;
 use pocketmine\utils\ObjectSet;
 use pocketmine\utils\Utils;
 use function array_slice;
 use function count;
+use function get_class;
 use function max;
 use function min;
 use function spl_object_id;
@@ -69,10 +72,22 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 
 	abstract protected function internalSetItem(int $index, Item $item) : void;
 
+	private static function validateItem(Item $item) : void{
+		$blockTypeId = ItemTypeIds::toBlockTypeId($item->getTypeId());
+		if($blockTypeId !== null && !$item instanceof ItemBlock){
+			throw new \InvalidArgumentException(
+				"Item type ID " . $item->getTypeId() . " maps to block type ID " . $blockTypeId .
+				" and is reserved for ItemBlock instances, but " . get_class($item) . " \"" .
+				$item->getName() . "\" was given; use the block's asItem() method"
+			);
+		}
+	}
+
 	public function setItem(int $index, Item $item) : void{
 		if($item->isNull()){
 			$item = VanillaItems::AIR();
 		}else{
+			self::validateItem($item);
 			$item = clone $item;
 		}
 
@@ -96,6 +111,11 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 		Utils::validateArrayValueType($items, function(Item $item) : void{});
 		if(count($items) > $this->getSize()){
 			$items = array_slice($items, 0, $this->getSize(), true);
+		}
+		foreach($items as $item){
+			if(!$item->isNull()){
+				self::validateItem($item);
+			}
 		}
 
 		$oldContents = $this->getContents(true);
