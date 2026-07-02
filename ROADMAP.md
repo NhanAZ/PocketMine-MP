@@ -29,12 +29,14 @@ Goal: prove the fork can build, test, and release before changing behaviour.
 
 Todo:
 
-- [ ] Install dependencies from a clean checkout.
-- [ ] Run PHPStan.
-- [ ] Run PHPUnit.
-- [ ] Build a server phar.
-- [ ] Verify GitHub Actions still match the fork's needs.
-- [ ] Document the exact release command sequence.
+- [x] Install dependencies from a clean checkout.
+- [x] Run PHPStan.
+- [x] Run PHPUnit.
+- [x] Build a server phar.
+- [x] Verify GitHub Actions still match the fork's needs.
+- [x] Document the exact release command sequence.
+
+Baseline notes are recorded in [MAINTAINING.md](MAINTAINING.md).
 
 Agent prompt:
 
