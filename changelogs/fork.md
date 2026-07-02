@@ -27,6 +27,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 ### Reviewed Or Deferred
 
 - Reviewed upstream issue #7035 and rejected the unsupported suggestion to raise the LevelDB world NetworkVersion ceiling without an affected world or matching chunk, blockstate, and upgrade-schema evidence. Current network protocol `1001` does not imply safe support for worlds newer than the deliberate `924` storage ceiling.
+- Reviewed upstream issue #5385 and related #1567, then deferred the death-screen rejoin fix because the correct direction requires moving respawn state and `PlayerRespawnEvent` into the login/pre-`StartGamePacket` path, which needs a separate plugin-compatibility plan.
 
 ## 2026-07-02
 
