@@ -1,0 +1,944 @@
+{
+    "source": "pmmp/PocketMine-MP",
+    "generatedAt": "2026-07-02T07:12:55+00:00",
+    "limit": 40,
+    "counts": {
+        "protocol-and-network": 44,
+        "bug-regression-crash": 89,
+        "upstream-pr-review": 16,
+        "plugin-api-compatibility": 149,
+        "general-triage": 63,
+        "feature-ideas": 89,
+        "total": 450
+    },
+    "items": [
+        {
+            "type": "issue",
+            "number": 6284,
+            "title": "Tile network NBT serialization needs a TypeConverter context",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6284",
+            "author": "dktapps",
+            "labels": [
+                "Priority: High",
+                "Category: Network",
+                "BC break",
+                "Type: Enhancement",
+                "Easy task"
+            ],
+            "createdAt": "2024-03-13T15:49:44Z",
+            "updatedAt": "2025-08-31T21:05:10Z",
+            "comments": 0,
+            "lane": "protocol-and-network",
+            "score": 157,
+            "scoreReasons": [
+                "protocol-and-network",
+                "priority-high",
+                "easy-task",
+                "bc-break",
+                "protocol-keyword",
+                "discussion-heavy",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6711,
+            "title": "No serializer registered for pocketmine\\item\\Item (-10282) Grass",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6711",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2025-05-28T20:39:17Z",
+            "updatedAt": "2025-09-02T13:23:34Z",
+            "comments": 1,
+            "lane": "protocol-and-network",
+            "score": 155,
+            "scoreReasons": [
+                "protocol-and-network",
+                "debugged",
+                "protocol-keyword",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6580,
+            "title": "LevelDB compaction performance issue with large worlds (especially converted worlds)",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6580",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Performance"
+            ],
+            "createdAt": "2024-12-20T17:32:12Z",
+            "updatedAt": "2025-10-01T21:14:22Z",
+            "comments": 2,
+            "lane": "protocol-and-network",
+            "score": 155,
+            "scoreReasons": [
+                "protocol-and-network",
+                "debugged",
+                "protocol-keyword",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6808,
+            "title": "Entities are still saved with Java 1.10 IDs",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6808",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Easy task"
+            ],
+            "createdAt": "2025-09-18T17:52:24Z",
+            "updatedAt": "2025-10-19T18:21:59Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 150,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "easy-task",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 5632,
+            "title": "Update blocks due to missing blockstate properties produced by converters",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5632",
+            "author": "GH-PM",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2023-03-13T19:25:09Z",
+            "updatedAt": "2024-11-16T12:53:23Z",
+            "comments": 1,
+            "lane": "protocol-and-network",
+            "score": 145,
+            "scoreReasons": [
+                "protocol-and-network",
+                "debugged",
+                "protocol-keyword",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6750,
+            "title": "Server crashed",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6750",
+            "author": "LeonMazzoli",
+            "labels": [
+                "Status: Unconfirmed",
+                "Category: Network"
+            ],
+            "createdAt": "2025-07-02T22:02:41Z",
+            "updatedAt": "2025-07-30T14:16:18Z",
+            "comments": 2,
+            "lane": "protocol-and-network",
+            "score": 145,
+            "scoreReasons": [
+                "protocol-and-network",
+                "protocol-keyword",
+                "stability-keyword",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6832,
+            "title": "Loaded tiles with positions outside the world crash the server",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6832",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2025-10-08T22:31:34Z",
+            "updatedAt": "2025-10-08T22:31:34Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 145,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "stability-keyword",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6861,
+            "title": "Crash when loading firework from disk with negative flight multiplier",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6861",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2025-10-23T22:24:51Z",
+            "updatedAt": "2025-10-23T22:24:51Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 145,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "stability-keyword",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6130,
+            "title": "DedicatedQueryNetworkInterface crashes server if unable to bind to udp/19132",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6130",
+            "author": "dktapps",
+            "labels": [
+                "Status: Debugged",
+                "Category: Network"
+            ],
+            "createdAt": "2023-11-02T11:54:33Z",
+            "updatedAt": "2023-11-02T11:54:33Z",
+            "comments": 0,
+            "lane": "protocol-and-network",
+            "score": 140,
+            "scoreReasons": [
+                "protocol-and-network",
+                "debugged",
+                "protocol-keyword",
+                "stability-keyword",
+                "old",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 5342,
+            "title": "Colours from item custom names leak into /give output",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5342",
+            "author": "dktapps",
+            "labels": [
+                "Status: Debugged",
+                "Category: UI",
+                "Easy task"
+            ],
+            "createdAt": "2022-10-14T19:19:40Z",
+            "updatedAt": "2024-11-12T19:04:54Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 140,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "easy-task",
+                "debugged",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 4830,
+            "title": "ItemEntity doesn't bounce on slime block",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4830",
+            "author": "NTT1906",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged",
+                "Easy task"
+            ],
+            "createdAt": "2022-02-15T05:22:34Z",
+            "updatedAt": "2024-11-14T15:34:14Z",
+            "comments": 2,
+            "lane": "bug-regression-crash",
+            "score": 140,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "easy-task",
+                "debugged",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 5603,
+            "title": "Incorrect bounding box for Nether Brick Fence and other adjacent fences",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5603",
+            "author": "DaisukeDaisuke",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged",
+                "Easy task"
+            ],
+            "createdAt": "2023-03-04T11:19:59Z",
+            "updatedAt": "2024-12-02T01:14:11Z",
+            "comments": 1,
+            "lane": "bug-regression-crash",
+            "score": 140,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "easy-task",
+                "debugged",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 5463,
+            "title": "Update Checker incorrectly detects the server build",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5463",
+            "author": "Gaprix",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Easy task"
+            ],
+            "createdAt": "2022-12-20T13:58:37Z",
+            "updatedAt": "2024-12-02T01:16:58Z",
+            "comments": 1,
+            "lane": "bug-regression-crash",
+            "score": 140,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "easy-task",
+                "debugged",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 7035,
+            "title": "Protocol 944 LevelDB unsupported \"world\"",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/7035",
+            "author": "HungerWars951",
+            "labels": [],
+            "createdAt": "2026-04-07T09:38:35Z",
+            "updatedAt": "2026-05-11T11:27:29Z",
+            "comments": 2,
+            "lane": "protocol-and-network",
+            "score": 140,
+            "scoreReasons": [
+                "protocol-and-network",
+                "protocol-keyword",
+                "fresh",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6712,
+            "title": "Bad saved hunger values crash the server",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6712",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2025-05-28T20:44:39Z",
+            "updatedAt": "2025-05-28T20:44:39Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 135,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "stability-keyword",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6714,
+            "title": "Crash when plugins close() projectiles during ProjectileHit(Block|Entity)Event",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6714",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2025-05-28T20:54:58Z",
+            "updatedAt": "2025-05-28T20:54:58Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 135,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "stability-keyword",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 5385,
+            "title": "You can no longer interact with the world after rejoining while being in the death screen",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5385",
+            "author": "JavierLeon9966",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged",
+                "Category: Protocol",
+                "Opinions Wanted"
+            ],
+            "createdAt": "2022-11-03T02:36:54Z",
+            "updatedAt": "2024-11-12T19:35:16Z",
+            "comments": 5,
+            "lane": "protocol-and-network",
+            "score": 132,
+            "scoreReasons": [
+                "protocol-and-network",
+                "debugged",
+                "protocol-keyword",
+                "discussion-heavy"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 5638,
+            "title": "PlayerAuthInputPacket: Add timings for transaction handling, movement processing etc",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5638",
+            "author": "dktapps",
+            "labels": [
+                "Category: Network",
+                "Type: Enhancement",
+                "Performance",
+                "Easy task"
+            ],
+            "createdAt": "2023-03-15T21:56:06Z",
+            "updatedAt": "2024-12-02T01:11:44Z",
+            "comments": 0,
+            "lane": "protocol-and-network",
+            "score": 132,
+            "scoreReasons": [
+                "protocol-and-network",
+                "easy-task",
+                "protocol-keyword",
+                "discussion-heavy",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 5064,
+            "title": "Add a configuration option to disable listing players in GS4 query responses",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5064",
+            "author": "dktapps",
+            "labels": [
+                "Category: Network",
+                "Type: Enhancement",
+                "Category: UI",
+                "Easy task"
+            ],
+            "createdAt": "2022-05-22T18:20:35Z",
+            "updatedAt": "2024-12-02T01:25:05Z",
+            "comments": 3,
+            "lane": "protocol-and-network",
+            "score": 132,
+            "scoreReasons": [
+                "protocol-and-network",
+                "easy-task",
+                "protocol-keyword",
+                "discussion-heavy",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 2626,
+            "title": "PlayerInteractEvent::LEFT_CLICK_BLOCK is not fired in creative",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2626",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Category: Gameplay",
+                "Category: Client",
+                "Status: Debugged"
+            ],
+            "createdAt": "2019-01-01T12:05:27Z",
+            "updatedAt": "2024-11-12T19:30:29Z",
+            "comments": 2,
+            "lane": "protocol-and-network",
+            "score": 130,
+            "scoreReasons": [
+                "protocol-and-network",
+                "debugged",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6781,
+            "title": "Large, long-lived arrays significantly impact cycle GC performance",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6781",
+            "author": "dktapps",
+            "labels": [
+                "Status: Debugged",
+                "Category: PHP",
+                "Performance"
+            ],
+            "createdAt": "2025-08-27T23:28:01Z",
+            "updatedAt": "2025-08-30T12:36:20Z",
+            "comments": 2,
+            "lane": "bug-regression-crash",
+            "score": 130,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 4206,
+            "title": "Tiles may get saved with mismatched coordinates if a chunk is set in a different position than its original",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4206",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2021-05-02T18:31:51Z",
+            "updatedAt": "2025-08-31T23:33:56Z",
+            "comments": 1,
+            "lane": "bug-regression-crash",
+            "score": 130,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6800,
+            "title": "`Item::equals()` and `Item::canStackWith()` rebuilding NBT inside loops during inventory search operations",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6800",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Performance"
+            ],
+            "createdAt": "2025-09-10T19:16:20Z",
+            "updatedAt": "2025-09-10T19:16:20Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 130,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6818,
+            "title": "Timezone is not auto-detected when not specified in php.ini",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6818",
+            "author": "dktapps",
+            "labels": [
+                "Status: Debugged",
+                "Category: UI"
+            ],
+            "createdAt": "2025-09-27T15:59:11Z",
+            "updatedAt": "2025-10-22T11:28:47Z",
+            "comments": 3,
+            "lane": "bug-regression-crash",
+            "score": 130,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 3272,
+            "title": "Chunks may be modified while LightPopulationTask is running",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/3272",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2020-01-07T10:23:50Z",
+            "updatedAt": "2025-10-24T20:41:32Z",
+            "comments": 3,
+            "lane": "bug-regression-crash",
+            "score": 130,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 3974,
+            "title": "Generator rate limits are ineffective when many parallel worlds are used",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/3974",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Performance"
+            ],
+            "createdAt": "2020-12-17T23:44:03Z",
+            "updatedAt": "2025-10-24T20:46:33Z",
+            "comments": 1,
+            "lane": "bug-regression-crash",
+            "score": 130,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 5410,
+            "title": "PM's and Vanilla's flat generators are generating terrain at different heights",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5410",
+            "author": "ipad54",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged"
+            ],
+            "createdAt": "2022-11-12T14:34:27Z",
+            "updatedAt": "2025-10-24T20:51:44Z",
+            "comments": 3,
+            "lane": "bug-regression-crash",
+            "score": 130,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 2549,
+            "title": "Generator performance is artificially limited",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2549",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Performance"
+            ],
+            "createdAt": "2018-12-04T15:31:17Z",
+            "updatedAt": "2025-10-24T20:53:19Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 130,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 5821,
+            "title": "Leaves at the edges of large tree canopies generated by bonemeal decay spontaneously",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5821",
+            "author": "dktapps",
+            "labels": [
+                "Category: Gameplay",
+                "Category: Core",
+                "Status: Debugged",
+                "Performance"
+            ],
+            "createdAt": "2023-06-11T13:42:50Z",
+            "updatedAt": "2025-10-24T21:00:39Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 130,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6926,
+            "title": "The float-string \"300000000000000000000\" is not representable as an int, cast occurred",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6926",
+            "author": "dktapps",
+            "labels": [
+                "Status: Debugged",
+                "Category: UI"
+            ],
+            "createdAt": "2025-12-03T00:04:13Z",
+            "updatedAt": "2025-12-21T03:54:46Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 130,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "pull_request",
+            "number": 5805,
+            "title": "First look at specialized network compression threads",
+            "url": "https://github.com/pmmp/PocketMine-MP/pull/5805",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Incomplete",
+                "Type: Enhancement",
+                "Performance"
+            ],
+            "createdAt": "2023-06-05T20:20:30Z",
+            "updatedAt": "2025-10-23T17:25:49Z",
+            "comments": 6,
+            "lane": "protocol-and-network",
+            "draft": false,
+            "baseRef": "minor-next",
+            "headRef": "compressor-threads",
+            "headRepo": "pmmp/PocketMine-MP",
+            "score": 127,
+            "scoreReasons": [
+                "protocol-and-network",
+                "open-pr",
+                "protocol-keyword",
+                "discussion-heavy",
+                "still-active"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 2731,
+            "title": "No damage when standing on top of a cactus",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2731",
+            "author": "dktapps",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged"
+            ],
+            "createdAt": "2019-02-02T11:38:27Z",
+            "updatedAt": "2025-08-31T23:19:31Z",
+            "comments": 4,
+            "lane": "bug-regression-crash",
+            "score": 125,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 4649,
+            "title": "Tree generation is not consistent",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4649",
+            "author": "dktapps",
+            "labels": [
+                "Category: Gameplay",
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2021-12-13T21:34:50Z",
+            "updatedAt": "2025-10-24T20:46:37Z",
+            "comments": 7,
+            "lane": "bug-regression-crash",
+            "score": 125,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6814,
+            "title": "Gravity & drag are applied to entity velocity before doing any movement",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6814",
+            "author": "TheShermanTanker",
+            "labels": [
+                "Category: Gameplay",
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2025-09-26T14:17:32Z",
+            "updatedAt": "2025-10-24T21:18:24Z",
+            "comments": 13,
+            "lane": "bug-regression-crash",
+            "score": 125,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 2041,
+            "title": "Magma blocks don't work any more",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2041",
+            "author": "dktapps",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged"
+            ],
+            "createdAt": "2018-02-19T10:25:35Z",
+            "updatedAt": "2025-11-09T17:48:22Z",
+            "comments": 4,
+            "lane": "bug-regression-crash",
+            "score": 125,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "still-active"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6831,
+            "title": "Entity drag is supposed to be different on horizontal vs vertical axes",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6831",
+            "author": "dktapps",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged",
+                "Opinions Wanted"
+            ],
+            "createdAt": "2025-10-08T13:23:51Z",
+            "updatedAt": "2025-10-08T13:24:56Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 122,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "discussion-heavy",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6661,
+            "title": "Lack of hard max levels for enchantments",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6661",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2025-03-23T16:05:12Z",
+            "updatedAt": "2025-10-26T23:31:58Z",
+            "comments": 1,
+            "lane": "bug-regression-crash",
+            "score": 122,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "discussion-heavy",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6782,
+            "title": "Clean up hack for skulls and other items converted to generic blockitems",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6782",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Opinions Wanted"
+            ],
+            "createdAt": "2025-08-28T17:10:34Z",
+            "updatedAt": "2025-10-26T23:32:46Z",
+            "comments": 0,
+            "lane": "bug-regression-crash",
+            "score": 122,
+            "scoreReasons": [
+                "bug-regression-crash",
+                "debugged",
+                "discussion-heavy",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 6654,
+            "title": "Detect unregistered data serializers sooner",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6654",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Type: Enhancement",
+                "Opinions Wanted"
+            ],
+            "createdAt": "2025-03-15T21:02:39Z",
+            "updatedAt": "2025-12-23T16:20:11Z",
+            "comments": 3,
+            "lane": "protocol-and-network",
+            "score": 122,
+            "scoreReasons": [
+                "protocol-and-network",
+                "protocol-keyword",
+                "discussion-heavy",
+                "still-active",
+                "small-thread"
+            ]
+        },
+        {
+            "type": "issue",
+            "number": 4673,
+            "title": "Server crashed on Ubuntu LXC",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4673",
+            "author": "catzy007",
+            "labels": [
+                "Status: Debugged",
+                "Category: Network"
+            ],
+            "createdAt": "2021-12-24T06:58:47Z",
+            "updatedAt": "2021-12-27T20:01:02Z",
+            "comments": 4,
+            "lane": "protocol-and-network",
+            "score": 120,
+            "scoreReasons": [
+                "protocol-and-network",
+                "debugged",
+                "protocol-keyword",
+                "stability-keyword",
+                "very-old"
+            ]
+        }
+    ]
+}

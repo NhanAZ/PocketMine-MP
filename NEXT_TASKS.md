@@ -56,7 +56,8 @@ Reason: upstream issues and pull requests can seed useful fork work without copy
 Checklist:
 
 - Refresh `.github/upstream-intake/open-items.md` with `php tools/fetch-upstream-backlog.php`.
-- Pick one `protocol-and-network`, `bug-regression-crash`, or `upstream-pr-review` item.
+- Refresh `.github/upstream-intake/priority-shortlist.md` with `php tools/prioritize-upstream-backlog.php`.
+- Pick one high-scoring `protocol-and-network`, `bug-regression-crash`, or `upstream-pr-review` item.
 - Open the upstream item and decide whether it is actionable for this fork.
 - Create a small fork issue or implementation plan with an upstream source link.
 - Do not mass-create fork issues.

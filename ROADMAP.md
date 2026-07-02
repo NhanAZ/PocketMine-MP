@@ -142,6 +142,7 @@ Deliverables:
 
 - [ ] Use labels from `.github/labels.yml` consistently.
 - [ ] Refresh the upstream backlog snapshot regularly using [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md).
+- [ ] Keep the upstream priority shortlist fresh before starting triage batches.
 - [ ] Convert useful upstream issues and pull requests into small fork issues or PRs.
 - [ ] Keep issue responses short, neutral, and action-oriented.
 - [ ] Convert good plugin compatibility reports into reproducible tests or documented compatibility notes.

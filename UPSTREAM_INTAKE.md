@@ -29,6 +29,20 @@ The generated files are:
 The snapshot is metadata-only: number, title, author, labels, timestamps, comment count, and URL.
 Agents should fetch the original upstream issue or pull request only when they are about to triage or implement that specific item.
 
+After refreshing the full snapshot, generate the priority shortlist:
+
+```powershell
+php tools/prioritize-upstream-backlog.php
+```
+
+This writes:
+
+- `.github/upstream-intake/priority-shortlist.md`
+- `.github/upstream-intake/priority-shortlist.json`
+
+The shortlist is score-based and intentionally imperfect.
+It should help agents choose work, not replace human judgement.
+
 ## Triage Lanes
 
 Generated backlog items are grouped into rough lanes:
@@ -64,5 +78,5 @@ For upstream pull requests, prefer one of these actions:
 ## Agent Prompt
 
 ```text
-Triage one item from .github/upstream-intake/open-items.md. Open the upstream source, classify fork relevance, identify the smallest actionable next step, and either create a fork issue/PR plan or explain why it should be skipped. Do not mass-import upstream discussions.
+Triage one item from .github/upstream-intake/priority-shortlist.md. Open the upstream source, classify fork relevance, identify the smallest actionable next step, and either create a fork issue/PR plan or explain why it should be skipped. Do not mass-import upstream discussions.
 ```

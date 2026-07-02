@@ -1,6 +1,6 @@
 {
     "source": "pmmp/PocketMine-MP",
-    "generatedAt": "2026-07-02T07:05:58+00:00",
+    "generatedAt": "2026-07-02T07:12:55+00:00",
     "counts": {
         "issues": 419,
         "pullRequests": 31,
@@ -47,6 +47,22 @@
             "createdAt": "2018-02-19T10:25:35Z",
             "updatedAt": "2025-11-09T17:48:22Z",
             "comments": 4,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 6782,
+            "title": "Clean up hack for skulls and other items converted to generic blockitems",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6782",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Opinions Wanted"
+            ],
+            "createdAt": "2025-08-28T17:10:34Z",
+            "updatedAt": "2025-10-26T23:32:46Z",
+            "comments": 0,
             "lane": "bug-regression-crash"
         },
         {
@@ -224,6 +240,21 @@
         },
         {
             "type": "issue",
+            "number": 6832,
+            "title": "Loaded tiles with positions outside the world crash the server",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6832",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2025-10-08T22:31:34Z",
+            "updatedAt": "2025-10-08T22:31:34Z",
+            "comments": 0,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
             "number": 6831,
             "title": "Entity drag is supposed to be different on horizontal vs vertical axes",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6831",
@@ -240,18 +271,33 @@
         },
         {
             "type": "issue",
-            "number": 6580,
-            "title": "LevelDB compaction performance issue with large worlds (especially converted worlds)",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6580",
+            "number": 6821,
+            "title": "Placing item with invalid custom tile data causes a crash",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6821",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Unconfirmed"
+            ],
+            "createdAt": "2025-09-28T23:08:01Z",
+            "updatedAt": "2025-09-28T23:08:01Z",
+            "comments": 0,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 6800,
+            "title": "`Item::equals()` and `Item::canStackWith()` rebuilding NBT inside loops during inventory search operations",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6800",
             "author": "dktapps",
             "labels": [
                 "Category: Core",
                 "Status: Debugged",
                 "Performance"
             ],
-            "createdAt": "2024-12-20T17:32:12Z",
-            "updatedAt": "2025-10-01T21:14:22Z",
-            "comments": 2,
+            "createdAt": "2025-09-10T19:16:20Z",
+            "updatedAt": "2025-09-10T19:16:20Z",
+            "comments": 0,
             "lane": "bug-regression-crash"
         },
         {
@@ -363,6 +409,21 @@
         },
         {
             "type": "issue",
+            "number": 6712,
+            "title": "Bad saved hunger values crash the server",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6712",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2025-05-28T20:44:39Z",
+            "updatedAt": "2025-05-28T20:44:39Z",
+            "comments": 0,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
             "number": 6677,
             "title": "Cake block interaction issue",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6677",
@@ -405,6 +466,38 @@
             "createdAt": "2024-12-30T03:41:58Z",
             "updatedAt": "2025-03-09T17:13:53Z",
             "comments": 8,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 2706,
+            "title": "Pick-block can be used to obtain items that are not normally obtainable (e.g. portal blocks)",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2706",
+            "author": "Johnmacrocraft",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged",
+                "BC break"
+            ],
+            "createdAt": "2019-01-28T13:57:03Z",
+            "updatedAt": "2025-02-23T20:15:11Z",
+            "comments": 6,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 5463,
+            "title": "Update Checker incorrectly detects the server build",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5463",
+            "author": "Gaprix",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Easy task"
+            ],
+            "createdAt": "2022-12-20T13:58:37Z",
+            "updatedAt": "2024-12-02T01:16:58Z",
+            "comments": 1,
             "lane": "bug-regression-crash"
         },
         {
@@ -470,6 +563,22 @@
         },
         {
             "type": "issue",
+            "number": 4830,
+            "title": "ItemEntity doesn't bounce on slime block",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4830",
+            "author": "NTT1906",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged",
+                "Easy task"
+            ],
+            "createdAt": "2022-02-15T05:22:34Z",
+            "updatedAt": "2024-11-14T15:34:14Z",
+            "comments": 2,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
             "number": 3598,
             "title": "onGround checks don't fire for players until/unless they move",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/3598",
@@ -480,6 +589,22 @@
             ],
             "createdAt": "2020-06-19T08:17:14Z",
             "updatedAt": "2024-11-12T19:24:14Z",
+            "comments": 0,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 5342,
+            "title": "Colours from item custom names leak into /give output",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5342",
+            "author": "dktapps",
+            "labels": [
+                "Status: Debugged",
+                "Category: UI",
+                "Easy task"
+            ],
+            "createdAt": "2022-10-14T19:19:40Z",
+            "updatedAt": "2024-11-12T19:04:54Z",
             "comments": 0,
             "lane": "bug-regression-crash"
         },
@@ -563,6 +688,22 @@
         },
         {
             "type": "issue",
+            "number": 1161,
+            "title": "Plugins/blocking operations hogging the AsyncWorkers causes significant server slowdown",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/1161",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged",
+                "Performance"
+            ],
+            "createdAt": "2017-07-01T09:56:29Z",
+            "updatedAt": "2024-11-10T16:22:37Z",
+            "comments": 19,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
             "number": 6062,
             "title": "BlockTypeIds::newId() is not synchronized between threads",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6062",
@@ -604,6 +745,21 @@
             ],
             "createdAt": "2023-01-30T01:50:30Z",
             "updatedAt": "2023-12-01T23:28:29Z",
+            "comments": 3,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 6029,
+            "title": "ItemBreakSound plays when Durable item is placed in Item Frame in survival mode",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6029",
+            "author": "Nerahikada",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged"
+            ],
+            "createdAt": "2023-08-31T14:56:29Z",
+            "updatedAt": "2023-12-01T23:23:37Z",
             "comments": 3,
             "lane": "bug-regression-crash"
         },
@@ -665,6 +821,21 @@
             "createdAt": "2023-08-28T15:40:25Z",
             "updatedAt": "2023-09-06T10:18:46Z",
             "comments": 1,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 5734,
+            "title": "Item Frame cannot be placed on Chest",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5734",
+            "author": "Azvyl",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged"
+            ],
+            "createdAt": "2023-05-03T04:32:21Z",
+            "updatedAt": "2023-08-02T10:21:13Z",
+            "comments": 3,
             "lane": "bug-regression-crash"
         },
         {
@@ -807,6 +978,37 @@
         },
         {
             "type": "issue",
+            "number": 5620,
+            "title": "Item frames cannot be placed on tree leaves (PM 5.0.0)",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5620",
+            "author": "GH-PM",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged",
+                "Mojang inconsistency"
+            ],
+            "createdAt": "2023-03-11T15:52:20Z",
+            "updatedAt": "2023-03-14T22:02:36Z",
+            "comments": 1,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 4558,
+            "title": "PlayerInventory->setHeldItemIndex() may not work in PlayerInteractEvent",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4558",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Status: Debugged"
+            ],
+            "createdAt": "2021-11-06T20:28:03Z",
+            "updatedAt": "2022-09-29T20:52:20Z",
+            "comments": 1,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
             "number": 5125,
             "title": "Water breaks the light block",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/5125",
@@ -853,18 +1055,17 @@
         },
         {
             "type": "issue",
-            "number": 4797,
-            "title": "Pre-1.0 biome colours are not loaded from LevelDB",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4797",
+            "number": 4760,
+            "title": "Server crash if sign loaded from disk contains Java-style lines containing \\n",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4760",
             "author": "dktapps",
             "labels": [
                 "Category: Core",
-                "Status: Debugged",
-                "Priority: Low"
+                "Status: Debugged"
             ],
-            "createdAt": "2022-02-04T23:05:18Z",
-            "updatedAt": "2022-05-10T12:32:28Z",
-            "comments": 1,
+            "createdAt": "2022-01-23T15:27:04Z",
+            "updatedAt": "2022-02-05T19:23:54Z",
+            "comments": 2,
             "lane": "bug-regression-crash"
         },
         {
@@ -914,16 +1115,16 @@
         },
         {
             "type": "issue",
-            "number": 4651,
-            "title": "Uncaught errors may be thrown during PalettedBlockArray deserialization from disk",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4651",
+            "number": 4647,
+            "title": "Invalid player NBT tag types crash the server",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4647",
             "author": "dktapps",
             "labels": [
                 "Category: Core",
                 "Status: Debugged"
             ],
-            "createdAt": "2021-12-14T17:33:14Z",
-            "updatedAt": "2021-12-14T19:26:45Z",
+            "createdAt": "2021-12-13T19:05:48Z",
+            "updatedAt": "2021-12-13T19:05:48Z",
             "comments": 0,
             "lane": "bug-regression-crash"
         },
@@ -977,6 +1178,21 @@
         },
         {
             "type": "issue",
+            "number": 4377,
+            "title": "server.lock isn't always removed when server restarts",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4377",
+            "author": "sn3akrr",
+            "labels": [
+                "Category: Core",
+                "Status: Debugged"
+            ],
+            "createdAt": "2021-08-17T03:58:00Z",
+            "updatedAt": "2021-08-17T21:31:28Z",
+            "comments": 5,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
             "number": 4205,
             "title": "Some Snooze notifications may be ignored during shutdown",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/4205",
@@ -1003,6 +1219,21 @@
             "createdAt": "2019-01-27T15:14:34Z",
             "updatedAt": "2021-04-18T12:46:46Z",
             "comments": 1,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 3929,
+            "title": "Dropped items don't get pushed out of a block if standing inside the northern or western edge",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/3929",
+            "author": "TheNewHEROBRINEX",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Debugged"
+            ],
+            "createdAt": "2020-11-24T08:19:45Z",
+            "updatedAt": "2021-01-05T03:06:19Z",
+            "comments": 4,
             "lane": "bug-regression-crash"
         },
         {
@@ -1037,6 +1268,22 @@
         },
         {
             "type": "issue",
+            "number": 3142,
+            "title": "open_basedir restriction breaks various behaviour and crashes server",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/3142",
+            "author": "dktapps",
+            "labels": [
+                "Status: Reproduced",
+                "Category: Core",
+                "Category: PHP"
+            ],
+            "createdAt": "2019-10-09T16:32:24Z",
+            "updatedAt": "2019-10-09T18:35:34Z",
+            "comments": 2,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
             "number": 2867,
             "title": "EntityLevelChangeEvent and EntityTeleportEvent are cancellable under critical conditions",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/2867",
@@ -1064,6 +1311,21 @@
             "createdAt": "2019-05-15T19:29:13Z",
             "updatedAt": "2019-05-27T15:56:50Z",
             "comments": 3,
+            "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 2653,
+            "title": "Server crashed when loading Java world",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2653",
+            "author": "xNayte",
+            "labels": [
+                "Category: Core",
+                "Status: Not Implemented"
+            ],
+            "createdAt": "2019-01-09T19:05:44Z",
+            "updatedAt": "2019-01-16T11:27:48Z",
+            "comments": 10,
             "lane": "bug-regression-crash"
         },
         {
@@ -1111,6 +1373,21 @@
             "updatedAt": "2018-11-29T19:13:25Z",
             "comments": 4,
             "lane": "bug-regression-crash"
+        },
+        {
+            "type": "issue",
+            "number": 6999,
+            "title": "Don't keep non-ticking chunks in memory on the server",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6999",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2026-01-14T06:10:51Z",
+            "updatedAt": "2026-05-31T23:21:41Z",
+            "comments": 0,
+            "lane": "feature-ideas"
         },
         {
             "type": "issue",
@@ -1402,6 +1679,22 @@
             ],
             "createdAt": "2024-11-23T12:41:20Z",
             "updatedAt": "2025-10-06T16:11:23Z",
+            "comments": 3,
+            "lane": "feature-ideas"
+        },
+        {
+            "type": "issue",
+            "number": 3898,
+            "title": "Item->onActivate() and Item->onClickAir() cannot replace the used itemstack",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/3898",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "BC break",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2020-11-09T13:28:22Z",
+            "updatedAt": "2025-09-15T19:52:45Z",
             "comments": 3,
             "lane": "feature-ideas"
         },
@@ -1739,6 +2032,23 @@
         },
         {
             "type": "issue",
+            "number": 2532,
+            "title": "Split server configurations are confusing and inconsistent",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2532",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "BC break",
+                "Type: Enhancement",
+                "Category: UI"
+            ],
+            "createdAt": "2018-11-21T19:36:52Z",
+            "updatedAt": "2024-11-12T19:50:07Z",
+            "comments": 6,
+            "lane": "feature-ideas"
+        },
+        {
+            "type": "issue",
             "number": 3120,
             "title": "Introduce per-component logging configurations",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/3120",
@@ -1864,6 +2174,38 @@
         },
         {
             "type": "issue",
+            "number": 4981,
+            "title": "Pooling skin data",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4981",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Type: Enhancement",
+                "Performance"
+            ],
+            "createdAt": "2022-04-21T20:38:05Z",
+            "updatedAt": "2024-11-12T19:07:23Z",
+            "comments": 3,
+            "lane": "feature-ideas"
+        },
+        {
+            "type": "issue",
+            "number": 5607,
+            "title": "Document that Block->getName() and Item->getName() are intended for display only",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5607",
+            "author": "dktapps",
+            "labels": [
+                "Type: Enhancement",
+                "Easy task",
+                "Category: Documentation"
+            ],
+            "createdAt": "2023-03-06T01:13:20Z",
+            "updatedAt": "2024-11-12T19:02:14Z",
+            "comments": 1,
+            "lane": "feature-ideas"
+        },
+        {
+            "type": "issue",
             "number": 5807,
             "title": "Explore using Phive to manage tools instead of Composer",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/5807",
@@ -1892,6 +2234,21 @@
             "createdAt": "2019-07-19T10:49:58Z",
             "updatedAt": "2024-11-12T18:26:07Z",
             "comments": 7,
+            "lane": "feature-ideas"
+        },
+        {
+            "type": "issue",
+            "number": 2793,
+            "title": "Inconsistent behaviour when deserializing items/tiles/entities from NBT",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2793",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2019-03-01T12:07:54Z",
+            "updatedAt": "2024-11-10T16:24:43Z",
+            "comments": 0,
             "lane": "feature-ideas"
         },
         {
@@ -2017,6 +2374,21 @@
             "createdAt": "2020-11-10T17:22:03Z",
             "updatedAt": "2024-10-06T04:45:46Z",
             "comments": 5,
+            "lane": "feature-ideas"
+        },
+        {
+            "type": "issue",
+            "number": 6349,
+            "title": "Container windows aren't closed by the server when the player is too far away",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6349",
+            "author": "dktapps",
+            "labels": [
+                "Category: Gameplay",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2024-05-22T14:12:25Z",
+            "updatedAt": "2024-07-03T02:38:26Z",
+            "comments": 1,
             "lane": "feature-ideas"
         },
         {
@@ -2226,6 +2598,21 @@
         },
         {
             "type": "issue",
+            "number": 3135,
+            "title": "Allow difficulty string in server.properties",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/3135",
+            "author": "dktapps",
+            "labels": [
+                "Type: Enhancement",
+                "Category: UI"
+            ],
+            "createdAt": "2019-10-04T08:53:25Z",
+            "updatedAt": "2022-11-25T20:44:55Z",
+            "comments": 0,
+            "lane": "feature-ideas"
+        },
+        {
+            "type": "issue",
             "number": 3091,
             "title": "Avoid useless updates on unconnected daylight sensors",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/3091",
@@ -2319,18 +2706,17 @@
         },
         {
             "type": "issue",
-            "number": 2925,
-            "title": "LevelDB performance optimizations",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/2925",
-            "author": "dktapps",
+            "number": 4065,
+            "title": "Transferserver should take optional [player] argument",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4065",
+            "author": "inxomnyaa",
             "labels": [
-                "Category: Core",
                 "Type: Enhancement",
-                "Performance"
+                "Category: UI"
             ],
-            "createdAt": "2019-05-17T12:46:10Z",
-            "updatedAt": "2021-09-09T15:14:13Z",
-            "comments": 1,
+            "createdAt": "2021-03-11T09:07:39Z",
+            "updatedAt": "2021-03-11T12:20:22Z",
+            "comments": 0,
             "lane": "feature-ideas"
         },
         {
@@ -2491,6 +2877,38 @@
             "createdAt": "2025-10-22T08:58:26Z",
             "updatedAt": "2025-10-22T13:51:01Z",
             "comments": 2,
+            "lane": "general-triage"
+        },
+        {
+            "type": "issue",
+            "number": 6040,
+            "title": "Rail shapes are still using legacy metadata",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6040",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core",
+                "Priority: High",
+                "BC break",
+                "Type: Cleanup"
+            ],
+            "createdAt": "2023-09-07T13:47:36Z",
+            "updatedAt": "2025-10-05T15:16:26Z",
+            "comments": 1,
+            "lane": "general-triage"
+        },
+        {
+            "type": "issue",
+            "number": 6819,
+            "title": "Include timezone in server.log timestamps",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6819",
+            "author": "dktapps",
+            "labels": [
+                "Type: Fix",
+                "Category: UI"
+            ],
+            "createdAt": "2025-09-27T16:12:38Z",
+            "updatedAt": "2025-09-27T16:12:38Z",
+            "comments": 0,
             "lane": "general-triage"
         },
         {
@@ -2696,6 +3114,20 @@
         },
         {
             "type": "issue",
+            "number": 5092,
+            "title": "Separation of saved data validation from its application",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5092",
+            "author": "dktapps",
+            "labels": [
+                "Category: Core"
+            ],
+            "createdAt": "2022-06-04T18:29:52Z",
+            "updatedAt": "2024-11-10T16:01:13Z",
+            "comments": 0,
+            "lane": "general-triage"
+        },
+        {
+            "type": "issue",
             "number": 5968,
             "title": "Making entity classes component-ready to improve flexibility",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/5968",
@@ -2704,6 +3136,22 @@
             "createdAt": "2023-08-06T04:28:56Z",
             "updatedAt": "2024-11-10T16:01:01Z",
             "comments": 1,
+            "lane": "general-triage"
+        },
+        {
+            "type": "issue",
+            "number": 6290,
+            "title": "Unexpected trailing data after 3D biomes data",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6290",
+            "author": "TheLemzz",
+            "labels": [
+                "Category: Core",
+                "Mojang inconsistency",
+                "Category: Documentation"
+            ],
+            "createdAt": "2024-03-18T19:04:50Z",
+            "updatedAt": "2024-11-04T13:23:34Z",
+            "comments": 14,
             "lane": "general-triage"
         },
         {
@@ -2750,6 +3198,21 @@
             "createdAt": "2023-11-09T14:51:51Z",
             "updatedAt": "2024-03-13T15:51:05Z",
             "comments": 1,
+            "lane": "general-triage"
+        },
+        {
+            "type": "issue",
+            "number": 5855,
+            "title": "Entity data in 1.18.30 and above vanilla worlds not loaded (storage method was changed)",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5855",
+            "author": "diamond-gold",
+            "labels": [
+                "Category: Core",
+                "Status: Unconfirmed"
+            ],
+            "createdAt": "2023-06-22T12:53:48Z",
+            "updatedAt": "2023-12-04T11:08:45Z",
+            "comments": 0,
             "lane": "general-triage"
         },
         {
@@ -2917,6 +3380,21 @@
         },
         {
             "type": "issue",
+            "number": 4936,
+            "title": "Fast eat (Trying to drop while eating food even the PlayerDropItemEvent getting cancel)",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4936",
+            "author": "ItsZodiaX",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Unconfirmed"
+            ],
+            "createdAt": "2022-03-31T14:00:17Z",
+            "updatedAt": "2022-04-01T15:40:30Z",
+            "comments": 4,
+            "lane": "general-triage"
+        },
+        {
+            "type": "issue",
             "number": 4880,
             "title": "Player does not stop sprinting when it hits an entity",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/4880",
@@ -2943,6 +3421,21 @@
             "createdAt": "2022-01-05T15:28:07Z",
             "updatedAt": "2022-01-20T12:33:32Z",
             "comments": 5,
+            "lane": "general-triage"
+        },
+        {
+            "type": "issue",
+            "number": 4555,
+            "title": "Implement server-side water physics",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4555",
+            "author": "IvanCraft623",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Not Implemented"
+            ],
+            "createdAt": "2021-11-06T02:29:45Z",
+            "updatedAt": "2022-01-19T17:06:23Z",
+            "comments": 0,
             "lane": "general-triage"
         },
         {
@@ -3002,6 +3495,21 @@
             ],
             "createdAt": "2021-11-11T01:57:10Z",
             "updatedAt": "2021-11-11T01:57:10Z",
+            "comments": 0,
+            "lane": "general-triage"
+        },
+        {
+            "type": "issue",
+            "number": 4524,
+            "title": "Start destroying blocks and using items at the same time, will fail to use the items.",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4524",
+            "author": "rasu3n",
+            "labels": [
+                "Category: Gameplay",
+                "Status: Unconfirmed"
+            ],
+            "createdAt": "2021-10-29T12:50:21Z",
+            "updatedAt": "2021-11-05T16:18:41Z",
             "comments": 0,
             "lane": "general-triage"
         },
@@ -3252,6 +3760,22 @@
         },
         {
             "type": "issue",
+            "number": 6961,
+            "title": "Item actions cannot be triggered by non-player entities",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6961",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "BC break",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2025-12-24T16:23:45Z",
+            "updatedAt": "2025-12-24T16:23:45Z",
+            "comments": 0,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
             "number": 6933,
             "title": "Improve control over post-consumption effects of food",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6933",
@@ -3279,6 +3803,23 @@
             "createdAt": "2025-11-04T19:02:41Z",
             "updatedAt": "2025-11-12T14:45:20Z",
             "comments": 3,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
+            "number": 6496,
+            "title": "Add events for server startup completed",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6496",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Type: Enhancement",
+                "Easy task",
+                "Opinions Wanted"
+            ],
+            "createdAt": "2024-11-12T15:15:56Z",
+            "updatedAt": "2025-11-03T08:19:51Z",
+            "comments": 5,
             "lane": "plugin-api-compatibility"
         },
         {
@@ -3566,6 +4107,22 @@
         },
         {
             "type": "issue",
+            "number": 4614,
+            "title": "Replace NBT in Item on ItemComponent",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4614",
+            "author": "ghost",
+            "labels": [
+                "Category: API",
+                "Type: Enhancement",
+                "Opinions Wanted"
+            ],
+            "createdAt": "2021-12-03T03:55:58Z",
+            "updatedAt": "2025-08-31T23:51:18Z",
+            "comments": 0,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
             "number": 6536,
             "title": "Always use `Permission` objects instead of `string`",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6536",
@@ -3620,6 +4177,24 @@
         },
         {
             "type": "issue",
+            "number": 6510,
+            "title": "Remove `CommandSender->getServer()`",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6510",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Priority: Low",
+                "BC break",
+                "Type: Enhancement",
+                "Easy task"
+            ],
+            "createdAt": "2024-11-17T00:14:43Z",
+            "updatedAt": "2025-08-31T21:07:42Z",
+            "comments": 0,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
             "number": 6506,
             "title": "Scrap `plugin.yml` commands",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6506",
@@ -3653,6 +4228,23 @@
             "createdAt": "2023-08-07T14:56:32Z",
             "updatedAt": "2025-08-31T21:07:40Z",
             "comments": 0,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
+            "number": 5971,
+            "title": "Simplified `Item->addEnchantment()` API",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5971",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Priority: Low",
+                "BC break",
+                "Easy task"
+            ],
+            "createdAt": "2023-08-07T13:33:11Z",
+            "updatedAt": "2025-08-31T21:07:40Z",
+            "comments": 3,
             "lane": "plugin-api-compatibility"
         },
         {
@@ -3703,6 +4295,23 @@
             "createdAt": "2023-04-03T15:15:47Z",
             "updatedAt": "2025-08-31T21:07:38Z",
             "comments": 4,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
+            "number": 4771,
+            "title": "Allow changing the result item in PlayerBlockPickEvent",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4771",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Priority: Low",
+                "BC break",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2022-01-25T17:48:47Z",
+            "updatedAt": "2025-08-31T21:07:38Z",
+            "comments": 1,
             "lane": "plugin-api-compatibility"
         },
         {
@@ -3808,6 +4417,26 @@
             "createdAt": "2023-11-17T13:37:41Z",
             "updatedAt": "2025-08-31T21:05:10Z",
             "comments": 1,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
+            "number": 5762,
+            "title": "Allow Player data providers to return Promise<CompoundTag> for data load/save",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5762",
+            "author": "alvin0319",
+            "labels": [
+                "Category: API",
+                "Category: Core",
+                "Priority: High",
+                "BC break",
+                "Type: Enhancement",
+                "Performance",
+                "Easy task"
+            ],
+            "createdAt": "2023-05-23T23:56:28Z",
+            "updatedAt": "2025-08-31T21:05:09Z",
+            "comments": 2,
             "lane": "plugin-api-compatibility"
         },
         {
@@ -4003,6 +4632,22 @@
         },
         {
             "type": "issue",
+            "number": 5515,
+            "title": "Implement pickup mode for dropped items",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5515",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Type: Enhancement",
+                "Easy task"
+            ],
+            "createdAt": "2023-01-16T20:06:29Z",
+            "updatedAt": "2024-12-02T01:15:07Z",
+            "comments": 0,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
             "number": 5606,
             "title": "Increase visibility of CocoaBlock->grow()",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/5606",
@@ -4082,6 +4727,23 @@
         },
         {
             "type": "issue",
+            "number": 2988,
+            "title": "Transition away from Minecraft formatting codes for internal usage",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2988",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Category: Core",
+                "BC break",
+                "Type: Cleanup"
+            ],
+            "createdAt": "2019-06-30T14:39:37Z",
+            "updatedAt": "2024-11-29T15:59:56Z",
+            "comments": 12,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
             "number": 6543,
             "title": "Remove `Plugin` hard dependency from `PermissionAttachment`",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6543",
@@ -4128,6 +4790,21 @@
             "createdAt": "2020-08-11T04:13:47Z",
             "updatedAt": "2024-11-23T22:13:58Z",
             "comments": 11,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
+            "number": 3087,
+            "title": "Dependency injection for plugins, configurable by server owners",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/3087",
+            "author": "SOF3",
+            "labels": [
+                "Category: API",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2019-08-09T16:13:30Z",
+            "updatedAt": "2024-11-23T20:49:02Z",
+            "comments": 1,
             "lane": "plugin-api-compatibility"
         },
         {
@@ -4198,6 +4875,23 @@
         },
         {
             "type": "issue",
+            "number": 6520,
+            "title": "Return array of matches in `Server::getPlayerByPrefix()` (or add an alternative to do so)",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6520",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "BC break",
+                "Category: UI",
+                "Type: Cleanup"
+            ],
+            "createdAt": "2024-11-17T13:00:09Z",
+            "updatedAt": "2024-11-17T13:00:09Z",
+            "comments": 0,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
             "number": 2862,
             "title": "Validate permissions actually exist when applying them to a `Permissible`",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/2862",
@@ -4261,6 +4955,22 @@
             "createdAt": "2024-11-12T19:36:50Z",
             "updatedAt": "2024-11-15T00:45:21Z",
             "comments": 2,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
+            "number": 6505,
+            "title": "Rewrite inventory transaction system to an instruction-based model (like ItemStackRequest) instead of slot-change model (legacy)",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6505",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "BC break",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2024-11-15T00:03:10Z",
+            "updatedAt": "2024-11-15T00:03:38Z",
+            "comments": 0,
             "lane": "plugin-api-compatibility"
         },
         {
@@ -4727,6 +5437,21 @@
         },
         {
             "type": "issue",
+            "number": 2630,
+            "title": "Server->getOnlinePlayers() depends on playerList",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2630",
+            "author": "SalmonDE",
+            "labels": [
+                "Category: API",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2019-01-02T23:02:52Z",
+            "updatedAt": "2024-08-12T07:45:23Z",
+            "comments": 2,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
             "number": 6324,
             "title": "Automatically declare parent permission groups",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6324",
@@ -4819,6 +5544,21 @@
         },
         {
             "type": "issue",
+            "number": 3721,
+            "title": "Provide the item consumed by shooting bow in EntityShootBowEvent",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/3721",
+            "author": "xxAROX",
+            "labels": [
+                "Category: API",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2020-07-21T13:09:14Z",
+            "updatedAt": "2023-09-08T08:38:49Z",
+            "comments": 11,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
             "number": 5959,
             "title": "Add ability to lock dependencies' version of the plugin",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/5959",
@@ -4830,6 +5570,22 @@
             "createdAt": "2023-08-02T16:11:22Z",
             "updatedAt": "2023-09-03T20:01:04Z",
             "comments": 2,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
+            "number": 6004,
+            "title": "Store connections in state data for fence, bars and glass",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6004",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Category: Core",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2023-08-19T12:08:58Z",
+            "updatedAt": "2023-08-19T12:08:58Z",
+            "comments": 0,
             "lane": "plugin-api-compatibility"
         },
         {
@@ -4930,6 +5686,21 @@
         },
         {
             "type": "issue",
+            "number": 5352,
+            "title": "Simplify receiving server broadcast channel messages.",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/5352",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2022-10-18T18:59:04Z",
+            "updatedAt": "2022-10-18T19:00:45Z",
+            "comments": 0,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
             "number": 4970,
             "title": "An `EntityLandEvent`",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/4970",
@@ -4956,6 +5727,21 @@
             "createdAt": "2022-07-20T14:30:39Z",
             "updatedAt": "2022-07-24T17:45:50Z",
             "comments": 1,
+            "lane": "plugin-api-compatibility"
+        },
+        {
+            "type": "issue",
+            "number": 4866,
+            "title": "Add VanillaItems::COOKED_BEEF()",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4866",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2022-02-25T23:01:15Z",
+            "updatedAt": "2022-02-25T23:01:15Z",
+            "comments": 0,
             "lane": "plugin-api-compatibility"
         },
         {
@@ -5126,21 +5912,6 @@
         },
         {
             "type": "issue",
-            "number": 6999,
-            "title": "Don't keep non-ticking chunks in memory on the server",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6999",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2026-01-14T06:10:51Z",
-            "updatedAt": "2026-05-31T23:21:41Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
             "number": 7035,
             "title": "Protocol 944 LevelDB unsupported \"world\"",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/7035",
@@ -5149,22 +5920,6 @@
             "createdAt": "2026-04-07T09:38:35Z",
             "updatedAt": "2026-05-11T11:27:29Z",
             "comments": 2,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6961,
-            "title": "Item actions cannot be triggered by non-player entities",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6961",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "BC break",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2025-12-24T16:23:45Z",
-            "updatedAt": "2025-12-24T16:23:45Z",
-            "comments": 0,
             "lane": "protocol-and-network"
         },
         {
@@ -5185,129 +5940,18 @@
         },
         {
             "type": "issue",
-            "number": 6496,
-            "title": "Add events for server startup completed",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6496",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "Type: Enhancement",
-                "Easy task",
-                "Opinions Wanted"
-            ],
-            "createdAt": "2024-11-12T15:15:56Z",
-            "updatedAt": "2025-11-03T08:19:51Z",
-            "comments": 5,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6782,
-            "title": "Clean up hack for skulls and other items converted to generic blockitems",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6782",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "Status: Debugged",
-                "Opinions Wanted"
-            ],
-            "createdAt": "2025-08-28T17:10:34Z",
-            "updatedAt": "2025-10-26T23:32:46Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6832,
-            "title": "Loaded tiles with positions outside the world crash the server",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6832",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "Status: Debugged"
-            ],
-            "createdAt": "2025-10-08T22:31:34Z",
-            "updatedAt": "2025-10-08T22:31:34Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6040,
-            "title": "Rail shapes are still using legacy metadata",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6040",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "Priority: High",
-                "BC break",
-                "Type: Cleanup"
-            ],
-            "createdAt": "2023-09-07T13:47:36Z",
-            "updatedAt": "2025-10-05T15:16:26Z",
-            "comments": 1,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6821,
-            "title": "Placing item with invalid custom tile data causes a crash",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6821",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "Status: Unconfirmed"
-            ],
-            "createdAt": "2025-09-28T23:08:01Z",
-            "updatedAt": "2025-09-28T23:08:01Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6819,
-            "title": "Include timezone in server.log timestamps",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6819",
-            "author": "dktapps",
-            "labels": [
-                "Type: Fix",
-                "Category: UI"
-            ],
-            "createdAt": "2025-09-27T16:12:38Z",
-            "updatedAt": "2025-09-27T16:12:38Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 3898,
-            "title": "Item->onActivate() and Item->onClickAir() cannot replace the used itemstack",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/3898",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "BC break",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2020-11-09T13:28:22Z",
-            "updatedAt": "2025-09-15T19:52:45Z",
-            "comments": 3,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6800,
-            "title": "`Item::equals()` and `Item::canStackWith()` rebuilding NBT inside loops during inventory search operations",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6800",
+            "number": 6580,
+            "title": "LevelDB compaction performance issue with large worlds (especially converted worlds)",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/6580",
             "author": "dktapps",
             "labels": [
                 "Category: Core",
                 "Status: Debugged",
                 "Performance"
             ],
-            "createdAt": "2025-09-10T19:16:20Z",
-            "updatedAt": "2025-09-10T19:16:20Z",
-            "comments": 0,
+            "createdAt": "2024-12-20T17:32:12Z",
+            "updatedAt": "2025-10-01T21:14:22Z",
+            "comments": 2,
             "lane": "protocol-and-network"
         },
         {
@@ -5327,74 +5971,6 @@
         },
         {
             "type": "issue",
-            "number": 4614,
-            "title": "Replace NBT in Item on ItemComponent",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4614",
-            "author": "ghost",
-            "labels": [
-                "Category: API",
-                "Type: Enhancement",
-                "Opinions Wanted"
-            ],
-            "createdAt": "2021-12-03T03:55:58Z",
-            "updatedAt": "2025-08-31T23:51:18Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6510,
-            "title": "Remove `CommandSender->getServer()`",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6510",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "Priority: Low",
-                "BC break",
-                "Type: Enhancement",
-                "Easy task"
-            ],
-            "createdAt": "2024-11-17T00:14:43Z",
-            "updatedAt": "2025-08-31T21:07:42Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 5971,
-            "title": "Simplified `Item->addEnchantment()` API",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5971",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "Priority: Low",
-                "BC break",
-                "Easy task"
-            ],
-            "createdAt": "2023-08-07T13:33:11Z",
-            "updatedAt": "2025-08-31T21:07:40Z",
-            "comments": 3,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 4771,
-            "title": "Allow changing the result item in PlayerBlockPickEvent",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4771",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "Priority: Low",
-                "BC break",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2022-01-25T17:48:47Z",
-            "updatedAt": "2025-08-31T21:07:38Z",
-            "comments": 1,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
             "number": 6284,
             "title": "Tile network NBT serialization needs a TypeConverter context",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6284",
@@ -5409,26 +5985,6 @@
             "createdAt": "2024-03-13T15:49:44Z",
             "updatedAt": "2025-08-31T21:05:10Z",
             "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 5762,
-            "title": "Allow Player data providers to return Promise<CompoundTag> for data load/save",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5762",
-            "author": "alvin0319",
-            "labels": [
-                "Category: API",
-                "Category: Core",
-                "Priority: High",
-                "BC break",
-                "Type: Enhancement",
-                "Performance",
-                "Easy task"
-            ],
-            "createdAt": "2023-05-23T23:56:28Z",
-            "updatedAt": "2025-08-31T21:05:09Z",
-            "comments": 2,
             "lane": "protocol-and-network"
         },
         {
@@ -5459,21 +6015,6 @@
             "createdAt": "2025-03-23T14:55:59Z",
             "updatedAt": "2025-06-21T22:10:58Z",
             "comments": 1,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6712,
-            "title": "Bad saved hunger values crash the server",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6712",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "Status: Debugged"
-            ],
-            "createdAt": "2025-05-28T20:44:39Z",
-            "updatedAt": "2025-05-28T20:44:39Z",
-            "comments": 0,
             "lane": "protocol-and-network"
         },
         {
@@ -5522,22 +6063,6 @@
             "createdAt": "2017-03-26T10:55:52Z",
             "updatedAt": "2025-02-23T20:15:45Z",
             "comments": 3,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 2706,
-            "title": "Pick-block can be used to obtain items that are not normally obtainable (e.g. portal blocks)",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/2706",
-            "author": "Johnmacrocraft",
-            "labels": [
-                "Category: Gameplay",
-                "Status: Debugged",
-                "BC break"
-            ],
-            "createdAt": "2019-01-28T13:57:03Z",
-            "updatedAt": "2025-02-23T20:15:11Z",
-            "comments": 6,
             "lane": "protocol-and-network"
         },
         {
@@ -5608,22 +6133,6 @@
         },
         {
             "type": "issue",
-            "number": 5463,
-            "title": "Update Checker incorrectly detects the server build",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5463",
-            "author": "Gaprix",
-            "labels": [
-                "Category: Core",
-                "Status: Debugged",
-                "Easy task"
-            ],
-            "createdAt": "2022-12-20T13:58:37Z",
-            "updatedAt": "2024-12-02T01:16:58Z",
-            "comments": 1,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
             "number": 5510,
             "title": "NPC Human skins change to Steve when teleported",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/5510",
@@ -5636,22 +6145,6 @@
             "createdAt": "2023-01-13T00:17:56Z",
             "updatedAt": "2024-12-02T01:15:42Z",
             "comments": 3,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 5515,
-            "title": "Implement pickup mode for dropped items",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5515",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "Type: Enhancement",
-                "Easy task"
-            ],
-            "createdAt": "2023-01-16T20:06:29Z",
-            "updatedAt": "2024-12-02T01:15:07Z",
-            "comments": 0,
             "lane": "protocol-and-network"
         },
         {
@@ -5669,38 +6162,6 @@
             "createdAt": "2023-03-15T21:56:06Z",
             "updatedAt": "2024-12-02T01:11:44Z",
             "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 2988,
-            "title": "Transition away from Minecraft formatting codes for internal usage",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/2988",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "Category: Core",
-                "BC break",
-                "Type: Cleanup"
-            ],
-            "createdAt": "2019-06-30T14:39:37Z",
-            "updatedAt": "2024-11-29T15:59:56Z",
-            "comments": 12,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 3087,
-            "title": "Dependency injection for plugins, configurable by server owners",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/3087",
-            "author": "SOF3",
-            "labels": [
-                "Category: API",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2019-08-09T16:13:30Z",
-            "updatedAt": "2024-11-23T20:49:02Z",
-            "comments": 1,
             "lane": "protocol-and-network"
         },
         {
@@ -5738,23 +6199,6 @@
         },
         {
             "type": "issue",
-            "number": 6520,
-            "title": "Return array of matches in `Server::getPlayerByPrefix()` (or add an alternative to do so)",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6520",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "BC break",
-                "Category: UI",
-                "Type: Cleanup"
-            ],
-            "createdAt": "2024-11-17T13:00:09Z",
-            "updatedAt": "2024-11-17T13:00:09Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
             "number": 5632,
             "title": "Update blocks due to missing blockstate properties produced by converters",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/5632",
@@ -5766,55 +6210,6 @@
             "createdAt": "2023-03-13T19:25:09Z",
             "updatedAt": "2024-11-16T12:53:23Z",
             "comments": 1,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6505,
-            "title": "Rewrite inventory transaction system to an instruction-based model (like ItemStackRequest) instead of slot-change model (legacy)",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6505",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "BC break",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2024-11-15T00:03:10Z",
-            "updatedAt": "2024-11-15T00:03:38Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 4830,
-            "title": "ItemEntity doesn't bounce on slime block",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4830",
-            "author": "NTT1906",
-            "labels": [
-                "Category: Gameplay",
-                "Status: Debugged",
-                "Easy task"
-            ],
-            "createdAt": "2022-02-15T05:22:34Z",
-            "updatedAt": "2024-11-14T15:34:14Z",
-            "comments": 2,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 2532,
-            "title": "Split server configurations are confusing and inconsistent",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/2532",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "BC break",
-                "Type: Enhancement",
-                "Category: UI"
-            ],
-            "createdAt": "2018-11-21T19:36:52Z",
-            "updatedAt": "2024-11-12T19:50:07Z",
-            "comments": 6,
             "lane": "protocol-and-network"
         },
         {
@@ -5853,85 +6248,6 @@
         },
         {
             "type": "issue",
-            "number": 4981,
-            "title": "Pooling skin data",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4981",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "Type: Enhancement",
-                "Performance"
-            ],
-            "createdAt": "2022-04-21T20:38:05Z",
-            "updatedAt": "2024-11-12T19:07:23Z",
-            "comments": 3,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 5342,
-            "title": "Colours from item custom names leak into /give output",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5342",
-            "author": "dktapps",
-            "labels": [
-                "Status: Debugged",
-                "Category: UI",
-                "Easy task"
-            ],
-            "createdAt": "2022-10-14T19:19:40Z",
-            "updatedAt": "2024-11-12T19:04:54Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 5607,
-            "title": "Document that Block->getName() and Item->getName() are intended for display only",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5607",
-            "author": "dktapps",
-            "labels": [
-                "Type: Enhancement",
-                "Easy task",
-                "Category: Documentation"
-            ],
-            "createdAt": "2023-03-06T01:13:20Z",
-            "updatedAt": "2024-11-12T19:02:14Z",
-            "comments": 1,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 2793,
-            "title": "Inconsistent behaviour when deserializing items/tiles/entities from NBT",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/2793",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2019-03-01T12:07:54Z",
-            "updatedAt": "2024-11-10T16:24:43Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 1161,
-            "title": "Plugins/blocking operations hogging the AsyncWorkers causes significant server slowdown",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/1161",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "Status: Debugged",
-                "Performance"
-            ],
-            "createdAt": "2017-07-01T09:56:29Z",
-            "updatedAt": "2024-11-10T16:22:37Z",
-            "comments": 19,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
             "number": 6294,
             "title": "Explore running RakLib without a thread",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6294",
@@ -5944,66 +6260,6 @@
             "createdAt": "2024-03-20T17:08:39Z",
             "updatedAt": "2024-11-10T16:21:02Z",
             "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 5092,
-            "title": "Separation of saved data validation from its application",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5092",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core"
-            ],
-            "createdAt": "2022-06-04T18:29:52Z",
-            "updatedAt": "2024-11-10T16:01:13Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6290,
-            "title": "Unexpected trailing data after 3D biomes data",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6290",
-            "author": "TheLemzz",
-            "labels": [
-                "Category: Core",
-                "Mojang inconsistency",
-                "Category: Documentation"
-            ],
-            "createdAt": "2024-03-18T19:04:50Z",
-            "updatedAt": "2024-11-04T13:23:34Z",
-            "comments": 14,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 2630,
-            "title": "Server->getOnlinePlayers() depends on playerList",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/2630",
-            "author": "SalmonDE",
-            "labels": [
-                "Category: API",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2019-01-02T23:02:52Z",
-            "updatedAt": "2024-08-12T07:45:23Z",
-            "comments": 2,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6349,
-            "title": "Container windows aren't closed by the server when the player is too far away",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6349",
-            "author": "dktapps",
-            "labels": [
-                "Category: Gameplay",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2024-05-22T14:12:25Z",
-            "updatedAt": "2024-07-03T02:38:26Z",
-            "comments": 1,
             "lane": "protocol-and-network"
         },
         {
@@ -6039,36 +6295,6 @@
         },
         {
             "type": "issue",
-            "number": 5855,
-            "title": "Entity data in 1.18.30 and above vanilla worlds not loaded (storage method was changed)",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5855",
-            "author": "diamond-gold",
-            "labels": [
-                "Category: Core",
-                "Status: Unconfirmed"
-            ],
-            "createdAt": "2023-06-22T12:53:48Z",
-            "updatedAt": "2023-12-04T11:08:45Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6029,
-            "title": "ItemBreakSound plays when Durable item is placed in Item Frame in survival mode",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6029",
-            "author": "Nerahikada",
-            "labels": [
-                "Category: Gameplay",
-                "Status: Debugged"
-            ],
-            "createdAt": "2023-08-31T14:56:29Z",
-            "updatedAt": "2023-12-01T23:23:37Z",
-            "comments": 3,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
             "number": 6130,
             "title": "DedicatedQueryNetworkInterface crashes server if unable to bind to udp/19132",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/6130",
@@ -6096,52 +6322,6 @@
             "createdAt": "2021-12-31T01:26:15Z",
             "updatedAt": "2023-10-23T18:14:47Z",
             "comments": 1,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 3721,
-            "title": "Provide the item consumed by shooting bow in EntityShootBowEvent",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/3721",
-            "author": "xxAROX",
-            "labels": [
-                "Category: API",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2020-07-21T13:09:14Z",
-            "updatedAt": "2023-09-08T08:38:49Z",
-            "comments": 11,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 6004,
-            "title": "Store connections in state data for fence, bars and glass",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/6004",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "Category: Core",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2023-08-19T12:08:58Z",
-            "updatedAt": "2023-08-19T12:08:58Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 5734,
-            "title": "Item Frame cannot be placed on Chest",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5734",
-            "author": "Azvyl",
-            "labels": [
-                "Category: Gameplay",
-                "Status: Debugged"
-            ],
-            "createdAt": "2023-05-03T04:32:21Z",
-            "updatedAt": "2023-08-02T10:21:13Z",
-            "comments": 3,
             "lane": "protocol-and-network"
         },
         {
@@ -6194,22 +6374,6 @@
         },
         {
             "type": "issue",
-            "number": 5620,
-            "title": "Item frames cannot be placed on tree leaves (PM 5.0.0)",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5620",
-            "author": "GH-PM",
-            "labels": [
-                "Category: Gameplay",
-                "Status: Debugged",
-                "Mojang inconsistency"
-            ],
-            "createdAt": "2023-03-11T15:52:20Z",
-            "updatedAt": "2023-03-14T22:02:36Z",
-            "comments": 1,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
             "number": 5624,
             "title": "Bring back constant self entity runtime IDs for players",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/5624",
@@ -6258,21 +6422,6 @@
         },
         {
             "type": "issue",
-            "number": 3135,
-            "title": "Allow difficulty string in server.properties",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/3135",
-            "author": "dktapps",
-            "labels": [
-                "Type: Enhancement",
-                "Category: UI"
-            ],
-            "createdAt": "2019-10-04T08:53:25Z",
-            "updatedAt": "2022-11-25T20:44:55Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
             "number": 5372,
             "title": "STUN support",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/5372",
@@ -6288,47 +6437,18 @@
         },
         {
             "type": "issue",
-            "number": 5352,
-            "title": "Simplify receiving server broadcast channel messages.",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/5352",
+            "number": 4797,
+            "title": "Pre-1.0 biome colours are not loaded from LevelDB",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4797",
             "author": "dktapps",
             "labels": [
-                "Category: API",
-                "Type: Enhancement"
+                "Category: Core",
+                "Status: Debugged",
+                "Priority: Low"
             ],
-            "createdAt": "2022-10-18T18:59:04Z",
-            "updatedAt": "2022-10-18T19:00:45Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 4558,
-            "title": "PlayerInventory->setHeldItemIndex() may not work in PlayerInteractEvent",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4558",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "Status: Debugged"
-            ],
-            "createdAt": "2021-11-06T20:28:03Z",
-            "updatedAt": "2022-09-29T20:52:20Z",
+            "createdAt": "2022-02-04T23:05:18Z",
+            "updatedAt": "2022-05-10T12:32:28Z",
             "comments": 1,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 4936,
-            "title": "Fast eat (Trying to drop while eating food even the PlayerDropItemEvent getting cancel)",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4936",
-            "author": "ItsZodiaX",
-            "labels": [
-                "Category: Gameplay",
-                "Status: Unconfirmed"
-            ],
-            "createdAt": "2022-03-31T14:00:17Z",
-            "updatedAt": "2022-04-01T15:40:30Z",
-            "comments": 4,
             "lane": "protocol-and-network"
         },
         {
@@ -6349,51 +6469,6 @@
         },
         {
             "type": "issue",
-            "number": 4866,
-            "title": "Add VanillaItems::COOKED_BEEF()",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4866",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2022-02-25T23:01:15Z",
-            "updatedAt": "2022-02-25T23:01:15Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 4760,
-            "title": "Server crash if sign loaded from disk contains Java-style lines containing \\n",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4760",
-            "author": "dktapps",
-            "labels": [
-                "Category: Core",
-                "Status: Debugged"
-            ],
-            "createdAt": "2022-01-23T15:27:04Z",
-            "updatedAt": "2022-02-05T19:23:54Z",
-            "comments": 2,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 4555,
-            "title": "Implement server-side water physics",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4555",
-            "author": "IvanCraft623",
-            "labels": [
-                "Category: Gameplay",
-                "Status: Not Implemented"
-            ],
-            "createdAt": "2021-11-06T02:29:45Z",
-            "updatedAt": "2022-01-19T17:06:23Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
             "number": 4673,
             "title": "Server crashed on Ubuntu LXC",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/4673",
@@ -6409,16 +6484,16 @@
         },
         {
             "type": "issue",
-            "number": 4647,
-            "title": "Invalid player NBT tag types crash the server",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4647",
+            "number": 4651,
+            "title": "Uncaught errors may be thrown during PalettedBlockArray deserialization from disk",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/4651",
             "author": "dktapps",
             "labels": [
                 "Category: Core",
                 "Status: Debugged"
             ],
-            "createdAt": "2021-12-13T19:05:48Z",
-            "updatedAt": "2021-12-13T19:05:48Z",
+            "createdAt": "2021-12-14T17:33:14Z",
+            "updatedAt": "2021-12-14T19:26:45Z",
             "comments": 0,
             "lane": "protocol-and-network"
         },
@@ -6439,21 +6514,6 @@
         },
         {
             "type": "issue",
-            "number": 4524,
-            "title": "Start destroying blocks and using items at the same time, will fail to use the items.",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4524",
-            "author": "rasu3n",
-            "labels": [
-                "Category: Gameplay",
-                "Status: Unconfirmed"
-            ],
-            "createdAt": "2021-10-29T12:50:21Z",
-            "updatedAt": "2021-11-05T16:18:41Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
             "number": 4461,
             "title": "Allow plugins to register mappings in ItemTranslator",
             "url": "https://github.com/pmmp/PocketMine-MP/issues/4461",
@@ -6470,47 +6530,18 @@
         },
         {
             "type": "issue",
-            "number": 4377,
-            "title": "server.lock isn't always removed when server restarts",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4377",
-            "author": "sn3akrr",
+            "number": 2925,
+            "title": "LevelDB performance optimizations",
+            "url": "https://github.com/pmmp/PocketMine-MP/issues/2925",
+            "author": "dktapps",
             "labels": [
                 "Category: Core",
-                "Status: Debugged"
-            ],
-            "createdAt": "2021-08-17T03:58:00Z",
-            "updatedAt": "2021-08-17T21:31:28Z",
-            "comments": 5,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 4065,
-            "title": "Transferserver should take optional [player] argument",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/4065",
-            "author": "inxomnyaa",
-            "labels": [
                 "Type: Enhancement",
-                "Category: UI"
+                "Performance"
             ],
-            "createdAt": "2021-03-11T09:07:39Z",
-            "updatedAt": "2021-03-11T12:20:22Z",
-            "comments": 0,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 3929,
-            "title": "Dropped items don't get pushed out of a block if standing inside the northern or western edge",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/3929",
-            "author": "TheNewHEROBRINEX",
-            "labels": [
-                "Category: Gameplay",
-                "Status: Debugged"
-            ],
-            "createdAt": "2020-11-24T08:19:45Z",
-            "updatedAt": "2021-01-05T03:06:19Z",
-            "comments": 4,
+            "createdAt": "2019-05-17T12:46:10Z",
+            "updatedAt": "2021-09-09T15:14:13Z",
+            "comments": 1,
             "lane": "protocol-and-network"
         },
         {
@@ -6527,40 +6558,29 @@
             "updatedAt": "2020-11-05T00:09:44Z",
             "comments": 4,
             "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 3142,
-            "title": "open_basedir restriction breaks various behaviour and crashes server",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/3142",
-            "author": "dktapps",
-            "labels": [
-                "Status: Reproduced",
-                "Category: Core",
-                "Category: PHP"
-            ],
-            "createdAt": "2019-10-09T16:32:24Z",
-            "updatedAt": "2019-10-09T18:35:34Z",
-            "comments": 2,
-            "lane": "protocol-and-network"
-        },
-        {
-            "type": "issue",
-            "number": 2653,
-            "title": "Server crashed when loading Java world",
-            "url": "https://github.com/pmmp/PocketMine-MP/issues/2653",
-            "author": "xNayte",
-            "labels": [
-                "Category: Core",
-                "Status: Not Implemented"
-            ],
-            "createdAt": "2019-01-09T19:05:44Z",
-            "updatedAt": "2019-01-16T11:27:48Z",
-            "comments": 10,
-            "lane": "protocol-and-network"
         }
     ],
     "pullRequests": [
+        {
+            "type": "pull_request",
+            "number": 7045,
+            "title": "Thread-safe block and item type ID assignment",
+            "url": "https://github.com/pmmp/PocketMine-MP/pull/7045",
+            "author": "dktapps",
+            "labels": [
+                "Category: API",
+                "Category: Core",
+                "Type: Enhancement"
+            ],
+            "createdAt": "2026-05-25T23:26:30Z",
+            "updatedAt": "2026-05-25T23:28:14Z",
+            "comments": 0,
+            "lane": "plugin-api-compatibility",
+            "draft": false,
+            "baseRef": "minor-next",
+            "headRef": "thread-safe-type-ids",
+            "headRepo": "pmmp/PocketMine-MP"
+        },
         {
             "type": "pull_request",
             "number": 6947,
@@ -6788,26 +6808,6 @@
         },
         {
             "type": "pull_request",
-            "number": 7045,
-            "title": "Thread-safe block and item type ID assignment",
-            "url": "https://github.com/pmmp/PocketMine-MP/pull/7045",
-            "author": "dktapps",
-            "labels": [
-                "Category: API",
-                "Category: Core",
-                "Type: Enhancement"
-            ],
-            "createdAt": "2026-05-25T23:26:30Z",
-            "updatedAt": "2026-05-25T23:28:14Z",
-            "comments": 0,
-            "lane": "protocol-and-network",
-            "draft": false,
-            "baseRef": "minor-next",
-            "headRef": "thread-safe-type-ids",
-            "headRepo": "pmmp/PocketMine-MP"
-        },
-        {
-            "type": "pull_request",
             "number": 6651,
             "title": "EXPERIMENTAL! Packet read ops accounting and limiting",
             "url": "https://github.com/pmmp/PocketMine-MP/pull/6651",
@@ -6866,26 +6866,6 @@
             "baseRef": "minor-next",
             "headRef": "item-lock",
             "headRepo": "yuyaprgrm/PocketMine-MP"
-        },
-        {
-            "type": "pull_request",
-            "number": 4768,
-            "title": "Items that have contents now drops them on destroy",
-            "url": "https://github.com/pmmp/PocketMine-MP/pull/4768",
-            "author": "JavierLeon9966",
-            "labels": [
-                "Category: Gameplay",
-                "Type: Enhancement",
-                "Opinions Wanted"
-            ],
-            "createdAt": "2022-01-24T23:16:51Z",
-            "updatedAt": "2025-10-23T17:25:49Z",
-            "comments": 10,
-            "lane": "protocol-and-network",
-            "draft": false,
-            "baseRef": "minor-next",
-            "headRef": "item-drop-contents",
-            "headRepo": "JavierLeon9966/PocketMine-MP"
         },
         {
             "type": "pull_request",
@@ -7156,6 +7136,26 @@
             "baseRef": "minor-next",
             "headRef": "implement-hopper-push",
             "headRepo": "PocketSoftMine/PocketMine-MP-dev"
+        },
+        {
+            "type": "pull_request",
+            "number": 4768,
+            "title": "Items that have contents now drops them on destroy",
+            "url": "https://github.com/pmmp/PocketMine-MP/pull/4768",
+            "author": "JavierLeon9966",
+            "labels": [
+                "Category: Gameplay",
+                "Type: Enhancement",
+                "Opinions Wanted"
+            ],
+            "createdAt": "2022-01-24T23:16:51Z",
+            "updatedAt": "2025-10-23T17:25:49Z",
+            "comments": 10,
+            "lane": "upstream-pr-review",
+            "draft": false,
+            "baseRef": "minor-next",
+            "headRef": "item-drop-contents",
+            "headRepo": "JavierLeon9966/PocketMine-MP"
         },
         {
             "type": "pull_request",

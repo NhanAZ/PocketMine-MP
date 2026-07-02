@@ -155,7 +155,7 @@ function classifyItem(string $type, string $title, array $labels) : string{
 	if(str_contains($text, "security") || str_contains($text, "exploit") || str_contains($text, "vulnerability")){
 		return "security-sensitive-review";
 	}
-	if(preg_match('/protocol|bedrock|packet|network|mcpe|minecraft|raklib|runtime id|block state|blockstate|item|login|client|server|data/', $text)){
+	if(preg_match('/protocol|bedrock|packet|network|mcpe|raklib|runtime id|block state|blockstate|leveldb|serializer|serialization|login|client|query|gs4/', $text)){
 		return "protocol-and-network";
 	}
 	if(str_contains($text, "crash") || str_contains($text, "regression") || str_contains($text, "bug")){
