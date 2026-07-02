@@ -65,8 +65,8 @@
     },
     {
       "repository": "pmmp/RakLibIpc",
-      "classification": "defer",
-      "note": "Post-pin commits update CI and static-analysis configuration only."
+      "classification": "adopt",
+      "note": "Imported tag 1.0.1 at the root lock pin ce632ef2c6743e71eddb5dc329c49af6555f90bc as packages/raklib-ipc with its GPL-3.0 license, IPC channel sources, static-analysis config, and full subtree history. Adapted the PHPStan-only type assertion from later master commit dd79c4344640ab0d086f08ad47fe83f52b7d3371; remaining post-tag commits only update CI and dev PHPStan dependencies, so they remain deferred."
     },
     {
       "repository": "pmmp/Snooze",

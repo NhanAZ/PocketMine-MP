@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dac77e32b862bb0d24d4a70c3d02560b",
+    "content-hash": "4cd32f23a4d3f5bc6f79f9b1db63be80",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -580,16 +580,10 @@
         {
             "name": "pocketmine/raklib-ipc",
             "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pmmp/RakLibIpc.git",
-                "reference": "ce632ef2c6743e71eddb5dc329c49af6555f90bc"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/RakLibIpc/zipball/ce632ef2c6743e71eddb5dc329c49af6555f90bc",
-                "reference": "ce632ef2c6743e71eddb5dc329c49af6555f90bc",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/raklib-ipc",
+                "reference": "24a3598b1db06c1270c452c0932fb196e5b5734b"
             },
             "require": {
                 "php": "^8.0",
@@ -607,16 +601,14 @@
                     "raklib\\server\\ipc\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "GPL-3.0"
             ],
             "description": "Channel-based protocols for inter-thread/inter-process communication with RakLib",
-            "support": {
-                "issues": "https://github.com/pmmp/RakLibIpc/issues",
-                "source": "https://github.com/pmmp/RakLibIpc/tree/1.0.1"
-            },
-            "time": "2024-03-01T15:55:05+00:00"
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "pocketmine/snooze",

@@ -106,6 +106,14 @@
     },
     {
       "kind": "imported-package",
+      "name": "pocketmine/raklib-ipc",
+      "repository": "pmmp/RakLibIpc",
+      "branch": "master",
+      "pinned_ref": "ce632ef2c6743e71eddb5dc329c49af6555f90bc",
+      "path": "packages/raklib-ipc"
+    },
+    {
+      "kind": "imported-package",
       "name": "pocketmine/snooze",
       "repository": "pmmp/Snooze",
       "branch": "master",
