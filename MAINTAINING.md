@@ -44,4 +44,15 @@ Inspect changed sources or upstream items before updating snapshots or creating 
 ## Publishing
 
 Main CI remains enabled.
-Do not enable Docker, Discord, Crowdin, updater, or release publishing until fork-owned credentials and destinations are configured.
+Current release mode is source builds and local phar builds only.
+GitHub Releases, Docker publishing, updater metadata, Discord announcements, Crowdin automation, branch sync, and upstream RestrictedActions-style release workflows remain disabled.
+
+Before publishing anything manually:
+
+1. Confirm CI and Docker image CI are green on the exact commit.
+2. Confirm the changelog, version, supported Bedrock version, and rollback notes are ready.
+3. Build a phar with the release dependency set and run `php PocketMine-MP.phar --version`.
+4. Smoke-test on a staging server with the target Bedrock client and representative plugins.
+5. Publish only to fork-owned destinations, then watch issues and Actions for regressions.
+
+Rollback means unpublishing or marking the release unsafe, deleting or moving a bad tag when appropriate, reverting the release commit, and posting a short warning with the last known good commit.

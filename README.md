@@ -13,10 +13,6 @@
 
 <p align="center">
 	<a href="https://github.com/NhanAZ/PocketMine-MP/actions/workflows/main.yml"><img src="https://github.com/NhanAZ/PocketMine-MP/actions/workflows/main.yml/badge.svg" alt="CI" /></a>
-	<a href="https://github.com/NhanAZ/PocketMine-MP/releases/latest"><img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/NhanAZ/PocketMine-MP?label=release&sort=semver"></a>
-	<br>
-	<a href="https://github.com/NhanAZ/PocketMine-MP/releases"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/NhanAZ/PocketMine-MP/total?label=downloads%40total"></a>
-	<a href="https://github.com/NhanAZ/PocketMine-MP/releases/latest"><img alt="GitHub release (latest by SemVer)" src="https://img.shields.io/github/downloads/NhanAZ/PocketMine-MP/latest/total?sort=semver"></a>
 </p>
 
 > [!WARNING]
@@ -31,6 +27,7 @@ It is not affiliated with or endorsed by the upstream PocketMine-MP project, and
 
 The original LGPL-3.0 license and attribution are retained.
 Fork-specific direction is documented in [FORK_POLICY.md](FORK_POLICY.md), planned work is tracked in [ROADMAP.md](ROADMAP.md), and AI agent workflow rules are documented in [AGENTS.md](AGENTS.md).
+Automated release publishing is currently disabled; build from source or create local phars until fork-owned release automation is intentionally enabled.
 
 ## What is this?
 PocketMine-MP is a highly customisable server software for Minecraft: Bedrock Edition, built from scratch in PHP, with over 10 years of history.

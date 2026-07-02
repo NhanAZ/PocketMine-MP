@@ -15,6 +15,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Full repository PHPStan is clean after typing the JSON backlog tools.
 - Fork CI health is the top active gate; the latest red runs were PHP-CS-Fixer import order, PHPStan CLI argv handling, and Docker missing local `packages/` path repositories.
 - User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
+- Release automation is intentionally conservative: source builds and local phars only; GitHub Releases, Docker publishing, updater metadata, Discord, Crowdin, branch sync, and upstream RestrictedActions-style workflows are disabled until fork-owned destinations are configured.
 
 ## Priority
 
@@ -38,10 +39,10 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
 
 ### 2. Decide Fork Release Automation
 
-- [ ] Decide whether the fork needs GitHub Releases, phars, Docker images, updater metadata, or source builds only.
-- [ ] Remove unused upstream-only workflows.
-- [ ] Enable publishing only with fork-owned credentials and destinations.
-- [ ] Add a compact release checklist and rollback note.
+- [x] Decide whether the fork needs GitHub Releases, phars, Docker images, updater metadata, or source builds only.
+- [x] Remove unused upstream-only workflows.
+- [x] Enable publishing only with fork-owned credentials and destinations.
+- [x] Add a compact release checklist and rollback note.
 
 ### 3. Perform A Real Protocol Update
 
@@ -79,10 +80,10 @@ Re-evaluate RakLib commit `765501863` during its import or when a release contai
 
 ## Milestones
 
-- **Foundation hardening: active.** Remaining: links, disabled workflows, release checklist, and changelog habit.
+- **Foundation hardening: active.** Remaining: changelog habit.
 - **Self-contained dependencies: active.** Four packages are local; protocol and network packages remain.
 - **Protocol velocity: active.** Evidence rules are ready; one real verified protocol update is still required.
-- **Fork releases: planned.** Naming, artifacts, automation, notes, and rollback policy remain.
+- **Fork releases: planned.** Automated publishing is disabled; release naming and artifact policy remain before public releases.
 - **Community throughput: planned.** Keep intake neutral, focused, reproducible, and fast without mass-importing upstream noise.
 
 ## Maintenance Commands
