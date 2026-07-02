@@ -9,7 +9,7 @@ Keep it short. Active work belongs in `ROADMAP.md`, not here.
 2. Choose the smallest ready task unless a confirmed security issue, crash, or current protocol break is more urgent.
 3. Keep protocol work, dependency imports, upstream ports, and broad cleanup separate.
 4. Follow existing PocketMine-MP architecture, style, and tooling.
-5. Run checks proportional to risk and state any skipped or failing checks.
+5. Run checks proportional to risk; before pushing, run local equivalents of touched GitHub Actions when available, and state skipped or failing checks.
 6. Update `ROADMAP.md` live when work is completed, discovered, deferred, or reprioritized.
 7. Commit and push each completed unit when the maintainer has requested that workflow.
 
@@ -21,6 +21,7 @@ Keep it short. Active work belongs in `ROADMAP.md`, not here.
 - Add tests for behavioural changes where practical; provide manual checks for gameplay or client compatibility.
 - Keep security reports private until a fix is ready.
 - AI-generated code is untrusted until reviewed, explained, and tested.
+- Treat red GitHub Actions as the next task until diagnosed, fixed, or explicitly deferred.
 
 ## Sources And Drift
 

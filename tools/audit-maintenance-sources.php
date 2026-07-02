@@ -41,8 +41,8 @@ use function mkdir;
 use function preg_match;
 use function rawurlencode;
 use function str_starts_with;
-use function strtolower;
 use function stream_context_create;
+use function strtolower;
 use function trim;
 use function usort;
 use const JSON_PRETTY_PRINT;
@@ -280,6 +280,7 @@ function auditSource(SourceDefinition $source) : AuditResult{
 	return new AuditResult($source, $branch, $latestRef, $license, $url, $signal);
 }
 
+$argv ??= [];
 /** @var list<string> $arguments */
 $arguments = $argv;
 $configPath = $arguments[1] ?? ".github/maintenance-sources/sources.json";

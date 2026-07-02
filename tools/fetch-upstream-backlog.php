@@ -23,8 +23,8 @@ declare(strict_types=1);
 
 namespace pocketmine\tools\fetch_upstream_backlog;
 
-use function array_key_exists;
 use function array_is_list;
+use function array_key_exists;
 use function count;
 use function date;
 use function explode;
@@ -44,8 +44,8 @@ use function mkdir;
 use function preg_match;
 use function sprintf;
 use function str_contains;
-use function strtolower;
 use function stream_context_create;
+use function strtolower;
 use function trim;
 use function usort;
 use const JSON_PRETTY_PRINT;

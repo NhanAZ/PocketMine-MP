@@ -13,15 +13,17 @@ Update it during every completed maintenance unit; do not create separate task-c
 - RakLib anti-spoofing cookies were reviewed and deferred until a tagged release or the planned local RakLib import.
 - The upstream backlog snapshot contains 450 open items and a scored top-40 shortlist.
 - Full repository PHPStan is clean after typing the JSON backlog tools.
+- Fork CI health is the top active gate; the latest red runs were PHP-CS-Fixer import order, PHPStan CLI argv handling, and Docker missing local `packages/` path repositories.
 
 ## Priority
 
-1. Confirmed security issue or crash regression.
-2. Current Bedrock protocol compatibility.
-3. A focused PMMP dependency stabilization or import.
-4. A useful canonical upstream fix.
-5. One actionable upstream issue or pull request.
-6. Release, community, maintenance, or documentation cleanup.
+1. Red GitHub Actions on the active fork branch.
+2. Confirmed security issue or crash regression.
+3. Current Bedrock protocol compatibility.
+4. A focused PMMP dependency stabilization or import.
+5. A useful canonical upstream fix.
+6. One actionable upstream issue or pull request.
+7. Release, community, maintenance, or documentation cleanup.
 
 Before source-sensitive work, refresh `.github/maintenance-sources/report.json`.
 The fork root remains authoritative, canonical PMMP remains the primary change feed, and peer projects remain evidence only.
@@ -101,5 +103,6 @@ When asked to continue this roadmap:
 1. Read `AGENTS.md` and this file only, then inspect code relevant to the first ready task.
 2. Refresh external data only when the task depends on it.
 3. Complete one focused unit with proportional checks.
-4. Update this file live, including discoveries and deferrals.
-5. Commit and push when requested.
+4. If a push touches workflow-covered code, run the closest local checks before pushing.
+5. Update this file live, including discoveries and deferrals.
+6. Commit and push when requested.

@@ -24,6 +24,7 @@ COPY ./build/server-phar.php ./build/server-phar-stub.php /opt/pocketmine/repo/b
 COPY ./resources /opt/pocketmine/repo/resources
 COPY ./src /opt/pocketmine/repo/src
 COPY ./generated /opt/pocketmine/repo/generated
+COPY ./packages /opt/pocketmine/repo/packages
 COPY ./composer.json ./composer.lock /opt/pocketmine/repo/
 
 WORKDIR /opt/pocketmine/repo
