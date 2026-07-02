@@ -20,6 +20,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Upstream issue #6808 was triaged and implemented: core entities now save with Bedrock entity IDs while retaining legacy Java/PM aliases for loading older worlds.
 - Upstream issue #5632 was triaged and implemented: missing Bedrock blockstate properties now fall back to the registered default state for that block ID while still rejecting wrong property types.
 - Upstream issue #6832 was triaged and implemented: chunk loading now skips invalid loaded tiles before block-state sync when their saved position is outside world bounds, duplicated, or in an unavailable chunk.
+- Upstream issue #6861 was triaged and implemented: invalid firework rocket `Flight` values loaded from saved NBT now fail as `SavedDataLoadingException` instead of escaping safe item loading as `InvalidArgumentException`.
 - Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, and `git diff --check` are clean after the #6832 invalid loaded-tile work.
 - Fork CI health is the top active gate; the latest red runs were PHP-CS-Fixer import order, PHPStan CLI argv handling, and Docker missing local `packages/` path repositories.
 - User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
@@ -78,6 +79,8 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
   - Opened issue #6808, "Entities are still saved with Java 1.10 IDs".
   - Opened issue #5632, "Update blocks due to missing blockstate properties produced by converters".
   - Opened issue #6832, "Loaded tiles with positions outside the world crash the server".
+  - Opened issue #6750, "Server crashed".
+  - Opened issue #6861, "Crash when loading firework from disk with negative flight multiplier".
 - [x] Classify relevance and create only the smallest actionable fork task or port.
   - Classified as actionable network/protocol architecture work and implemented the smallest local change: pass `TypeConverter` through tile spawn NBT serialization and cache serialized spawn compounds per converter.
   - Classified #6711 as actionable core validation work and implemented the smallest local guard: `BaseInventory` rejects non-null plain `Item` objects whose type ID maps to a block type ID unless they are real `ItemBlock` instances.
@@ -85,10 +88,12 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
   - Classified #6808 as actionable core save-format work and implemented the smallest local change: make Bedrock entity IDs the default save IDs while preserving legacy aliases for deserialization.
   - Classified #5632 as actionable world-load tolerance work and implemented the smallest local change: registered blockstate deserializers now supply default property values for missing states while preserving failures for unknown IDs, unread properties, invalid values, and wrong tag types.
   - Classified #6832 as actionable crash/corruption handling work and implemented the smallest local change: invalid loaded tiles are logged and skipped before the chunk block-state post-processing path can read out-of-bounds coordinates.
+  - Deferred #6750 because the public issue is unconfirmed and the actionable crash dumps are private to upstream maintainers.
+  - Classified #6861 as actionable saved-data crash handling and implemented the smallest local change: validate firework rocket `Flight` during item NBT deserialization and convert invalid values to `SavedDataLoadingException`.
 - [x] Preserve source links and authorship; do not copy whole discussions.
-  - Sources: https://github.com/pmmp/PocketMine-MP/issues/6284, https://github.com/pmmp/PocketMine-MP/issues/6711, https://github.com/pmmp/PocketMine-MP/issues/6580, https://github.com/pmmp/PocketMine-MP/issues/6808 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/5632 by GH-PM with a dktapps root-cause comment, and https://github.com/pmmp/PocketMine-MP/issues/6832 by dktapps; original issue comments were reviewed before implementation or deferral.
-  - Checks: targeted `SpawnableTest`, targeted `BaseInventoryTest`, targeted `EntityFactoryTest`, targeted `BlockSerializerDeserializerTest`, targeted `WorldTest`, full PHPUnit, full PHPStan, PHP-CS-Fixer 3.75 dry-run, JSON validation, `git diff --check`, and generated-file collision check.
-  - The next shortlist candidates are #6750 and #6861, but the original issue must be opened and reviewed before any work is added.
+  - Sources: https://github.com/pmmp/PocketMine-MP/issues/6284, https://github.com/pmmp/PocketMine-MP/issues/6711, https://github.com/pmmp/PocketMine-MP/issues/6580, https://github.com/pmmp/PocketMine-MP/issues/6808 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/5632 by GH-PM with a dktapps root-cause comment, https://github.com/pmmp/PocketMine-MP/issues/6832 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/6750 by LeonMazzoli with private upstream crash dumps, and https://github.com/pmmp/PocketMine-MP/issues/6861 by dktapps; original issue comments were reviewed before implementation or deferral.
+  - Checks: targeted `SpawnableTest`, targeted `BaseInventoryTest`, targeted `EntityFactoryTest`, targeted `BlockSerializerDeserializerTest`, targeted `WorldTest`, targeted `ItemTest`, full PHPUnit, full PHPStan, PHP-CS-Fixer 3.75 dry-run, JSON validation, `git diff --check`, and generated-file collision check. For #6861 specifically, touched-file PHPStan and `git diff --check` were clean; local PHP-CS-Fixer was unavailable and remains delegated to CI.
+  - The next shortlist candidates are #6130, #5342, and #4830, but each original issue must be opened and reviewed before any work is added.
 
 ## Dependency Track
 

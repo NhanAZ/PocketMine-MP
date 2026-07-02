@@ -25,6 +25,8 @@ namespace pocketmine\item;
 
 use PHPUnit\Framework\TestCase;
 use pocketmine\block\VanillaBlocks;
+use pocketmine\data\bedrock\item\SavedItemData;
+use pocketmine\data\SavedDataLoadingException;
 use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\item\enchantment\VanillaEnchantments;
 
@@ -69,6 +71,20 @@ class ItemTest extends TestCase{
 		$item = Item::nbtDeserialize($item->nbtSerialize());
 		self::assertTrue($item->getCustomName() === $name);
 		self::assertTrue($item->getLore() === $lore);
+	}
+
+	public function testInvalidFireworkFlightMultiplierThrowsSavedDataLoadingException() : void{
+		$itemNbt = VanillaItems::FIREWORK_ROCKET()->nbtSerialize();
+		$tag = $itemNbt->getCompoundTag(SavedItemData::TAG_TAG);
+		self::assertNotNull($tag);
+		$fireworkData = $tag->getCompoundTag(FireworkRocket::TAG_FIREWORK_DATA);
+		self::assertNotNull($fireworkData);
+		$fireworkData->setByte("Flight", -1);
+
+		$this->expectException(SavedDataLoadingException::class);
+		$this->expectExceptionMessage("Invalid firework flight time multiplier -1");
+
+		Item::nbtDeserialize($itemNbt);
 	}
 
 	public function testHasEnchantment() : void{

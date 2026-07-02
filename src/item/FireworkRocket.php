@@ -120,7 +120,11 @@ class FireworkRocket extends Item{
 			throw new SavedDataLoadingException("Missing firework data");
 		}
 
-		$this->setFlightTimeMultiplier($fireworkData->getByte(self::TAG_FLIGHT_TIME_MULTIPLIER, 1));
+		$flightTimeMultiplier = $fireworkData->getByte(self::TAG_FLIGHT_TIME_MULTIPLIER, 1);
+		if($flightTimeMultiplier < 1 || $flightTimeMultiplier > 127){
+			throw new SavedDataLoadingException("Invalid firework flight time multiplier $flightTimeMultiplier");
+		}
+		$this->setFlightTimeMultiplier($flightTimeMultiplier);
 
 		if(($explosions = $fireworkData->getListTag(self::TAG_EXPLOSIONS, CompoundTag::class)) !== null){
 			foreach($explosions as $explosion){

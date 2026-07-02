@@ -14,6 +14,7 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 - Implemented upstream issue #6808: core entities now save with Bedrock entity IDs while retaining legacy Java/PM aliases for loading older worlds.
 - Implemented upstream issue #5632: missing Bedrock blockstate properties now fall back to the registered default state for that block ID while wrong tag types still fail.
 - Implemented upstream issue #6832: chunk loading skips invalid loaded tiles before block-state sync when saved positions are out of bounds, duplicated, or in unavailable chunks.
+- Implemented upstream issue #6861: invalid firework rocket `Flight` values loaded from saved NBT now raise `SavedDataLoadingException` instead of leaking `InvalidArgumentException` past safe item loading.
 
 ### Protocol
 
@@ -35,9 +36,11 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 ### Reviewed Or Deferred
 
 - Reviewed upstream issue #6580 and deferred it because the LevelDB compaction fix needs a world-format or region-sharded DB design, migration path, rollback plan, and benchmarks.
+- Reviewed upstream issue #6750 and deferred it because the public report is unconfirmed and the useful crash dumps are private to upstream maintainers.
 - Reviewed RakLib anti-spoofing cookies and deferred them until a tagged release or the planned local RakLib import.
 
 ### Checks
 
 - Targeted tests were run for the implemented upstream fixes.
 - Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, JSON validation, generated-file collision checks, and `git diff --check` were clean after the #6832 invalid loaded-tile work.
+- For #6861, targeted `ItemTest` regression coverage, touched-file PHPStan, and `git diff --check` were clean; local PHP-CS-Fixer was not available outside CI.
