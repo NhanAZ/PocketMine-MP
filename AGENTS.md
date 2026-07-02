@@ -1,117 +1,50 @@
 # AGENTS.md
 
-This file defines how AI agents should work in this fork.
-The goal is fast, practical maintenance without losing reviewability.
+This is the durable rule set for AI-assisted work in NhanAZ's personal PocketMine-MP fork.
+Keep it short. Active work belongs in `ROADMAP.md`, not here.
 
-## Project Intent
+## Work Loop
 
-This is NhanAZ's personal, experimental fork of PocketMine-MP.
-It is not official PocketMine-MP.
-Agents must keep wording neutral, preserve attribution, and avoid hostile references to upstream maintainers, contributors, or other forks.
+1. Read `ROADMAP.md`, then inspect the code and Git state relevant to the selected task.
+2. Choose the smallest ready task unless a confirmed security issue, crash, or current protocol break is more urgent.
+3. Keep protocol work, dependency imports, upstream ports, and broad cleanup separate.
+4. Follow existing PocketMine-MP architecture, style, and tooling.
+5. Run checks proportional to risk and state any skipped or failing checks.
+6. Update `ROADMAP.md` live when work is completed, discovered, deferred, or reprioritized.
+7. Commit and push each completed unit when the maintainer has requested that workflow.
 
-## Default Workflow
+## Engineering Rules
 
-1. Read the relevant local files before changing code.
-2. Keep changes small and focused.
-3. Prefer existing PocketMine-MP style, architecture, and tooling.
-4. Preserve license headers, copyright notices, and source attribution.
-5. Treat protocol, world format, networking, security, and public API changes as high risk.
-6. Run the narrowest useful checks first, then broader checks when risk is high.
-7. End every task with a concise report: what changed, tests run, remaining risks, and suggested next tasks.
+- Preserve licenses, attribution, original authorship, and useful source history.
+- Do not overwrite unrelated user changes or hide generated diffs.
+- Treat networking, protocol, world data, security, plugin API, threading, and shutdown code as high risk.
+- Add tests for behavioural changes where practical; provide manual checks for gameplay or client compatibility.
+- Keep security reports private until a fix is ready.
+- AI-generated code is untrusted until reviewed, explained, and tested.
 
-When the maintainer asks to continue [ROADMAP.md](ROADMAP.md), agents should use the roadmap's default continuation rules instead of waiting for a detailed prompt.
+## Sources And Drift
 
-## Allowed Inputs
+- The fork root is the implementation authority; canonical PMMP is the primary change feed.
+- Before source-sensitive work, run `php tools/audit-maintenance-sources.php` with `GITHUB_TOKEN` set and inspect `.github/maintenance-sources/report.json`.
+- Record source decisions in `.github/maintenance-sources/reviews.json` as `adopt`, `adapt`, `already-covered`, `defer`, or `reject-with-reason`.
+- For dependency imports, compare the lock pin with the canonical branch, verify the license, preserve history, use a Composer path repository, and import one package at a time.
+- Upstream backlog JSON is a triage aid. Read the original issue or PR before acting and never mass-create fork issues.
 
-Agents may be asked to work from:
+## Protocol Rules
 
-- Issues or pull requests from this fork.
-- Issues, pull requests, commits, or releases from upstream PocketMine-MP.
-- Useful ideas from plugins or other forks, when licensing allows reuse.
-- Private security reports, emails, or DMs summarized by the maintainer.
-- A maintainer's direct idea or experiment.
+- Verify the exact Bedrock version and protocol number at task time; never rely on memory.
+- Prefer packet captures, canonical PMMP protocol/data changes, and reproducible behaviour.
+- Cloudburst Protocol, PowerNukkitX, Dragonfly, and Endstone are corroborating evidence, not drop-in specifications.
+- For high-risk packet fields, require a capture or agreement between at least two independent implementations.
+- Translate wire behaviour into PMMP-native PHP; do not mechanically convert foreign code.
+- Record sources, commits, field order/types/conditions, uncertainty, generated changes, tests, and plugin risks in the issue, PR, or commit.
 
-Issue and pull request triage must follow [COMMUNITY_INTAKE.md](COMMUNITY_INTAKE.md).
-Upstream backlog triage must follow [UPSTREAM_INTAKE.md](UPSTREAM_INTAKE.md).
-Root, dependency, and protocol-reference drift must follow [SOURCE_MONITORING.md](SOURCE_MONITORING.md).
-Sustainable maintenance audits must follow [SUSTAINABLE_MAINTENANCE.md](SUSTAINABLE_MAINTENANCE.md), and intentional fork drift must be recorded in [FORK_DEVIATIONS.md](FORK_DEVIATIONS.md).
+## Documentation Budget
 
-## AI-Assisted Code Rules
+- Do not create Markdown by default.
+- `AGENTS.md` stores durable rules; `ROADMAP.md` stores live state and next work.
+- Add other Markdown only for a distinct user, security, release, changelog, or concrete developer-reference need.
+- Prefer updating an existing document, code comments, tests, issue/PR text, or structured JSON over creating agent-context files.
+- Generated audits and backlog snapshots must be JSON-only.
 
-AI assistance is allowed in this fork.
-However, agents must not treat generated code as correct just because it compiles.
-
-Agents must:
-
-- Explain the reason for non-trivial code changes.
-- Call out assumptions and uncertain behaviour.
-- Avoid inventing APIs or protocol details.
-- Prefer source-backed changes for Minecraft protocol updates.
-- Translate behaviour from peer implementations into PocketMine-MP architecture; never perform mechanical code conversion.
-- Add or update tests when behaviour can be tested automatically.
-- Provide manual test steps for gameplay or client compatibility changes.
-
-## High-Risk Areas
-
-Be extra careful with:
-
-- `src/network/mcpe/`
-- packet serialization and deserialization
-- runtime IDs, item IDs, block states, and generated data
-- world loading, saving, and format upgrades
-- authentication, encryption, compression, and connection handling
-- plugin API signatures and documented behaviour
-- threading, async tasks, and shutdown behaviour
-
-High-risk changes should include a rollback plan or a clear reason why rollback is simple.
-
-Protocol updates must follow [PROTOCOL_UPDATES.md](PROTOCOL_UPDATES.md).
-Do not assume the latest Minecraft: Bedrock Edition version from memory; verify it at task time and record the source used.
-
-## Upstream Sync Tasks
-
-When syncing from upstream:
-
-- Record the upstream commit, PR, or issue reference.
-- Use the upstream backlog snapshot when selecting issue or pull request work.
-- Preserve original authorship where practical.
-- Prefer cherry-pick or subtree-style history over copy-paste when possible.
-- Document conflicts and fork-specific deviations.
-- Run checks related to the touched area.
-- Update [NEXT_TASKS.md](NEXT_TASKS.md) when the sync creates or resolves follow-up work.
-- Refresh the source-monitoring report so root and dependency drift are reviewed separately.
-
-## Dependency Consolidation Tasks
-
-When importing a dependency into this repository:
-
-- Confirm license compatibility first.
-- Identify namespace, Composer package name, source repository, and current version.
-- Prefer an import method that preserves useful history.
-- Update autoloading and build scripts in the same PR.
-- Keep one dependency import per PR unless there is a strong reason to combine them.
-- Compare the pinned version with the canonical package branch and recent tags before importing.
-- Add or update the package entry in `.github/maintenance-sources/sources.json`.
-
-## Security Tasks
-
-Do not disclose private vulnerability details in public issues, PRs, or changelogs before a fix is ready.
-If a report appears exploitable, prioritize reproduction, impact, affected versions, and a minimal patch.
-
-## Required Final Report Format
-
-Use this shape at the end of each task:
-
-```text
-Summary:
-- ...
-
-Checks:
-- ...
-
-Risks:
-- ...
-
-Next:
-- ...
-```
+End tasks with a concise summary of changes, checks, risks, and the next roadmap item.

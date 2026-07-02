@@ -27,4 +27,4 @@ jobs:
           GITHUB_TOKEN: ${{ github.token }}
 
       - name: Require source review when the snapshot changes
-        run: git diff --exit-code -- .github/maintenance-sources/report.md .github/maintenance-sources/report.json
+        run: git diff --exit-code -- .github/maintenance-sources/report.json
