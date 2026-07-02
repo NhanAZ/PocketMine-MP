@@ -64,12 +64,21 @@ class UpdateChecker{
 				$this->showConsoleUpdate();
 			}
 		}else{
-			if(!VersionInfo::IS_DEVELOPMENT_BUILD && $this->getChannel() !== "stable"){
+			$suggestedChannel = self::getChannelSuggestion(VersionInfo::BUILD_CHANNEL, $this->getChannel());
+			if($suggestedChannel === "stable"){
 				$this->showChannelSuggestionStable();
-			}elseif(VersionInfo::IS_DEVELOPMENT_BUILD && $this->getChannel() === "stable"){
-				$this->showChannelSuggestionBeta();
+			}elseif($suggestedChannel !== null){
+				$this->showChannelSuggestionPrerelease($suggestedChannel);
 			}
 		}
+	}
+
+	private static function getChannelSuggestion(string $buildChannel, string $preferredChannel) : ?string{
+		if($buildChannel === "stable"){
+			return $preferredChannel !== "stable" ? "stable" : null;
+		}
+
+		return $preferredChannel === "stable" ? $buildChannel : null;
 	}
 
 	/**
@@ -104,10 +113,10 @@ class UpdateChecker{
 		]);
 	}
 
-	protected function showChannelSuggestionBeta() : void{
+	protected function showChannelSuggestionPrerelease(string $buildChannel) : void{
 		$this->printConsoleMessage([
-			"You're running a Beta build, but you're receiving update notifications for Stable builds.",
-			"To get notified about new Beta or Development builds, change 'preferred-channel' in your pocketmine.yml to 'beta' or 'development'."
+			"The server build channel is " . ucfirst($buildChannel) . ", but the update checker is configured for Stable builds.",
+			"To get notified about " . ucfirst($buildChannel) . " builds, change 'preferred-channel' in your pocketmine.yml to '$buildChannel'."
 		]);
 	}
 
@@ -155,7 +164,7 @@ class UpdateChecker{
 	}
 
 	/**
-	 * Returns the channel used for update checking (stable, beta, dev)
+	 * Returns the channel used for update checking (development, alpha, beta, stable)
 	 */
 	public function getChannel() : string{
 		return strtolower($this->server->getConfigGroup()->getPropertyString(YmlServerProperties::AUTO_UPDATER_PREFERRED_CHANNEL, "stable"));
