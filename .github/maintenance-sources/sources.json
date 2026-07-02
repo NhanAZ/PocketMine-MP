@@ -10,6 +10,14 @@
     },
     {
       "kind": "imported-package",
+      "name": "pocketmine/binaryutils",
+      "repository": "pmmp/BinaryUtils",
+      "branch": "stable",
+      "pinned_ref": "14c044afa33cb581b4a6d1ea04a87e0bc99e824b",
+      "path": "packages/binaryutils"
+    },
+    {
+      "kind": "imported-package",
       "name": "pocketmine/callback-validator",
       "repository": "pmmp/CallbackValidator",
       "branch": "master",

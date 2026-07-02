@@ -27,6 +27,7 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 ### Dependencies
 
 - Imported `pocketmine/callback-validator` 1.0.4 at canonical commit `143fa6e13254f1ab90c31b223982016f95635c37` as a local Composer path package with its MIT license, package metadata, tests, subtree history, and canonical source monitoring.
+- Imported `pocketmine/binaryutils` 0.2.7 at canonical commit `14c044afa33cb581b4a6d1ea04a87e0bc99e824b` as a local Composer path package with its LGPL-3.0 license, package metadata, tests, subtree history, and canonical source monitoring.
 - Previously imported `pocketmine/color`, `pocketmine/errorhandler`, `pocketmine/math`, and `pocketmine/log` remain local Composer path packages.
 
 ### Maintenance
@@ -53,3 +54,4 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 - For #5342, server-rendered and client-translated regression tests, full PHPUnit (223 tests, 72,563 assertions), full PHPStan, PHP-CS-Fixer 3.75 dry-run, translation validation, generated-file collision check, PHP lint, and `git diff --check` passed.
 - For #4830, targeted item/XP-orb/sneaking/sound bounce tests, full PHPUnit (227 tests, 72,572 assertions), full PHPStan, PHP-CS-Fixer 3.75 dry-run, translation validation, generated-file collision check, PHP lint, and `git diff --check` passed; live client gameplay testing remains pending.
 - For the `callback-validator` import, its PHPUnit suite (104 tests, 499 assertions), package and root PHPStan, root PHPUnit (227 tests, 72,572 assertions), PHP-CS-Fixer 3.75 dry-run, Composer validation, source audit, JSON and translation validation, code generation, generated-file collision check, and `git diff --check` passed. Composer validation retains the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.
+- For the `binaryutils` import, its PHPUnit suite (4 tests, 4 assertions), package and root PHPStan, root PHPUnit (227 tests, 72,572 assertions), PHP-CS-Fixer 3.75 dry-run, source audit, JSON and translation validation, code generation, generated-file collision check, Composer install dry-run, and `git diff --check` passed. Composer validation retains the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.

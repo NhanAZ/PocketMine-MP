@@ -14,6 +14,19 @@
     },
     {
         "kind": "imported-package",
+        "name": "pocketmine/binaryutils",
+        "repository": "pmmp/BinaryUtils",
+        "branch": "stable",
+        "pinned_ref": "14c044afa33cb581b4a6d1ea04a87e0bc99e824b",
+        "latest_ref": "14c044afa33cb581b4a6d1ea04a87e0bc99e824b",
+        "license": "LGPL-3.0",
+        "url": "https://github.com/pmmp/BinaryUtils",
+        "path": "packages/binaryutils",
+        "role": null,
+        "signal": "at-branch-head"
+    },
+    {
+        "kind": "imported-package",
         "name": "pocketmine/callback-validator",
         "repository": "pmmp/CallbackValidator",
         "branch": "master",
@@ -126,19 +139,6 @@
         "license": "LGPL-3.0",
         "url": "https://github.com/pmmp/BedrockProtocol",
         "path": "vendor/pocketmine/bedrock-protocol",
-        "role": "Composer-managed PMMP dependency",
-        "signal": "at-branch-head"
-    },
-    {
-        "kind": "composer-package",
-        "name": "pocketmine/binaryutils",
-        "repository": "pmmp/BinaryUtils",
-        "branch": "stable",
-        "pinned_ref": "14c044afa33cb581b4a6d1ea04a87e0bc99e824b",
-        "latest_ref": "14c044afa33cb581b4a6d1ea04a87e0bc99e824b",
-        "license": "LGPL-3.0",
-        "url": "https://github.com/pmmp/BinaryUtils",
-        "path": "vendor/pocketmine/binaryutils",
         "role": "Composer-managed PMMP dependency",
         "signal": "at-branch-head"
     },
