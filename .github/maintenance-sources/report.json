@@ -40,6 +40,19 @@
     },
     {
         "kind": "imported-package",
+        "name": "pocketmine/log",
+        "repository": "pmmp/Log",
+        "branch": "stable",
+        "pinned_ref": "e6c912c0f9055c81d23108ec2d179b96f404c043",
+        "latest_ref": "3b6265df5d5c03d48907ff747ed0326f75e52f10",
+        "license": "LGPL-3.0",
+        "url": "https://github.com/pmmp/Log",
+        "path": "packages/log",
+        "role": null,
+        "signal": "review-needed"
+    },
+    {
+        "kind": "imported-package",
         "name": "pocketmine/math",
         "repository": "pmmp/Math",
         "branch": "stable",
@@ -128,19 +141,6 @@
         "path": "vendor/pocketmine/callback-validator",
         "role": "Composer-managed PMMP dependency",
         "signal": "at-branch-head"
-    },
-    {
-        "kind": "composer-package",
-        "name": "pocketmine/log",
-        "repository": "pmmp/Log",
-        "branch": "stable",
-        "pinned_ref": "e6c912c0f9055c81d23108ec2d179b96f404c043",
-        "latest_ref": "3b6265df5d5c03d48907ff747ed0326f75e52f10",
-        "license": "LGPL-3.0",
-        "url": "https://github.com/pmmp/Log",
-        "path": "vendor/pocketmine/log",
-        "role": "Composer-managed PMMP dependency",
-        "signal": "review-needed"
     },
     {
         "kind": "composer-package",

@@ -27,6 +27,16 @@
       },
       {
          "type": "path",
+         "url": "packages/log",
+         "options": {
+            "symlink": false,
+            "versions": {
+               "pocketmine/log": "0.4.0"
+            }
+         }
+      },
+      {
+         "type": "path",
          "url": "packages/math",
          "options": {
             "symlink": false,

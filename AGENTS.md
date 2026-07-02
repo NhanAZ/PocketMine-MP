@@ -29,6 +29,7 @@ Keep it short. Active work belongs in `ROADMAP.md`, not here.
 - Record source decisions in `.github/maintenance-sources/reviews.json` as `adopt`, `adapt`, `already-covered`, `defer`, or `reject-with-reason`.
 - For dependency imports, compare the lock pin with the canonical branch, verify the license, preserve history, use a Composer path repository, and import one package at a time.
 - Upstream backlog JSON is a triage aid. Read the original issue or PR before acting and never mass-create fork issues.
+- Add a reviewed upstream issue or PR to `ROADMAP.md` automatically only when it is actionable and ready for this fork.
 
 ## Protocol Rules
 

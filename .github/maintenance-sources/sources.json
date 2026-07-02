@@ -26,6 +26,14 @@
     },
     {
       "kind": "imported-package",
+      "name": "pocketmine/log",
+      "repository": "pmmp/Log",
+      "branch": "stable",
+      "pinned_ref": "e6c912c0f9055c81d23108ec2d179b96f404c043",
+      "path": "packages/log"
+    },
+    {
+      "kind": "imported-package",
       "name": "pocketmine/math",
       "repository": "pmmp/Math",
       "branch": "stable",
