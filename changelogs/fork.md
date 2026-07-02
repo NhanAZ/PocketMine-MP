@@ -10,6 +10,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #5603: nether-brick fences no longer extend collision boxes toward wooden fences, while different wooden fence variants continue connecting to each other.
 - Implemented upstream issue #5463: updater channel suggestions use `VersionInfo::BUILD_CHANNEL`, correctly distinguish alpha/beta releases from stable builds, and report the actual prerelease channel.
 - Implemented upstream issue #6712: invalid saved food, exhaustion, saturation, and hunger tick-timer values now raise `SavedDataLoadingException` instead of leaking `InvalidArgumentException` from strict hunger ranges.
+- Implemented upstream issue #6714: projectile hit handling now stops immediately if a plugin closes the projectile during `ProjectileHitBlockEvent` or `ProjectileHitEntityEvent`, avoiding post-close hit logic and world movement updates.
 
 ### Maintenance
 
@@ -21,6 +22,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Recorded the non-blocking `pmmp/setup-php-action@3.2.0` Node.js 20 deprecation warning for a focused workflow maintenance follow-up.
 - For #5463, targeted channel-resolution coverage (1 test, 7 assertions), full PHPUnit (234 tests, 72,613 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks passed. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `5179fb448`.
 - For #6712, targeted hunger-data coverage (5 tests, 12 assertions), full PHPUnit (239 tests, 72,625 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks passed. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `9f43f9497`.
+- For #6714, targeted projectile-close coverage (2 tests, 8 assertions), full PHPUnit (241 tests, 72,633 assertions), touched-file and full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks passed. PHP-CS-Fixer is not installed locally; CI remains responsible for style.
 
 ### Reviewed Or Deferred
 

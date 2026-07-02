@@ -227,8 +227,20 @@ abstract class Projectile extends Entity{
 
 			$motionBeforeOnHit = clone $this->motion;
 			$ev->call();
+			if($this->isClosed()){
+				Timings::$projectileMove->stopTiming();
+				return;
+			}
 			$this->onHit($ev);
+			if($this->isClosed()){
+				Timings::$projectileMove->stopTiming();
+				return;
+			}
 			$specificHitFunc();
+			if($this->isClosed()){
+				Timings::$projectileMove->stopTiming();
+				return;
+			}
 
 			$this->isCollided = $this->onGround = true;
 			if($motionBeforeOnHit->equals($this->motion)){
