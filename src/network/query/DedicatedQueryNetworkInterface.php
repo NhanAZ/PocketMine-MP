@@ -25,6 +25,7 @@ namespace pocketmine\network\query;
 
 use pocketmine\network\AdvancedNetworkInterface;
 use pocketmine\network\Network;
+use pocketmine\network\NetworkInterfaceStartException;
 use function preg_match;
 use function socket_bind;
 use function socket_close;
@@ -78,7 +79,7 @@ final class DedicatedQueryNetworkInterface implements AdvancedNetworkInterface{
 	){
 		$socket = @socket_create($ipV6 ? AF_INET6 : AF_INET, SOCK_DGRAM, SOL_UDP);
 		if($socket === false){
-			throw new \RuntimeException("Failed to create socket");
+			throw new NetworkInterfaceStartException("Failed to create socket");
 		}
 		if($ipV6){
 			socket_set_option($socket, IPPROTO_IPV6, IPV6_V6ONLY, 1); //disable linux's cool but annoying ipv4-over-ipv6 network stack
@@ -90,9 +91,9 @@ final class DedicatedQueryNetworkInterface implements AdvancedNetworkInterface{
 		if(!@socket_bind($this->socket, $this->ip, $this->port)){
 			$error = socket_last_error($this->socket);
 			if($error === SOCKET_EADDRINUSE){ //platform error messages aren't consistent
-				throw new \RuntimeException("Failed to bind socket: Something else is already running on $this->ip $this->port", $error);
+				throw new NetworkInterfaceStartException("Failed to bind socket: Something else is already running on $this->ip $this->port", $error);
 			}
-			throw new \RuntimeException("Failed to bind to $this->ip $this->port: " . trim(socket_strerror($error)), $error);
+			throw new NetworkInterfaceStartException("Failed to bind to $this->ip $this->port: " . trim(socket_strerror($error)), $error);
 		}
 		socket_set_nonblock($this->socket);
 		$this->logger->info("Running on $this->ip $this->port");

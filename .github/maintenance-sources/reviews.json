@@ -56,7 +56,7 @@
     {
       "repository": "protocol-references",
       "classification": "defer",
-      "note": "Peer projects remain evidence only. The 2026-07-02 audit saw PowerNukkitX advance to bbfe76ac8adb03e7f65bfb6c84aaacf541893330 for voxel shape encoding; it is unrelated to upstream issue #6284 and should be reviewed only during future block-shape or protocol-shape work."
+      "note": "Peer projects remain evidence only. The 2026-07-02 audit saw PowerNukkitX advance through f2cdff7eed3a0ad79099bd6adcc1f97ab31e7143; the latest change exposes RakNet pacing and cookie settings and is deferred as corroborating evidence for the planned RakLib import, not source for upstream issue #6130."
     }
   ]
 }

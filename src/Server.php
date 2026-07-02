@@ -1268,7 +1268,16 @@ class Server{
 			if(!$rakLibRegistered){
 				//RakLib would normally handle the transport for Query packets
 				//if it's not registered we need to make sure Query still works
-				$this->network->registerInterface(new DedicatedQueryNetworkInterface($ip, $port, $ipV6, new \PrefixedLogger($this->logger, "Dedicated Query Interface")));
+				try{
+					$this->network->registerInterface(new DedicatedQueryNetworkInterface($ip, $port, $ipV6, new \PrefixedLogger($this->logger, "Dedicated Query Interface")));
+				}catch(NetworkInterfaceStartException $e){
+					$this->logger->emergency($this->language->translate(KnownTranslationFactory::pocketmine_server_networkStartFailed(
+						$ip,
+						(string) $port,
+						$e->getMessage()
+					)));
+					return false;
+				}
 			}
 			$this->logger->info($this->language->translate(KnownTranslationFactory::pocketmine_server_query_running($prettyIp, (string) $port)));
 		}

@@ -11,7 +11,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Source monitoring covers the PMMP root, PMMP-owned dependencies, and four protocol reference projects.
 - The current root matches `upstream/stable` at `fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff`.
 - The source audit has 19 entries and eight reviewed package-drift signals.
-- PowerNukkitX advanced one reference-only voxel-shape commit on 2026-07-02; it was deferred as unrelated to the active TypeConverter task.
+- PowerNukkitX advanced through `f2cdff7eed3a0ad79099bd6adcc1f97ab31e7143` on 2026-07-02; its RakNet pacing and cookie settings remain reference-only evidence for the planned RakLib import.
 - RakLib anti-spoofing cookies were reviewed and deferred until a tagged release or the planned local RakLib import.
 - The upstream backlog snapshot contains 450 open items and a scored top-40 shortlist.
 - Upstream issue #6284 was triaged and implemented: spawnable tile network NBT now receives a `TypeConverter` context and converter-scoped serialized cache.
@@ -21,6 +21,7 @@ Update it during every completed maintenance unit; do not create separate task-c
 - Upstream issue #5632 was triaged and implemented: missing Bedrock blockstate properties now fall back to the registered default state for that block ID while still rejecting wrong property types.
 - Upstream issue #6832 was triaged and implemented: chunk loading now skips invalid loaded tiles before block-state sync when their saved position is outside world bounds, duplicated, or in an unavailable chunk.
 - Upstream issue #6861 was triaged and implemented: invalid firework rocket `Flight` values loaded from saved NBT now fail as `SavedDataLoadingException` instead of escaping safe item loading as `InvalidArgumentException`.
+- Upstream issue #6130 was triaged and implemented: dedicated Query socket startup failures now use `NetworkInterfaceStartException` and receive the server's localized, controlled network-start failure path instead of producing a crash dump.
 - Full repository PHPUnit, PHPStan, PHP-CS-Fixer 3.75 dry-run, and `git diff --check` are clean after the #6832 invalid loaded-tile work.
 - Fork CI health is the top active gate; the latest red runs were PHP-CS-Fixer import order, PHPStan CLI argv handling, and Docker missing local `packages/` path repositories.
 - User-facing links were reviewed: fork actions point to `NhanAZ/PocketMine-MP`; PMMP docs, packages, changelog links, and source attribution remain labeled upstream or ecosystem references.
@@ -81,6 +82,7 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
   - Opened issue #6832, "Loaded tiles with positions outside the world crash the server".
   - Opened issue #6750, "Server crashed".
   - Opened issue #6861, "Crash when loading firework from disk with negative flight multiplier".
+  - Opened issue #6130, "DedicatedQueryNetworkInterface crashes server if unable to bind to udp/19132".
 - [x] Classify relevance and create only the smallest actionable fork task or port.
   - Classified as actionable network/protocol architecture work and implemented the smallest local change: pass `TypeConverter` through tile spawn NBT serialization and cache serialized spawn compounds per converter.
   - Classified #6711 as actionable core validation work and implemented the smallest local guard: `BaseInventory` rejects non-null plain `Item` objects whose type ID maps to a block type ID unless they are real `ItemBlock` instances.
@@ -90,10 +92,11 @@ The fork root remains authoritative, canonical PMMP remains the primary change f
   - Classified #6832 as actionable crash/corruption handling work and implemented the smallest local change: invalid loaded tiles are logged and skipped before the chunk block-state post-processing path can read out-of-bounds coordinates.
   - Deferred #6750 because the public issue is unconfirmed and the actionable crash dumps are private to upstream maintainers.
   - Classified #6861 as actionable saved-data crash handling and implemented the smallest local change: validate firework rocket `Flight` during item NBT deserialization and convert invalid values to `SavedDataLoadingException`.
+  - Classified #6130 as actionable network startup crash handling and implemented the smallest local change: dedicated Query bind failures now satisfy the network-interface exception contract and are handled by the server's localized startup-failure path.
 - [x] Preserve source links and authorship; do not copy whole discussions.
-  - Sources: https://github.com/pmmp/PocketMine-MP/issues/6284, https://github.com/pmmp/PocketMine-MP/issues/6711, https://github.com/pmmp/PocketMine-MP/issues/6580, https://github.com/pmmp/PocketMine-MP/issues/6808 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/5632 by GH-PM with a dktapps root-cause comment, https://github.com/pmmp/PocketMine-MP/issues/6832 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/6750 by LeonMazzoli with private upstream crash dumps, and https://github.com/pmmp/PocketMine-MP/issues/6861 by dktapps; original issue comments were reviewed before implementation or deferral.
-  - Checks: targeted `SpawnableTest`, targeted `BaseInventoryTest`, targeted `EntityFactoryTest`, targeted `BlockSerializerDeserializerTest`, targeted `WorldTest`, targeted `ItemTest`, full PHPUnit, full PHPStan, PHP-CS-Fixer 3.75 dry-run, JSON validation, `git diff --check`, and generated-file collision check. For #6861 specifically, touched-file PHPStan and `git diff --check` were clean; local PHP-CS-Fixer was unavailable and remains delegated to CI.
-  - The next shortlist candidates are #6130, #5342, and #4830, but each original issue must be opened and reviewed before any work is added.
+  - Sources: https://github.com/pmmp/PocketMine-MP/issues/6284, https://github.com/pmmp/PocketMine-MP/issues/6711, https://github.com/pmmp/PocketMine-MP/issues/6580, https://github.com/pmmp/PocketMine-MP/issues/6808 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/5632 by GH-PM with a dktapps root-cause comment, https://github.com/pmmp/PocketMine-MP/issues/6832 by dktapps, https://github.com/pmmp/PocketMine-MP/issues/6750 by LeonMazzoli with private upstream crash dumps, https://github.com/pmmp/PocketMine-MP/issues/6861 by dktapps, and https://github.com/pmmp/PocketMine-MP/issues/6130 by dktapps; original issue comments were reviewed before implementation or deferral.
+  - Checks: targeted `SpawnableTest`, targeted `BaseInventoryTest`, targeted `EntityFactoryTest`, targeted `BlockSerializerDeserializerTest`, targeted `WorldTest`, targeted `ItemTest`, full PHPUnit, full PHPStan, PHP-CS-Fixer 3.75 dry-run, JSON validation, translation validation, `git diff --check`, and generated-file collision check. For #6130 specifically, the occupied-UDP-port regression test passed along with full PHPUnit (221 tests, 72,558 assertions), full PHPStan, and PHP-CS-Fixer 3.75.
+  - The next shortlist candidates are #5342 and #4830, but each original issue must be opened and reviewed before any work is added.
 
 ## Dependency Track
 
