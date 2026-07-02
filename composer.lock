@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5dfb60dc2ae67dfcc52708e861bf308e",
+    "content-hash": "c6ec25eba5c1fd9ee005c252a888a36e",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -346,16 +346,10 @@
         {
             "name": "pocketmine/callback-validator",
             "version": "1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pmmp/CallbackValidator.git",
-                "reference": "143fa6e13254f1ab90c31b223982016f95635c37"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pmmp/CallbackValidator/zipball/143fa6e13254f1ab90c31b223982016f95635c37",
-                "reference": "143fa6e13254f1ab90c31b223982016f95635c37",
-                "shasum": ""
+                "type": "path",
+                "url": "packages/callback-validator",
+                "reference": "799c8a90af9f8bae2be2816f7331dbd272010b4f"
             },
             "require": {
                 "ext-reflection": "*",
@@ -376,7 +370,11 @@
                     "DaveRandom\\CallbackValidator\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "DaveRandom\\CallbackValidator\\Test\\": "tests/"
+                }
+            },
             "license": [
                 "MIT"
             ],
@@ -387,11 +385,10 @@
                 }
             ],
             "description": "Fork of daverandom/callback-validator - Tools for validating callback signatures",
-            "support": {
-                "issues": "https://github.com/pmmp/CallbackValidator/issues",
-                "source": "https://github.com/pmmp/CallbackValidator/tree/1.0.4"
-            },
-            "time": "2025-12-24T01:25:05+00:00"
+            "transport-options": {
+                "symlink": false,
+                "relative": true
+            }
         },
         {
             "name": "pocketmine/color",

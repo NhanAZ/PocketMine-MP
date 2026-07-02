@@ -26,7 +26,8 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 
 ### Dependencies
 
-- Imported `pocketmine/color`, `pocketmine/errorhandler`, `pocketmine/math`, and `pocketmine/log` as local Composer path packages while preserving licenses, package metadata, and useful source history.
+- Imported `pocketmine/callback-validator` 1.0.4 at canonical commit `143fa6e13254f1ab90c31b223982016f95635c37` as a local Composer path package with its MIT license, package metadata, tests, subtree history, and canonical source monitoring.
+- Previously imported `pocketmine/color`, `pocketmine/errorhandler`, `pocketmine/math`, and `pocketmine/log` remain local Composer path packages.
 
 ### Maintenance
 
@@ -51,3 +52,4 @@ Backfilled changes after `a170743de838581487bcf91bc7026fe786de752b` through `6c7
 - For #6130, the targeted bind-failure test, full PHPUnit (221 tests, 72,558 assertions), full PHPStan, PHP-CS-Fixer 3.75 dry-run, JSON and translation validation, generated-file collision check, PHP lint, and `git diff --check` passed.
 - For #5342, server-rendered and client-translated regression tests, full PHPUnit (223 tests, 72,563 assertions), full PHPStan, PHP-CS-Fixer 3.75 dry-run, translation validation, generated-file collision check, PHP lint, and `git diff --check` passed.
 - For #4830, targeted item/XP-orb/sneaking/sound bounce tests, full PHPUnit (227 tests, 72,572 assertions), full PHPStan, PHP-CS-Fixer 3.75 dry-run, translation validation, generated-file collision check, PHP lint, and `git diff --check` passed; live client gameplay testing remains pending.
+- For the `callback-validator` import, its PHPUnit suite (104 tests, 499 assertions), package and root PHPStan, root PHPUnit (227 tests, 72,572 assertions), PHP-CS-Fixer 3.75 dry-run, Composer validation, source audit, JSON and translation validation, code generation, generated-file collision check, and `git diff --check` passed. Composer validation retains the pre-existing deprecated `LGPL-3.0` SPDX identifier warning.

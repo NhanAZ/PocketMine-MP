@@ -10,6 +10,14 @@
     },
     {
       "kind": "imported-package",
+      "name": "pocketmine/callback-validator",
+      "repository": "pmmp/CallbackValidator",
+      "branch": "master",
+      "pinned_ref": "143fa6e13254f1ab90c31b223982016f95635c37",
+      "path": "packages/callback-validator"
+    },
+    {
+      "kind": "imported-package",
       "name": "pocketmine/color",
       "repository": "pmmp/Color",
       "branch": "master",

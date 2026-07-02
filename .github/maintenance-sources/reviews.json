@@ -9,6 +9,11 @@
       "note": "Fork baseline and upstream/stable are both fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff."
     },
     {
+      "repository": "pmmp/CallbackValidator",
+      "classification": "adopt",
+      "note": "Imported tag 1.0.4 at the root lock pin and canonical master head 143fa6e13254f1ab90c31b223982016f95635c37 as packages/callback-validator with its MIT license and full subtree history."
+    },
+    {
       "repository": "pmmp/Color",
       "classification": "defer",
       "note": "Post-pin commits only update CI, supported test versions, and development dependencies."

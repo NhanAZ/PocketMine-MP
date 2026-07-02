@@ -14,6 +14,19 @@
     },
     {
         "kind": "imported-package",
+        "name": "pocketmine/callback-validator",
+        "repository": "pmmp/CallbackValidator",
+        "branch": "master",
+        "pinned_ref": "143fa6e13254f1ab90c31b223982016f95635c37",
+        "latest_ref": "143fa6e13254f1ab90c31b223982016f95635c37",
+        "license": "MIT",
+        "url": "https://github.com/pmmp/CallbackValidator",
+        "path": "packages/callback-validator",
+        "role": null,
+        "signal": "at-branch-head"
+    },
+    {
+        "kind": "imported-package",
         "name": "pocketmine/color",
         "repository": "pmmp/Color",
         "branch": "master",
@@ -126,19 +139,6 @@
         "license": "LGPL-3.0",
         "url": "https://github.com/pmmp/BinaryUtils",
         "path": "vendor/pocketmine/binaryutils",
-        "role": "Composer-managed PMMP dependency",
-        "signal": "at-branch-head"
-    },
-    {
-        "kind": "composer-package",
-        "name": "pocketmine/callback-validator",
-        "repository": "pmmp/CallbackValidator",
-        "branch": "master",
-        "pinned_ref": "143fa6e13254f1ab90c31b223982016f95635c37",
-        "latest_ref": "143fa6e13254f1ab90c31b223982016f95635c37",
-        "license": "MIT",
-        "url": "https://github.com/pmmp/CallbackValidator",
-        "path": "vendor/pocketmine/callback-validator",
         "role": "Composer-managed PMMP dependency",
         "signal": "at-branch-head"
     },
