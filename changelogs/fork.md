@@ -46,6 +46,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #2549, targeted `ChunkSelectorTest` (1 test, 1,569 assertions), full PHPUnit (257 tests, 74,267 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, JSON, whitespace, GitHub CI, PHP-CS-Fixer, and Docker checks passed for commit `2c705b83f`.
 - For #5821, source audit, review JSON validation, whitespace validation, GitHub CI, PHP-CS-Fixer, and Docker checks passed for decision commit `e8cc27251`; code tests were not required because no runtime source changed.
 - For #6926, targeted `VanillaCommandTest` (4 tests, 8 assertions), full PHPUnit (261 tests, 74,275 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `5fddf6251`.
+- For #5805, source audit, review JSON validation, whitespace, GitHub CI, PHP-CS-Fixer, and Docker checks passed for decision commit `32ad9a0c1`; runtime-specific tests were not required because no source code changed.
 
 ### Reviewed Or Deferred
 
