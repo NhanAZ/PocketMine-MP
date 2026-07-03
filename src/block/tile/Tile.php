@@ -28,9 +28,10 @@ declare(strict_types=1);
 namespace pocketmine\block\tile;
 
 use pocketmine\block\Block;
+use pocketmine\data\SavedDataLoadingException;
 use pocketmine\item\Item;
 use pocketmine\math\Vector3;
-use pocketmine\nbt\NbtDataException;
+use pocketmine\nbt\NbtException;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\timings\Timings;
 use pocketmine\timings\TimingsHandler;
@@ -57,7 +58,8 @@ abstract class Tile{
 
 	/**
 	 * @internal
-	 * @throws NbtDataException
+	 * @throws NbtException
+	 * @throws SavedDataLoadingException
 	 * Reads additional data from the CompoundTag on tile creation.
 	 */
 	abstract public function readSaveData(CompoundTag $nbt) : void;
@@ -91,7 +93,11 @@ abstract class Tile{
 	 */
 	public function copyDataFromItem(Item $item) : void{
 		if(($blockNbt = $item->getCustomBlockData()) !== null){ //TODO: check item root tag (MCPE doesn't use BlockEntityTag)
-			$this->readSaveData($blockNbt);
+			try{
+				$this->readSaveData($blockNbt);
+			}catch(NbtException|SavedDataLoadingException $e){
+				\GlobalLogger::get()->error(get_class($this) . " ($this->position): Error loading custom block data (data will be ignored): " . $e->getMessage());
+			}
 		}
 	}
 

@@ -27,6 +27,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #3598: player `onGround` now refreshes from current block collision when nearby blocks change, and new players are no longer forced on-ground before movement.
 - Implemented upstream issue #4931: sugarcane random ticks now run only from the top block and add at most one new block, while fertilizer can still grow sugarcane up to the normal maximum height; cactus top-only one-block growth is covered by regression tests.
 - Implemented upstream issue #6713: entity and block explosion events now reject affected or ignition blocks whose positions have no valid loaded world or are outside that world's bounds.
+- Implemented upstream issue #6821: invalid item custom block data now logs a concise loading error and leaves the placed tile active instead of crashing the server.
 
 ### Maintenance
 
@@ -71,6 +72,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #3598, targeted `PlayerGroundStateTest` (2 tests, 8 assertions), full PHPUnit (281 tests, 74,334 assertions), focused and full PHPStan, syntax, code generation, translation validation, source audit, 119-file non-vendor JSON validation, whitespace checks, GitHub CI, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker checks passed for commit `eb50bc059`. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
 - For #4931, targeted `BlockGrowthTest` (5 tests, 20 assertions), block PHPUnit (33 tests, 47,371 assertions), full PHPUnit (286 tests, 74,354 assertions), full PHPStan, syntax, code generation, translation validation, source audit, non-vendor JSON validation, whitespace checks, CI matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker checks passed for follow-up commit `6b9c772cd` after the first implementation run failed only PHP-CS-Fixer formatting in the new test file. Focused per-file PHPStan still reports the existing `Sugarcane::canBeSupportedAt()` dynamic trait-use warning when the class is analyzed outside the full project graph.
 - For #6713, targeted `ExplosionEventTest` (3 tests, 6 assertions), event PHPUnit (12 tests, 17 assertions), full PHPUnit (289 tests, 74,360 assertions), focused and full PHPStan, syntax checks, GitHub CI, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker checks passed for follow-up commit `322df2425` after the first implementation run failed only PHP-CS-Fixer on the new test header.
+- For #6821, targeted `TileTest` (2 tests, 4 assertions), full PHPUnit (291 tests, 74,364 assertions), focused and full PHPStan, syntax, PHP-CS-Fixer 3.75, code generation, translation validation, non-vendor JSON validation, and whitespace checks passed locally; GitHub CI and Docker are pending the implementation push.
 
 ### Reviewed Or Deferred
 
