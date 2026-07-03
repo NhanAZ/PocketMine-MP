@@ -24,12 +24,21 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\handler;
 
 use PHPUnit\Framework\TestCase;
+use pocketmine\entity\Attribute;
+use pocketmine\entity\AttributeFactory;
+use pocketmine\entity\AttributeMap;
 use pocketmine\math\Facing;
 use pocketmine\math\Vector3;
 use pocketmine\network\mcpe\InventoryManager;
 use pocketmine\network\mcpe\NetworkSession;
+use pocketmine\network\mcpe\protocol\InventoryTransactionPacket;
 use pocketmine\network\mcpe\protocol\PlayerActionPacket;
 use pocketmine\network\mcpe\protocol\types\BlockPosition;
+use pocketmine\network\mcpe\protocol\types\inventory\ItemStack;
+use pocketmine\network\mcpe\protocol\types\inventory\ItemStackWrapper;
+use pocketmine\network\mcpe\protocol\types\inventory\PredictedResult;
+use pocketmine\network\mcpe\protocol\types\inventory\TriggerType;
+use pocketmine\network\mcpe\protocol\types\inventory\UseItemTransactionData;
 use pocketmine\network\mcpe\protocol\types\PlayerAction;
 use pocketmine\player\Player;
 use ReflectionClass;
@@ -74,6 +83,24 @@ final class InGamePacketHandlerTest extends TestCase{
 		self::assertSame([false], $player->getSetUsingItemValues());
 	}
 
+	public function testFailedBlockInteractionResynchronizesHunger() : void{
+		$player = $this->createPlayer(false);
+		$hunger = $player->initializeHungerAttribute();
+		$player->setInteractBlockResult(false);
+
+		self::assertTrue($this->createHandler($player)->handleInventoryTransaction($this->createBlockInteractionTransaction()));
+		self::assertTrue($hunger->isDesynchronized());
+	}
+
+	public function testSuccessfulBlockInteractionDoesNotResynchronizeHunger() : void{
+		$player = $this->createPlayer(false);
+		$hunger = $player->initializeHungerAttribute();
+		$player->setInteractBlockResult(true);
+
+		self::assertTrue($this->createHandler($player)->handleInventoryTransaction($this->createBlockInteractionTransaction()));
+		self::assertFalse($hunger->isDesynchronized());
+	}
+
 	private function createPlayer(bool $creative) : InGamePacketHandlerTestPlayer{
 		/** @var InGamePacketHandlerTestPlayer $player */
 		$player = (new ReflectionClass(InGamePacketHandlerTestPlayer::class))->newInstanceWithoutConstructor();
@@ -92,10 +119,28 @@ final class InGamePacketHandlerTest extends TestCase{
 	private function createPlayerAction(int $action, BlockPosition $blockPosition) : PlayerActionPacket{
 		return PlayerActionPacket::create(1, $action, $blockPosition, $blockPosition, Facing::UP);
 	}
+
+	private function createBlockInteractionTransaction() : InventoryTransactionPacket{
+		return InventoryTransactionPacket::create(0, null, UseItemTransactionData::new(
+			[],
+			UseItemTransactionData::ACTION_CLICK_BLOCK,
+			TriggerType::PLAYER_INPUT,
+			new BlockPosition(1, 2, 3),
+			Facing::UP,
+			0,
+			ItemStackWrapper::legacy(ItemStack::null()),
+			new Vector3(1, 2, 3),
+			new Vector3(0.5, 0.5, 0.5),
+			0,
+			PredictedResult::FAILURE,
+			0
+		));
+	}
 }
 
 final class InGamePacketHandlerTestPlayer extends Player{
 	private bool $creative;
+	private bool $interactBlockResult = true;
 	/** @var list<array{string, int, int, int, 4?: int}> */
 	private array $calls = [];
 	/** @var list<bool> */
@@ -107,6 +152,26 @@ final class InGamePacketHandlerTestPlayer extends Player{
 
 	public function isCreative(bool $literal = false) : bool{
 		return $this->creative;
+	}
+
+	public function initializeHungerAttribute() : Attribute{
+		$this->attributeMap = new AttributeMap();
+		$hunger = AttributeFactory::getInstance()->mustGet(Attribute::HUNGER);
+		$hunger->markSynchronized();
+		$this->attributeMap->add($hunger);
+		return $hunger;
+	}
+
+	public function setInteractBlockResult(bool $interactBlockResult) : void{
+		$this->interactBlockResult = $interactBlockResult;
+	}
+
+	public function selectHotbarSlot(int $hotbarSlot) : bool{
+		return true;
+	}
+
+	public function interactBlock(Vector3 $pos, int $face, Vector3 $clickOffset) : bool{
+		return $this->interactBlockResult;
 	}
 
 	public function attackBlock(Vector3 $pos, int $face) : bool{

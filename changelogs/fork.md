@@ -29,6 +29,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #6713: entity and block explosion events now reject affected or ignition blocks whose positions have no valid loaded world or are outside that world's bounds.
 - Implemented upstream issue #6821: invalid item custom block data now logs a concise loading error and leaves the placed tile active instead of crashing the server.
 - Implemented upstream issue #6680: worlds retry non-empty chunk population queues once per tick, preventing externally locked requests from remaining dormant after their lock is released.
+- Implemented upstream issue #6677: failed block interactions now force hunger attribute resynchronization, correcting cancelled client-predicted cake consumption without adding updates to successful interactions.
 
 ### Maintenance
 
@@ -77,6 +78,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #6713, targeted `ExplosionEventTest` (3 tests, 6 assertions), event PHPUnit (12 tests, 17 assertions), full PHPUnit (289 tests, 74,360 assertions), focused and full PHPStan, syntax checks, GitHub CI, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker checks passed for follow-up commit `322df2425` after the first implementation run failed only PHP-CS-Fixer on the new test header.
 - For #6821, targeted `TileTest` (2 tests, 4 assertions), full PHPUnit (291 tests, 74,364 assertions), focused and full PHPStan, syntax, PHP-CS-Fixer 3.75, code generation, translation validation, non-vendor JSON, whitespace, PHP 8.1-8.5 CI, integration, generated-code, ShellCheck, and Docker checks passed for implementation commit `3014ca16d`.
 - For #6680, targeted `WorldTest` (5 tests, 24 assertions), full PHPUnit (292 tests, 74,366 assertions), focused and full PHPStan, syntax, PHP-CS-Fixer 3.75, code generation, source audit, non-vendor JSON, translation, whitespace, PHP 8.1-8.5 CI, integration, generated-code, ShellCheck, and Docker checks passed for implementation commit `92d8cc072`.
+- For #6677, targeted `InGamePacketHandlerTest` (5 tests, 14 assertions), full PHPUnit (294 tests, 74,370 assertions), focused and full PHPStan, syntax, PHP-CS-Fixer 3.75, code generation, source audit, non-vendor JSON, translation, and whitespace checks passed locally; GitHub CI and Docker are pending the implementation push.
 
 ### Reviewed Or Deferred
 
