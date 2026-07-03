@@ -6,7 +6,7 @@
  * |  _ \ ___   ___| | _____| |_|  \/  (_)_ __   ___      |  \/  |  _ \
  * | |_) / _ \ / __| |/ / _ \ __| |\/| | | '_ \ / _ \_____| |\/| | |_) |
  * |  __/ (_) | (__|   <  __/ |_| |  | | | | | |  __/_____| |  | |  __/
- * |_|   \___/ \___|_|\_\___|\__|_|  |_|_| |_| \___|     |_|  |_|_|
+ * |_|   \___/ \___|_|\_\___|\__|_|  |_|_|_| |_|\___|     |_|  |_|_|
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -109,7 +109,7 @@ final class BlockGrowthTest extends TestCase{
 	}
 
 	/**
-	 * @param array<string, Block> $blocks
+	 * @param array<string, Block>                                            $blocks
 	 * @param list<array{x: int, y: int, z: int, block: Block, update: bool}> $setBlocks
 	 */
 	private function createBlockWorld(array &$blocks, array &$setBlocks) : World{
@@ -164,7 +164,7 @@ final class BlockGrowthTest extends TestCase{
 			if($entry["x"] === $x && $entry["y"] === $y && $entry["z"] === $z){
 				self::assertSame($typeId, $entry["block"]->getTypeId());
 				if($age !== null){
-					self::assertInstanceOf(\pocketmine\block\utils\Ageable::class, $entry["block"]);
+					self::assertInstanceOf(utils\Ageable::class, $entry["block"]);
 					self::assertSame($age, $entry["block"]->getAge());
 				}
 				return;
