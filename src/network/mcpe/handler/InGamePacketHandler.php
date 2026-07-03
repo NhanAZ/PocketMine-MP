@@ -746,6 +746,13 @@ class InGamePacketHandler extends PacketHandler{
 				break;
 			case PlayerAction::PREDICT_DESTROY_BLOCK:
 				self::validateFacing($face);
+				if($this->player->isCreative() && ($this->lastBlockAttacked === null || !$blockPosition->equals($this->lastBlockAttacked))){
+					if(!$this->player->attackBlock($pos, $face)){
+						$this->syncBlocksNearby($pos, $face);
+						$this->lastBlockAttacked = null;
+						break;
+					}
+				}
 				if(!$this->player->breakBlock($pos)){
 					$this->syncBlocksNearby($pos, $face);
 				}

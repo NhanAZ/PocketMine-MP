@@ -11,6 +11,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #5463: updater channel suggestions use `VersionInfo::BUILD_CHANNEL`, correctly distinguish alpha/beta releases from stable builds, and report the actual prerelease channel.
 - Implemented upstream issue #6712: invalid saved food, exhaustion, saturation, and hunger tick-timer values now raise `SavedDataLoadingException` instead of leaking `InvalidArgumentException` from strict hunger ranges.
 - Implemented upstream issue #6714: projectile hit handling now stops immediately if a plugin closes the projectile during `ProjectileHitBlockEvent` or `ProjectileHitEntityEvent`, avoiding post-close hit logic and world movement updates.
+- Implemented upstream issue #2626: creative-mode predicted block destroys now restore `PlayerInteractEvent::LEFT_CLICK_BLOCK` when the client skips repeated start-break actions, without duplicating normal start-break left-click events.
 
 ### Maintenance
 
@@ -28,6 +29,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #6714, targeted projectile-close coverage (2 tests, 8 assertions), full PHPUnit (241 tests, 72,633 assertions), touched-file and full PHPStan, code generation, translation validation, generated-file collision, JSON, syntax, and whitespace checks passed. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for style follow-up commit `9270fb248` after the initial implementation run failed only PHP-CS-Fixer import ordering.
 - For #5638, syntax checks, touched-file PHPStan, full PHPStan, full PHPUnit (241 tests, 72,633 assertions), code generation, translation validation, generated-file collision, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `13fba9671`.
 - For #5064, targeted Query PHPUnit (4 tests, 18 assertions), touched-file PHPStan, full PHPUnit (244 tests, 72,647 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `3213aae4e`.
+- For #2626, targeted handler PHPUnit (3 tests, 10 assertions), touched-file PHPStan, full PHPUnit (247 tests, 72,657 assertions), full PHPStan, syntax, and whitespace checks passed locally. PHP-CS-Fixer was unavailable in this workspace, so the fork Code Style workflow must be watched after push.
 
 ### Reviewed Or Deferred
 
