@@ -30,6 +30,7 @@ use pocketmine\item\Item;
 use pocketmine\item\ItemIdentifier;
 use pocketmine\item\ItemTypeIds;
 use pocketmine\item\VanillaItems;
+use pocketmine\nbt\tag\CompoundTag;
 
 class BaseInventoryTest extends TestCase{
 
@@ -111,6 +112,37 @@ class BaseInventoryTest extends TestCase{
 		self::assertSame($item->getMaxStackSize(), $inventory->getAddableItemQuantity($item));
 	}
 
+	public function testContainsCachesSearchItemTags() : void{
+		NbtSerializationCountingItem::$serializeCompoundTagCalls = 0;
+		$inventory = new SimpleInventory(4);
+		for($i = 0; $i < 4; $i++){
+			$inventory->setItem($i, VanillaItems::APPLE()->setCount(1)->setCustomName("needle"));
+		}
+
+		$search = new NbtSerializationCountingItem(new ItemIdentifier(ItemTypeIds::APPLE), "Apple");
+		$search->setCount(4);
+		$search->setCustomName("needle");
+
+		self::assertTrue($inventory->contains($search));
+		self::assertSame(1, NbtSerializationCountingItem::$serializeCompoundTagCalls);
+	}
+
+	public function testRemoveCachesSearchItemTags() : void{
+		NbtSerializationCountingItem::$serializeCompoundTagCalls = 0;
+		$inventory = new SimpleInventory(4);
+		for($i = 0; $i < 4; $i++){
+			$inventory->setItem($i, VanillaItems::APPLE()->setCount(1)->setCustomName("needle"));
+		}
+
+		$search = new NbtSerializationCountingItem(new ItemIdentifier(ItemTypeIds::APPLE), "Apple");
+		$search->setCustomName("needle");
+
+		$inventory->remove($search);
+
+		self::assertSame(1, NbtSerializationCountingItem::$serializeCompoundTagCalls);
+		self::assertSame([], $inventory->getContents());
+	}
+
 	public function testRejectsPlainItemUsingBlockTypeIdOnSetItem() : void{
 		$inventory = new SimpleInventory(1);
 		$item = new Item(new ItemIdentifier(ItemTypeIds::fromBlockTypeId(BlockTypeIds::GRASS)), "Grass");
@@ -140,5 +172,14 @@ class BaseInventoryTest extends TestCase{
 		$inventory->setItem(0, $item);
 
 		self::assertTrue($item->equalsExact($inventory->getItem(0)));
+	}
+}
+
+final class NbtSerializationCountingItem extends Item{
+	public static int $serializeCompoundTagCalls = 0;
+
+	protected function serializeCompoundTag(CompoundTag $tag) : void{
+		self::$serializeCompoundTagCalls++;
+		parent::serializeCompoundTag($tag);
 	}
 }

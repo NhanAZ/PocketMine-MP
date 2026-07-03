@@ -27,6 +27,7 @@ use pocketmine\item\Item;
 use pocketmine\item\ItemBlock;
 use pocketmine\item\ItemTypeIds;
 use pocketmine\item\VanillaItems;
+use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\player\Player;
 use pocketmine\utils\ObjectSet;
 use pocketmine\utils\Utils;
@@ -144,11 +145,22 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 		return $item->equals($test, true, $checkTags) ? $item->getCount() : 0;
 	}
 
+	protected static function itemMatchesInventorySearch(Item $item, Item $test, bool $checkTags, ?CompoundTag $testTags) : bool{
+		return $item->getStateId() === $test->getStateId() &&
+			(!$checkTags || $item->getNamedTag()->equals($testTags ?? $test->getNamedTag()));
+	}
+
+	protected function getMatchingItemCountWithCachedTags(int $slot, Item $test, bool $checkTags, ?CompoundTag $testTags) : int{
+		return $this->getMatchingItemCount($slot, $test, $checkTags);
+	}
+
 	public function contains(Item $item) : bool{
 		$count = max(1, $item->getCount());
-		$checkTags = $item->hasNamedTag();
+		$itemTags = $item->getNamedTag();
+		$checkTags = $itemTags->getCount() > 0;
+		$itemTags = $checkTags ? $itemTags : null;
 		for($i = 0, $size = $this->getSize(); $i < $size; $i++){
-			$slotCount = $this->getMatchingItemCount($i, $item, $checkTags);
+			$slotCount = $this->getMatchingItemCountWithCachedTags($i, $item, $checkTags, $itemTags);
 			if($slotCount > 0){
 				$count -= $slotCount;
 				if($count <= 0){
@@ -162,9 +174,11 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 
 	public function all(Item $item) : array{
 		$slots = [];
-		$checkTags = $item->hasNamedTag();
+		$itemTags = $item->getNamedTag();
+		$checkTags = $itemTags->getCount() > 0;
+		$itemTags = $checkTags ? $itemTags : null;
 		for($i = 0, $size = $this->getSize(); $i < $size; $i++){
-			if($this->getMatchingItemCount($i, $item, $checkTags) > 0){
+			if($this->getMatchingItemCountWithCachedTags($i, $item, $checkTags, $itemTags) > 0){
 				$slots[$i] = $this->getItem($i);
 			}
 		}
@@ -174,10 +188,12 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 
 	public function first(Item $item, bool $exact = false) : int{
 		$count = $exact ? $item->getCount() : max(1, $item->getCount());
-		$checkTags = $exact || $item->hasNamedTag();
+		$itemTags = $item->getNamedTag();
+		$checkTags = $exact || $itemTags->getCount() > 0;
+		$itemTags = $checkTags ? $itemTags : null;
 
 		for($i = 0, $size = $this->getSize(); $i < $size; $i++){
-			$slotCount = $this->getMatchingItemCount($i, $item, $checkTags);
+			$slotCount = $this->getMatchingItemCountWithCachedTags($i, $item, $checkTags, $itemTags);
 			if($slotCount > 0 && ($slotCount === $count || (!$exact && $slotCount > $count))){
 				return $i;
 			}
@@ -211,12 +227,13 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 	public function getAddableItemQuantity(Item $item) : int{
 		$count = $item->getCount();
 		$maxStackSize = min($this->getMaxStackSize(), $item->getMaxStackSize());
+		$itemTags = $item->getNamedTag();
 
 		for($i = 0, $size = $this->getSize(); $i < $size; ++$i){
 			if($this->isSlotEmpty($i)){
 				$count -= $maxStackSize;
 			}else{
-				$slotCount = $this->getMatchingItemCount($i, $item, true);
+				$slotCount = $this->getMatchingItemCountWithCachedTags($i, $item, true, $itemTags);
 				if($slotCount > 0 && ($diff = $maxStackSize - $slotCount) > 0){
 					$count -= $diff;
 				}
@@ -257,13 +274,14 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 		$emptySlots = [];
 
 		$maxStackSize = min($this->getMaxStackSize(), $newItem->getMaxStackSize());
+		$newItemTags = $newItem->getNamedTag();
 
 		for($i = 0, $size = $this->getSize(); $i < $size; ++$i){
 			if($this->isSlotEmpty($i)){
 				$emptySlots[] = $i;
 				continue;
 			}
-			$slotCount = $this->getMatchingItemCount($i, $newItem, true);
+			$slotCount = $this->getMatchingItemCountWithCachedTags($i, $newItem, true, $newItemTags);
 			if($slotCount === 0){
 				continue;
 			}
@@ -299,10 +317,12 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 	}
 
 	public function remove(Item $item) : void{
-		$checkTags = $item->hasNamedTag();
+		$itemTags = $item->getNamedTag();
+		$checkTags = $itemTags->getCount() > 0;
+		$itemTags = $checkTags ? $itemTags : null;
 
 		for($i = 0, $size = $this->getSize(); $i < $size; $i++){
-			if($this->getMatchingItemCount($i, $item, $checkTags) > 0){
+			if($this->getMatchingItemCountWithCachedTags($i, $item, $checkTags, $itemTags) > 0){
 				$this->clear($i);
 			}
 		}
@@ -310,9 +330,13 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 
 	public function removeItem(Item ...$slots) : array{
 		$searchItems = [];
+		$searchItemTags = [];
 		foreach($slots as $slot){
 			if(!$slot->isNull()){
-				$searchItems[] = clone $slot;
+				$search = clone $slot;
+				$searchItems[] = $search;
+				$searchTags = $search->getNamedTag();
+				$searchItemTags[] = $searchTags->getCount() > 0 ? $searchTags : null;
 			}
 		}
 
@@ -322,7 +346,8 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 			}
 
 			foreach($searchItems as $index => $search){
-				$slotCount = $this->getMatchingItemCount($i, $search, $search->hasNamedTag());
+				$searchTags = $searchItemTags[$index];
+				$slotCount = $this->getMatchingItemCountWithCachedTags($i, $search, $searchTags !== null, $searchTags);
 				if($slotCount > 0){
 					$amount = min($slotCount, $search->getCount());
 					$search->setCount($search->getCount() - $amount);
@@ -332,6 +357,7 @@ abstract class BaseInventory implements Inventory, SlotValidatedInventory{
 					$this->setItem($i, $slotItem);
 					if($search->getCount() <= 0){
 						unset($searchItems[$index]);
+						unset($searchItemTags[$index]);
 					}
 				}
 			}

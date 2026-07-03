@@ -13,6 +13,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #6714: projectile hit handling now stops immediately if a plugin closes the projectile during `ProjectileHitBlockEvent` or `ProjectileHitEntityEvent`, avoiding post-close hit logic and world movement updates.
 - Implemented upstream issue #2626: creative-mode predicted block destroys now restore `PlayerInteractEvent::LEFT_CLICK_BLOCK` when the client skips repeated start-break actions, without duplicating normal start-break left-click events.
 - Implemented upstream issue #4206: replacement chunks passed to `World::setChunk()` now rebase their existing tile coordinates to the target chunk before save or conflict handling.
+- Implemented upstream issue #6800: common inventory searches now cache the search item's prepared NBT for matching instead of rebuilding it on every slot comparison.
 
 ### Maintenance
 
@@ -32,6 +33,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #5064, targeted Query PHPUnit (4 tests, 18 assertions), touched-file PHPStan, full PHPUnit (244 tests, 72,647 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `3213aae4e`.
 - For #2626, targeted handler PHPUnit (3 tests, 10 assertions), touched-file PHPStan, full PHPUnit (247 tests, 72,657 assertions), full PHPStan, syntax, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `032d76f49`.
 - For #4206, targeted `WorldTest` (2 tests, 9 assertions), touched-file PHPStan, full PHPUnit (248 tests, 72,663 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `1276dd876`.
+- For #6800, targeted `BaseInventoryTest` (11 tests, 28 assertions), touched-file PHPStan, full PHPUnit (250 tests, 72,667 assertions), full PHPStan, and syntax checks passed locally.
 
 ### Reviewed Or Deferred
 

@@ -25,6 +25,7 @@ namespace pocketmine\inventory;
 
 use pocketmine\item\Item;
 use pocketmine\item\VanillaItems;
+use pocketmine\nbt\tag\CompoundTag;
 
 /**
  * This class provides a complete implementation of a regular inventory.
@@ -87,6 +88,11 @@ class SimpleInventory extends BaseInventory{
 	protected function getMatchingItemCount(int $slot, Item $test, bool $checkTags) : int{
 		$slotItem = $this->slots[$slot];
 		return $slotItem !== null && $slotItem->equals($test, true, $checkTags) ? $slotItem->getCount() : 0;
+	}
+
+	protected function getMatchingItemCountWithCachedTags(int $slot, Item $test, bool $checkTags, ?CompoundTag $testTags) : int{
+		$slotItem = $this->slots[$slot];
+		return $slotItem !== null && self::itemMatchesInventorySearch($slotItem, $test, $checkTags, $testTags) ? $slotItem->getCount() : 0;
 	}
 
 	public function isSlotEmpty(int $index) : bool{

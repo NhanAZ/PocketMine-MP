@@ -26,6 +26,7 @@ namespace pocketmine\block\inventory;
 use pocketmine\inventory\BaseInventory;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
+use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\world\sound\ChestCloseSound;
 use pocketmine\world\sound\ChestOpenSound;
 use pocketmine\world\sound\Sound;
@@ -90,6 +91,13 @@ class DoubleChestInventory extends BaseInventory implements BlockInventory, Inve
 		return $slot < $leftSize ?
 			$this->left->getMatchingItemCount($slot, $test, $checkTags) :
 			$this->right->getMatchingItemCount($slot - $leftSize, $test, $checkTags);
+	}
+
+	protected function getMatchingItemCountWithCachedTags(int $slot, Item $test, bool $checkTags, ?CompoundTag $testTags) : int{
+		$leftSize = $this->left->getSize();
+		return $slot < $leftSize ?
+			$this->left->getMatchingItemCountWithCachedTags($slot, $test, $checkTags, $testTags) :
+			$this->right->getMatchingItemCountWithCachedTags($slot - $leftSize, $test, $checkTags, $testTags);
 	}
 
 	public function isSlotEmpty(int $index) : bool{
