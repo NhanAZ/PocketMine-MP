@@ -9,6 +9,8 @@ settings:
   shutdown-message: "Server closed"
   #Allow listing plugins via Query
   query-plugins: true
+  #Allow listing player names via Query
+  query-player-list: true
   #Enable plugin and core profiling by default
   enable-profiling: false
   #Will only add results when tick measurement is below or equal to given value (default 20)

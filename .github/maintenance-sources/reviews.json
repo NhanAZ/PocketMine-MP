@@ -76,7 +76,7 @@
     {
       "repository": "protocol-references",
       "classification": "defer",
-      "note": "Peer projects remain evidence only. The 2026-07-02 audit saw PowerNukkitX advance through efd90f359f2ef6b7f80921b32afefa4761fe7082. The older f2cdff7eed3a0ad79099bd6adcc1f97ab31e7143 RakNet pacing and cookie settings corroborated the RakLib anti-spoofing follow-up; the newer efd90f359f2ef6b7f80921b32afefa4761fe7082 level-thread/entity tick fix is reference-only evidence for future cross-level ticking triage."
+      "note": "Peer projects remain evidence only. The 2026-07-03 audit saw PowerNukkitX advance through 0d0a3b4f9362f4188d3e2b65df47bc93b4f41975, a Java ItemFilledMap image-loading fix that is reference-only evidence for future map-image triage. Earlier f2cdff7eed3a0ad79099bd6adcc1f97ab31e7143 RakNet pacing and cookie settings corroborated the RakLib anti-spoofing follow-up; efd90f359f2ef6b7f80921b32afefa4761fe7082 remains reference-only evidence for future cross-level ticking triage."
     }
   ]
 }

@@ -41,6 +41,7 @@ final class QueryInfo{
 
 	private string $serverName;
 	private bool $listPlugins;
+	private bool $listPlayers;
 	/** @var Plugin[] */
 	private array $plugins;
 	/** @var string[] */
@@ -68,6 +69,7 @@ final class QueryInfo{
 	public function __construct(Server $server){
 		$this->serverName = $server->getMotd();
 		$this->listPlugins = $server->getConfigGroup()->getPropertyBool(YmlServerProperties::SETTINGS_QUERY_PLUGINS, true);
+		$this->listPlayers = $server->getConfigGroup()->getPropertyBool(YmlServerProperties::SETTINGS_QUERY_PLAYER_LIST, true);
 		$this->plugins = $server->getPluginManager()->getPlugins();
 		$this->players = array_map(fn(Player $p) => $p->getName(), $server->getOnlinePlayers());
 
@@ -104,6 +106,15 @@ final class QueryInfo{
 
 	public function setListPlugins(bool $value) : void{
 		$this->listPlugins = $value;
+		$this->destroyCache();
+	}
+
+	public function canListPlayers() : bool{
+		return $this->listPlayers;
+	}
+
+	public function setListPlayers(bool $value) : void{
+		$this->listPlayers = $value;
 		$this->destroyCache();
 	}
 
@@ -227,8 +238,10 @@ final class QueryInfo{
 		}
 
 		$query .= "\x00\x01player_\x00\x00";
-		foreach($this->players as $player){
-			$query .= $player . "\x00";
+		if($this->listPlayers){
+			foreach($this->players as $player){
+				$query .= $player . "\x00";
+			}
 		}
 		$query .= "\x00";
 

@@ -103,6 +103,7 @@ final class YmlServerProperties{
 	public const SETTINGS_ENABLE_PROFILING = 'settings.enable-profiling';
 	public const SETTINGS_FORCE_LANGUAGE = 'settings.force-language';
 	public const SETTINGS_PROFILE_REPORT_TRIGGER = 'settings.profile-report-trigger';
+	public const SETTINGS_QUERY_PLAYER_LIST = 'settings.query-player-list';
 	public const SETTINGS_QUERY_PLUGINS = 'settings.query-plugins';
 	public const SETTINGS_SHUTDOWN_MESSAGE = 'settings.shutdown-message';
 	public const TICKS_PER = 'ticks-per';
