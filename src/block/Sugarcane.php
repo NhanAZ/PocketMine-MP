@@ -42,6 +42,7 @@ class Sugarcane extends Flowable implements Ageable{
 	}
 
 	public const MAX_AGE = 15;
+	private const MAX_HEIGHT = 3;
 
 	private function seekToBottom() : Position{
 		$world = $this->position->getWorld();
@@ -52,10 +53,10 @@ class Sugarcane extends Flowable implements Ageable{
 		return $bottom;
 	}
 
-	private function grow(Position $pos, ?Player $player = null) : bool{
+	private function grow(Position $pos, int $maxNewBlocks, ?Player $player = null) : bool{
 		$grew = false;
 		$world = $pos->getWorld();
-		for($y = 1; $y < 3; ++$y){
+		for($y = 1; $y <= $maxNewBlocks; ++$y){
 			if(!$world->isInWorld($pos->x, $pos->y + $y, $pos->z)){
 				break;
 			}
@@ -77,7 +78,7 @@ class Sugarcane extends Flowable implements Ageable{
 
 	public function onInteract(Item $item, int $face, Vector3 $clickVector, ?Player $player = null, array &$returnedItems = []) : bool{
 		if($item instanceof Fertilizer){
-			if($this->grow($this->seekToBottom(), $player)){
+			if($this->grow($this->seekToBottom(), self::MAX_HEIGHT - 1, $player)){
 				$item->pop();
 			}
 
@@ -100,19 +101,38 @@ class Sugarcane extends Flowable implements Ageable{
 	}
 
 	public function onRandomTick() : void{
+		$up = $this->getSide(Facing::UP);
+		if($up->hasSameTypeId($this)){
+			return;
+		}
+
 		$down = $this->getSide(Facing::DOWN);
 		if(!$down->hasSameTypeId($this)){
 			if(!$this->hasNearbyWater($down)){
 				$this->position->getWorld()->useBreakOn($this->position, createParticles: true);
 				return;
 			}
+		}
 
-			if($this->age === self::MAX_AGE){
-				$this->grow($this->position);
-			}else{
-				++$this->age;
-				$this->position->getWorld()->setBlock($this->position, $this);
-			}
+		$world = $this->position->getWorld();
+		if($up->getTypeId() !== BlockTypeIds::AIR || !$world->isInWorld($up->position->getFloorX(), $up->position->getFloorY(), $up->position->getFloorZ())){
+			return;
+		}
+
+		$height = 1;
+		while($height < self::MAX_HEIGHT && $this->getSide(Facing::DOWN, $height)->hasSameTypeId($this)){
+			++$height;
+		}
+
+		if($height >= self::MAX_HEIGHT){
+			return;
+		}
+
+		if($this->age === self::MAX_AGE){
+			$this->grow($this->position, 1);
+		}else{
+			++$this->age;
+			$this->position->getWorld()->setBlock($this->position, $this);
 		}
 	}
 

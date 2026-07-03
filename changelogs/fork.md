@@ -25,6 +25,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #1537: chests now refuse to open when a `Living` entity is standing above the chest or either half of a double chest, while non-living entities do not block opening.
 - Implemented upstream issue #2148: spawnpoints created by real bed sleep now fall back to default world spawn if the bed block is missing at respawn time, while `/spawnpoint` and plugin-set spawnpoints remain bed-independent.
 - Implemented upstream issue #3598: player `onGround` now refreshes from current block collision when nearby blocks change, and new players are no longer forced on-ground before movement.
+- Implemented upstream issue #4931: sugarcane random ticks now run only from the top block and add at most one new block, while fertilizer can still grow sugarcane up to the normal maximum height; cactus top-only one-block growth is covered by regression tests.
 
 ### Maintenance
 
@@ -65,6 +66,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #1537, targeted `ChestTest` (3 tests, 9 assertions), block PHPUnit (13 tests, 45,699 assertions), full PHPUnit (276 tests, 74,322 assertions), targeted and full PHPStan, syntax, code generation, translation validation, generated-file collision, 119-file non-vendor JSON validation, source audit, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `7a657f0b4`. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
 - For #2148, targeted `PlayerSpawnTest` (3 tests, 4 assertions), focused player/block PHPUnit (7 tests, 1,582 assertions), full PHPUnit (279 tests, 74,326 assertions), targeted and full PHPStan, syntax, code generation, translation validation, generated-file collision, source audit, 119-file non-vendor JSON validation, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `e1e148882`. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
 - For #3598, targeted `PlayerGroundStateTest` (2 tests, 8 assertions), full PHPUnit (281 tests, 74,334 assertions), focused and full PHPStan, syntax, code generation, translation validation, source audit, 119-file non-vendor JSON validation, whitespace checks, GitHub CI, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker checks passed for commit `eb50bc059`. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
+- For #4931, targeted `BlockGrowthTest` (5 tests, 20 assertions), block PHPUnit (33 tests, 47,371 assertions), full PHPUnit (286 tests, 74,354 assertions), full PHPStan, syntax, code generation, translation validation, source audit, non-vendor JSON validation, and whitespace checks passed locally. Focused per-file PHPStan still reports the existing `Sugarcane::canBeSupportedAt()` dynamic trait-use warning when the class is analyzed outside the full project graph.
 
 ### Reviewed Or Deferred
 
