@@ -40,7 +40,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Reviewed upstream issue #4449 with related #6547 and deferred duplicate landing/step sound work until player ground tolerance can be redesigned with PlayerAuthInputPacket velocity/collision evidence.
 - Recorded the #2148 bed-spawn decision in source review notes: only spawnpoints created through real bed sleep get bed validation, because plugins and commands can intentionally set arbitrary custom spawnpoints.
 - Fixed the GitHub Code Style follow-up for #3272 by applying PHP-CS-Fixer native-function import style in `WorldTest`; follow-up commit `4c941c578` restored green CI.
-- Fixed the GitHub Code Style follow-up for #6713 by restoring the standard test-file header in `ExplosionEventTest`.
+- Fixed the GitHub Code Style follow-up for #6713 by restoring the standard test-file header in `ExplosionEventTest`; follow-up commit `322df2425` restored green CI.
 
 ### Checks
 
@@ -70,7 +70,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #2148, targeted `PlayerSpawnTest` (3 tests, 4 assertions), focused player/block PHPUnit (7 tests, 1,582 assertions), full PHPUnit (279 tests, 74,326 assertions), targeted and full PHPStan, syntax, code generation, translation validation, generated-file collision, source audit, 119-file non-vendor JSON validation, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `e1e148882`. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
 - For #3598, targeted `PlayerGroundStateTest` (2 tests, 8 assertions), full PHPUnit (281 tests, 74,334 assertions), focused and full PHPStan, syntax, code generation, translation validation, source audit, 119-file non-vendor JSON validation, whitespace checks, GitHub CI, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker checks passed for commit `eb50bc059`. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
 - For #4931, targeted `BlockGrowthTest` (5 tests, 20 assertions), block PHPUnit (33 tests, 47,371 assertions), full PHPUnit (286 tests, 74,354 assertions), full PHPStan, syntax, code generation, translation validation, source audit, non-vendor JSON validation, whitespace checks, CI matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker checks passed for follow-up commit `6b9c772cd` after the first implementation run failed only PHP-CS-Fixer formatting in the new test file. Focused per-file PHPStan still reports the existing `Sugarcane::canBeSupportedAt()` dynamic trait-use warning when the class is analyzed outside the full project graph.
-- For #6713, targeted `ExplosionEventTest` (3 tests, 6 assertions), event PHPUnit (12 tests, 17 assertions), full PHPUnit (289 tests, 74,360 assertions), focused and full PHPStan, and syntax checks passed locally. The first pushed implementation run failed only PHP-CS-Fixer on the new test header; follow-up style fix CI is pending.
+- For #6713, targeted `ExplosionEventTest` (3 tests, 6 assertions), event PHPUnit (12 tests, 17 assertions), full PHPUnit (289 tests, 74,360 assertions), focused and full PHPStan, syntax checks, GitHub CI, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker checks passed for follow-up commit `322df2425` after the first implementation run failed only PHP-CS-Fixer on the new test header.
 
 ### Reviewed Or Deferred
 
