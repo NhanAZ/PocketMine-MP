@@ -1,12 +1,12 @@
 {
   "schema": 1,
-  "reviewedAt": "2026-07-02",
+  "reviewedAt": "2026-07-03",
   "snapshot": ".github/maintenance-sources/report.json",
   "reviews": [
     {
       "repository": "pmmp/PocketMine-MP",
       "classification": "already-covered",
-      "note": "Fork baseline and upstream/stable are both fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff."
+      "note": "Fork baseline and upstream/stable are both fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff. Issue #5821 is deferred: stable and major-next still use the same bounded recursive leaf-decay search, and increasing its radius without persistent distance state would multiply hot-path traversal cost."
     },
     {
       "repository": "pmmp/CallbackValidator",
