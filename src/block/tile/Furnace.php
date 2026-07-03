@@ -56,9 +56,10 @@ abstract class Furnace extends Spawnable implements Container, Nameable{
 	public function __construct(World $world, Vector3 $pos){
 		parent::__construct($world, $pos);
 		$this->inventory = new FurnaceInventory($this->position, $this->getFurnaceType());
+		$position = $this->position;
 		$this->inventory->getListeners()->add(CallbackInventoryListener::onAnyChange(
-			static function(Inventory $unused) use ($world, $pos) : void{
-				$world->scheduleDelayedBlockUpdate($pos, 1);
+			static function(Inventory $unused) use ($position) : void{
+				$position->getWorld()->scheduleDelayedBlockUpdate($position, 1);
 			})
 		);
 	}

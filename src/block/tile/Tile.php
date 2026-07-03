@@ -103,6 +103,31 @@ abstract class Tile{
 		return $this->position;
 	}
 
+	/**
+	 * @internal
+	 */
+	final public function setPositionInternal(Vector3 $position) : void{
+		$oldX = $this->position->getFloorX();
+		$oldY = $this->position->getFloorY();
+		$oldZ = $this->position->getFloorZ();
+		$newX = $position->getFloorX();
+		$newY = $position->getFloorY();
+		$newZ = $position->getFloorZ();
+
+		if($oldX === $newX && $oldY === $newY && $oldZ === $newZ){
+			return;
+		}
+
+		$this->position->x = $newX;
+		$this->position->y = $newY;
+		$this->position->z = $newZ;
+		$this->onPositionChangedInternal($newX - $oldX, $newY - $oldY, $newZ - $oldZ);
+	}
+
+	protected function onPositionChangedInternal(int $deltaX, int $deltaY, int $deltaZ) : void{
+
+	}
+
 	public function isClosed() : bool{
 		return $this->closed;
 	}

@@ -56,6 +56,11 @@ abstract class Spawnable extends Tile{
 		$this->spawnCompoundCache = [];
 	}
 
+	protected function onPositionChangedInternal(int $deltaX, int $deltaY, int $deltaZ) : void{
+		parent::onPositionChangedInternal($deltaX, $deltaY, $deltaZ);
+		$this->clearSpawnCompoundCache();
+	}
+
 	/**
 	 * The Bedrock client won't re-render a block if the block's state properties didn't change. This is a problem when
 	 * the tile may affect the block's appearance. For example, a cauldron's liquid changes colour based on the dye

@@ -2551,6 +2551,25 @@ class World implements ChunkManager{
 		return $this->entitiesByChunk[World::chunkHash($chunkX, $chunkZ)] ?? [];
 	}
 
+	private function rebaseChunkTiles(int $chunkX, int $chunkZ, Chunk $chunk) : void{
+		$rebasedTiles = 0;
+		foreach($chunk->getTiles() as $tile){
+			$tilePosition = $tile->getPosition();
+			$expectedX = ($chunkX << Chunk::COORD_BIT_SIZE) + ($tilePosition->getFloorX() & Chunk::COORD_MASK);
+			$expectedZ = ($chunkZ << Chunk::COORD_BIT_SIZE) + ($tilePosition->getFloorZ() & Chunk::COORD_MASK);
+			if($tilePosition->getFloorX() !== $expectedX || $tilePosition->getFloorZ() !== $expectedZ){
+				$chunk->removeTile($tile);
+				$tile->setPositionInternal(new Vector3($expectedX, $tilePosition->getFloorY(), $expectedZ));
+				$chunk->addTile($tile);
+				$rebasedTiles++;
+			}
+		}
+
+		if($rebasedTiles > 0){
+			$this->logger->debug("Rebased $rebasedTiles tile(s) while setting chunk $chunkX $chunkZ");
+		}
+	}
+
 	/**
 	 * Returns the chunk containing the given Vector3 position.
 	 */
@@ -2638,6 +2657,8 @@ class World implements ChunkManager{
 				}
 			}
 		}
+
+		$this->rebaseChunkTiles($chunkX, $chunkZ, $chunk);
 
 		$chunkHash = World::chunkHash($chunkX, $chunkZ);
 		$oldChunk = $this->loadChunk($chunkX, $chunkZ);

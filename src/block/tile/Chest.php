@@ -126,6 +126,15 @@ class Chest extends Spawnable implements Container, Nameable{
 		return $this->inventory;
 	}
 
+	protected function onPositionChangedInternal(int $deltaX, int $deltaY, int $deltaZ) : void{
+		parent::onPositionChangedInternal($deltaX, $deltaY, $deltaZ);
+		if($this->pairX !== null && $this->pairZ !== null){
+			$this->pairX += $deltaX;
+			$this->pairZ += $deltaZ;
+			$this->doubleInventory = null;
+		}
+	}
+
 	protected function checkPairing() : void{
 		if($this->isPaired() && !$this->position->getWorld()->isInLoadedTerrain(new Vector3($this->pairX, $this->position->y, $this->pairZ))){
 			//paired to a tile in an unloaded chunk

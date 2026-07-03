@@ -12,6 +12,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #6712: invalid saved food, exhaustion, saturation, and hunger tick-timer values now raise `SavedDataLoadingException` instead of leaking `InvalidArgumentException` from strict hunger ranges.
 - Implemented upstream issue #6714: projectile hit handling now stops immediately if a plugin closes the projectile during `ProjectileHitBlockEvent` or `ProjectileHitEntityEvent`, avoiding post-close hit logic and world movement updates.
 - Implemented upstream issue #2626: creative-mode predicted block destroys now restore `PlayerInteractEvent::LEFT_CLICK_BLOCK` when the client skips repeated start-break actions, without duplicating normal start-break left-click events.
+- Implemented upstream issue #4206: replacement chunks passed to `World::setChunk()` now rebase their existing tile coordinates to the target chunk before save or conflict handling.
 
 ### Maintenance
 
@@ -30,11 +31,13 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #5638, syntax checks, touched-file PHPStan, full PHPStan, full PHPUnit (241 tests, 72,633 assertions), code generation, translation validation, generated-file collision, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `13fba9671`.
 - For #5064, targeted Query PHPUnit (4 tests, 18 assertions), touched-file PHPStan, full PHPUnit (244 tests, 72,647 assertions), full PHPStan, code generation, translation validation, generated-file collision, JSON, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `3213aae4e`.
 - For #2626, targeted handler PHPUnit (3 tests, 10 assertions), touched-file PHPStan, full PHPUnit (247 tests, 72,657 assertions), full PHPStan, syntax, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `032d76f49`.
+- For #4206, targeted `WorldTest` (2 tests, 9 assertions), touched-file PHPStan, full PHPUnit (248 tests, 72,663 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally.
 
 ### Reviewed Or Deferred
 
 - Reviewed upstream issue #7035 and rejected the unsupported suggestion to raise the LevelDB world NetworkVersion ceiling without an affected world or matching chunk, blockstate, and upgrade-schema evidence. Current network protocol `1001` does not imply safe support for worlds newer than the deliberate `924` storage ceiling.
 - Reviewed upstream issue #5385 and related #1567, then deferred the death-screen rejoin fix because the correct direction requires moving respawn state and `PlayerRespawnEvent` into the login/pre-`StartGamePacket` path, which needs a separate plugin-compatibility plan.
+- Reviewed upstream issue #6781 and deferred the large long-lived array GC-performance work because it needs a runtime or collection-design strategy with benchmarks, not a small registry-wrapper patch.
 
 ## 2026-07-02
 
