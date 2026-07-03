@@ -17,6 +17,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #6818: startup timezone initialization now treats `date.timezone=UTC` as PHP's possible unset/invalid fallback and continues into auto-detection, while `Etc/UTC` remains available for explicit UTC deployments.
 - Implemented upstream issue #3272: async light population now locks and keeps the target chunk loaded while calculating, then discards stale light results if main-thread terrain changes break the lock before completion.
 - Implemented upstream issue #3974: chunk population now uses a server-wide task slot limiter so many loaded worlds cannot each consume the full configured population concurrency at once.
+- Implemented upstream issue #6926: command integer parsing now checks numeric-string bounds before integer conversion, preventing PHP 8.5 out-of-range float-string warnings while preserving existing decimal, exponent, clamp, and localized error behaviour.
 
 ### Maintenance
 
@@ -44,6 +45,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #3974, targeted `WorldManagerTest`/`WorldTest` (6 tests, 33 assertions), full PHPUnit (256 tests, 72,698 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, JSON, whitespace, GitHub CI, PHP-CS-Fixer, and Docker checks passed for commit `05a6694b5`.
 - For #2549, targeted `ChunkSelectorTest` (1 test, 1,569 assertions), full PHPUnit (257 tests, 74,267 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, JSON, whitespace, GitHub CI, PHP-CS-Fixer, and Docker checks passed for commit `2c705b83f`.
 - For #5821, source audit, review JSON validation, whitespace validation, GitHub CI, PHP-CS-Fixer, and Docker checks passed for decision commit `e8cc27251`; code tests were not required because no runtime source changed.
+- For #6926, targeted `VanillaCommandTest` (4 tests, 8 assertions), full PHPUnit (261 tests, 74,275 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, and whitespace checks passed locally; PHP 8.5 CI, PHP-CS-Fixer, and Docker are pending.
 
 ### Reviewed Or Deferred
 

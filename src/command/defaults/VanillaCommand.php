@@ -60,15 +60,15 @@ abstract class VanillaCommand extends Command{
 	}
 
 	protected function getInteger(CommandSender $sender, string $value, int $min = self::MIN_COORD, int $max = self::MAX_COORD) : int{
-		$i = (int) $value;
+		$numericValue = (float) $value;
 
-		if($i < $min){
-			$i = $min;
-		}elseif($i > $max){
-			$i = $max;
+		if($numericValue < $min){
+			return $min;
+		}elseif($numericValue > $max){
+			return $max;
 		}
 
-		return $i;
+		return (int) $numericValue;
 	}
 
 	protected function getRelativeDouble(float $original, CommandSender $sender, string $input, float $min = self::MIN_COORD, float $max = self::MAX_COORD) : float{
@@ -98,16 +98,16 @@ abstract class VanillaCommand extends Command{
 			throw new InvalidCommandSyntaxException();
 		}
 
-		$v = (int) $input;
-		if($v > $max){
+		$numericValue = (float) $input;
+		if($numericValue > $max){
 			$sender->sendMessage(KnownTranslationFactory::commands_generic_num_tooBig($input, (string) $max)->prefix(TextFormat::RED));
 			return null;
 		}
-		if($v < $min){
+		if($numericValue < $min){
 			$sender->sendMessage(KnownTranslationFactory::commands_generic_num_tooSmall($input, (string) $min)->prefix(TextFormat::RED));
 			return null;
 		}
 
-		return $v;
+		return (int) $numericValue;
 	}
 }
