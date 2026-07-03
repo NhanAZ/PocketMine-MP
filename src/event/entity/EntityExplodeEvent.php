@@ -54,6 +54,8 @@ class EntityExplodeEvent extends EntityEvent implements Cancellable{
 		private array $ignitions = []
 	){
 		$this->entity = $entity;
+		self::validateBlockList($blocks);
+		self::validateBlockList($ignitions);
 		if($yield < 0.0 || $yield > 100.0){
 			throw new \InvalidArgumentException("Yield must be in range 0.0 - 100.0");
 		}
@@ -78,7 +80,7 @@ class EntityExplodeEvent extends EntityEvent implements Cancellable{
 	 * @param Block[] $blocks
 	 */
 	public function setBlockList(array $blocks) : void{
-		Utils::validateArrayValueType($blocks, function(Block $_) : void{});
+		self::validateBlockList($blocks);
 		$this->blocks = $blocks;
 	}
 
@@ -107,7 +109,7 @@ class EntityExplodeEvent extends EntityEvent implements Cancellable{
 	 * @param Block[] $ignitions
 	 */
 	public function setIgnitions(array $ignitions) : void{
-		Utils::validateArrayValueType($ignitions, fn(Block $block) => null);
+		self::validateBlockList($ignitions);
 		$this->ignitions = $ignitions;
 	}
 
@@ -118,5 +120,21 @@ class EntityExplodeEvent extends EntityEvent implements Cancellable{
 	 */
 	public function getIgnitions() : array{
 		return $this->ignitions;
+	}
+
+	/**
+	 * @param Block[] $blocks
+	 */
+	private static function validateBlockList(array $blocks) : void{
+		Utils::validateArrayValueType($blocks, function(Block $block) : void{
+			$pos = $block->getPosition();
+			if(!$pos->isValid()){
+				throw new \InvalidArgumentException("Block position does not have a valid world");
+			}
+			$world = $pos->getWorld();
+			if(!$world->isInWorld($pos->getFloorX(), $pos->getFloorY(), $pos->getFloorZ())){
+				throw new \InvalidArgumentException("Block position $pos is outside of the world bounds");
+			}
+		});
 	}
 }

@@ -50,6 +50,8 @@ class BlockExplodeEvent extends BlockEvent implements Cancellable{
 	){
 		parent::__construct($block);
 
+		self::validateBlockList($blocks);
+		self::validateBlockList($ignitions);
 		Utils::checkFloatNotInfOrNaN("yield", $yield);
 		if($yield < 0.0 || $yield > 100.0){
 			throw new \InvalidArgumentException("Yield must be in range 0.0 - 100.0");
@@ -97,7 +99,7 @@ class BlockExplodeEvent extends BlockEvent implements Cancellable{
 	 * @param Block[] $blocks
 	 */
 	public function setAffectedBlocks(array $blocks) : void{
-		Utils::validateArrayValueType($blocks, fn(Block $block) => null);
+		self::validateBlockList($blocks);
 		$this->blocks = $blocks;
 	}
 
@@ -116,7 +118,23 @@ class BlockExplodeEvent extends BlockEvent implements Cancellable{
 	 * @param Block[] $ignitions
 	 */
 	public function setIgnitions(array $ignitions) : void{
-		Utils::validateArrayValueType($ignitions, fn(Block $block) => null);
+		self::validateBlockList($ignitions);
 		$this->ignitions = $ignitions;
+	}
+
+	/**
+	 * @param Block[] $blocks
+	 */
+	private static function validateBlockList(array $blocks) : void{
+		Utils::validateArrayValueType($blocks, function(Block $block) : void{
+			$pos = $block->getPosition();
+			if(!$pos->isValid()){
+				throw new \InvalidArgumentException("Block position does not have a valid world");
+			}
+			$world = $pos->getWorld();
+			if(!$world->isInWorld($pos->getFloorX(), $pos->getFloorY(), $pos->getFloorZ())){
+				throw new \InvalidArgumentException("Block position $pos is outside of the world bounds");
+			}
+		});
 	}
 }
