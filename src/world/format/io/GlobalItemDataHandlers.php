@@ -31,7 +31,6 @@ use pocketmine\data\bedrock\item\upgrade\ItemIdMetaUpgrader;
 use pocketmine\data\bedrock\item\upgrade\ItemIdMetaUpgradeSchemaUtils;
 use pocketmine\data\bedrock\item\upgrade\LegacyItemIdToStringIdMap;
 use pocketmine\data\bedrock\item\upgrade\R12ItemIdToBlockIdMap;
-use pocketmine\network\mcpe\convert\TypeConverter;
 use Symfony\Component\Filesystem\Path;
 use const PHP_INT_MAX;
 use const pocketmine\BEDROCK_ITEM_UPGRADE_SCHEMA_PATH;
@@ -57,8 +56,7 @@ final class GlobalItemDataHandlers{
 			LegacyItemIdToStringIdMap::getInstance(),
 			R12ItemIdToBlockIdMap::getInstance(),
 			GlobalBlockStateHandlers::getUpgrader(),
-			BlockItemIdMap::getInstance(),
-			TypeConverter::getInstance()->getBlockTranslator()->getBlockStateDictionary()
+			BlockItemIdMap::getInstance()
 		);
 	}
 }

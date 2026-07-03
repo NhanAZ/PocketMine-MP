@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace pocketmine\data\bedrock\item\upgrade;
 
+use pocketmine\data\bedrock\block\BlockStateData;
 use pocketmine\data\bedrock\block\BlockStateDeserializeException;
 use pocketmine\data\bedrock\block\upgrade\BlockDataUpgrader;
 use pocketmine\data\bedrock\item\BlockItemIdMap;
@@ -41,14 +42,20 @@ use function array_map;
 final class ItemDataUpgrader{
 	private const TAG_LEGACY_ID = "id"; //TAG_Short (or TAG_String for Java itemstacks)
 
+	/**
+	 * @param BlockStateDictionary|null $blockStateDictionary Deprecated compatibility parameter, no longer used
+	 */
 	public function __construct(
 		private ItemIdMetaUpgrader $idMetaUpgrader,
 		private LegacyItemIdToStringIdMap $legacyIntToStringIdMap,
 		private R12ItemIdToBlockIdMap $r12ItemIdToBlockIdMap,
 		private BlockDataUpgrader $blockDataUpgrader,
 		private BlockItemIdMap $blockItemIdMap,
-		private BlockStateDictionary $blockStateDictionary
-	){}
+		?BlockStateDictionary $blockStateDictionary = null
+	){
+		//Kept only so plugins using the previous constructor signature continue to work.
+		unset($blockStateDictionary);
+	}
 
 	/**
 	 * This function replaces the legacy ItemFactory::get().
@@ -150,15 +157,10 @@ final class ItemDataUpgrader{
 
 		[$newNameId, $newMeta] = $this->idMetaUpgrader->upgrade($rawNameId, $meta);
 
-		//TODO: Dirty hack to load old skulls from disk: Put this into item upgrade schema's before Mojang makes something with a non 0 default state
+		//Some item upgrade schemas convert conventional items into blockitems without supplying blockstate properties.
+		//The block deserializer will fill omitted properties from the registered default state.
 		if($blockStateData === null && ($blockId = $this->blockItemIdMap->lookupBlockId($newNameId)) !== null){
-			$networkRuntimeId = $this->blockStateDictionary->lookupStateIdFromIdMeta($blockId, 0);
-
-			if($networkRuntimeId === null){
-				throw new SavedDataLoadingException("Failed to find blockstate for blockitem $newNameId");
-			}
-
-			$blockStateData = $this->blockStateDictionary->generateDataFromStateId($networkRuntimeId);
+			$blockStateData = BlockStateData::current($blockId, []);
 		}
 
 		//TODO: this won't account for spawn eggs from before 1.16.100 - perhaps we're lucky and they just left the meta in there anyway?
