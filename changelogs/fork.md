@@ -22,14 +22,17 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #6782: schema-converted blockitems without state NBT now resolve registered block defaults instead of assuming network legacy meta `0`; all seven legacy skull variants retain their correct item type.
 - Implemented the safe deserializer portion of upstream issue #6654: global block and item deserializers now reject outputs that lack matching persistent serializers, catching incomplete plugin registration during load instead of later during save.
 - Implemented upstream issue #4673: RakLib socket creation failures now raise `SocketException`, allowing unsupported IPv6/address-family startup errors to report as controlled network-start failures instead of thread crash dumps.
+- Implemented upstream issue #1537: chests now refuse to open when a `Living` entity is standing above the chest or either half of a double chest, while non-living entities do not block opening.
 
 ### Maintenance
 
 - Refreshed the upstream intake snapshot to 419 open issues and 31 open pull requests, retaining a scored 40-item shortlist.
+- Reconfirmed the upstream intake snapshot at 419 open issues and 31 open pull requests; the top-40 shortlist is unchanged and exhausted, so the next candidates are being read from an extended scored view without adding another repo JSON file.
 - Reviewed upstream issue #2549 as already covered by later canonical player generation throttling and concentric chunk ordering; added `ChunkSelector` ring-order/completeness regression coverage and clarified the global `population-queue-size` setting.
 - Implemented upstream issue #5638: `PlayerAuthInputPacket` now reports timing breakdowns for input flags, movement, item-use transactions, item-stack requests, and block actions.
 - Implemented upstream issue #5064: added `settings.query-player-list`, defaulting to true, so GS4 Query can keep reporting player counts while hiding player names from long-query responses when disabled.
 - Refreshed source monitoring; PowerNukkitX commit `0d0a3b4f9362f4188d3e2b65df47bc93b4f41975` is reviewed as reference-only map-image evidence.
+- Reviewed upstream issue #6062 and deferred cross-thread dynamic block type ID allocation until a shared allocator/registry or type-ID redesign is available.
 - Fixed the GitHub Code Style follow-up for #3272 by applying PHP-CS-Fixer native-function import style in `WorldTest`; follow-up commit `4c941c578` restored green CI.
 
 ### Checks
@@ -56,6 +59,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #6782, targeted item-upgrader and item serializer/deserializer PHPUnit (9 tests, 11,770 assertions), full PHPUnit (271 tests, 74,309 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, source audit, Composer validation/install dry-run, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `6f4d51ff7`.
 - For #6654, targeted block/item serializer-deserializer PHPUnit (7 tests, 23,142 assertions), full PHPUnit (273 tests, 74,313 assertions), full PHPStan, syntax, code generation, generated-file/report diff checks, 119-file non-vendor JSON validation, source audit, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `212435707`. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
 - For #4673, RakLib socket syntax, targeted RakLib/Query PHPUnit (6 tests, 33 assertions), full PHPUnit (273 tests, 74,313 assertions), full PHPStan, code generation, translation validation, generated-file collision, 119-file non-vendor JSON validation, source audit, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `32b06ac70`. Direct RakLib package PHPStan through the root config still reports unrelated pre-existing package issues; Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` and RakLib `GPL-3.0` SPDX warnings.
+- For #1537, targeted `ChestTest` (3 tests, 9 assertions), block PHPUnit (13 tests, 45,699 assertions), full PHPUnit (276 tests, 74,322 assertions), targeted and full PHPStan, syntax, code generation, translation validation, generated-file collision, 119-file non-vendor JSON validation, source audit, and whitespace checks passed locally. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
 
 ### Reviewed Or Deferred
 
@@ -69,6 +73,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Reviewed upstream issue #7035 and rejected the unsupported suggestion to raise the LevelDB world NetworkVersion ceiling without an affected world or matching chunk, blockstate, and upgrade-schema evidence. Current network protocol `1001` does not imply safe support for worlds newer than the deliberate `924` storage ceiling.
 - Reviewed upstream issue #5385 and related #1567, then deferred the death-screen rejoin fix because the correct direction requires moving respawn state and `PlayerRespawnEvent` into the login/pre-`StartGamePacket` path, which needs a separate plugin-compatibility plan.
 - Reviewed upstream issue #6781 and deferred the large long-lived array GC-performance work because it needs a runtime or collection-design strategy with benchmarks, not a small registry-wrapper patch.
+- Reviewed upstream issue #6062 and deferred `BlockTypeIds::newId()` cross-thread synchronization because a safe fix needs a shared allocator/registry or a broader type-ID design instead of another process-local static counter.
 
 ## 2026-07-02
 

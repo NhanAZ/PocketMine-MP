@@ -27,6 +27,7 @@ use pocketmine\block\tile\Chest as TileChest;
 use pocketmine\block\utils\FacesOppositePlacingPlayerTrait;
 use pocketmine\block\utils\HorizontalFacing;
 use pocketmine\block\utils\SupportType;
+use pocketmine\entity\Living;
 use pocketmine\event\block\ChestPairEvent;
 use pocketmine\item\Item;
 use pocketmine\math\AxisAlignedBB;
@@ -44,6 +45,21 @@ class Chest extends Transparent implements HorizontalFacing{
 
 	public function getSupportType(int $facing) : SupportType{
 		return SupportType::NONE;
+	}
+
+	private static function isBlockedFromOpening(Block $block) : bool{
+		if(!$block->getSide(Facing::UP)->isTransparent()){
+			return true;
+		}
+
+		$position = $block->getPosition();
+		foreach($position->getWorld()->getNearbyEntities(AxisAlignedBB::one()->offset($position->x, $position->y + 1, $position->z)) as $entity){
+			if($entity instanceof Living){
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public function onPostPlace() : void{
@@ -76,8 +92,8 @@ class Chest extends Transparent implements HorizontalFacing{
 			$chest = $this->position->getWorld()->getTile($this->position);
 			if($chest instanceof TileChest){
 				if(
-					!$this->getSide(Facing::UP)->isTransparent() ||
-					(($pair = $chest->getPair()) !== null && !$pair->getBlock()->getSide(Facing::UP)->isTransparent()) ||
+					self::isBlockedFromOpening($this) ||
+					(($pair = $chest->getPair()) !== null && self::isBlockedFromOpening($pair->getBlock())) ||
 					!$chest->canOpenWith($item->getCustomName())
 				){
 					return true;
