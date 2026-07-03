@@ -6,7 +6,7 @@
     {
       "repository": "pmmp/PocketMine-MP",
       "classification": "already-covered",
-      "note": "Fork baseline and upstream/stable are both fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff. Issue #5821 is deferred because increasing recursive leaf-decay distance would multiply hot-path traversal cost. Issue #6926 is adapted by range-checking command numeric strings before integer casts."
+      "note": "Fork baseline and upstream/stable are both fe9f8bd801530ee23ac8e6fb9d8a1922846d5aff. Issue #6926 is adapted by range-checking command numeric strings before integer casts. PR #5805 is deferred because its incomplete 2023 branch lacks current integration, queue/idle-pool safeguards, and regression coverage."
     },
     {
       "repository": "pmmp/CallbackValidator",

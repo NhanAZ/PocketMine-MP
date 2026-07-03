@@ -49,6 +49,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 
 ### Reviewed Or Deferred
 
+- Reviewed upstream pull request #5805 and deferred its specialized compression-worker pool because the incomplete 2023 branch lacks current integration, tests, idle-pool cleanup, bounded queue safeguards, and a safe fallback for forced login compression.
 - Reviewed upstream issue #5821 and deferred increasing leaf-decay distance until a cached distance-state design, bounded neighbour propagation, generated-tree coverage, traversal benchmarks, and block-state/plugin compatibility plan replace the current recursive random-tick search.
 - Reviewed upstream issue #5410 and deferred flat-world height changes until representative pre-1.18, post-1.18, and PMMP-created worlds establish `FlatWorldLayers` version and Y-offset semantics with round-trip and live-client evidence.
 - Reviewed upstream issue #7035 and rejected the unsupported suggestion to raise the LevelDB world NetworkVersion ceiling without an affected world or matching chunk, blockstate, and upgrade-schema evidence. Current network protocol `1001` does not imply safe support for worlds newer than the deliberate `924` storage ceiling.
