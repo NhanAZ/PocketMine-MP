@@ -15,6 +15,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #4206: replacement chunks passed to `World::setChunk()` now rebase their existing tile coordinates to the target chunk before save or conflict handling.
 - Implemented upstream issue #6800: common inventory searches now cache the search item's prepared NBT for matching instead of rebuilding it on every slot comparison.
 - Implemented upstream issue #6818: startup timezone initialization now treats `date.timezone=UTC` as PHP's possible unset/invalid fallback and continues into auto-detection, while `Etc/UTC` remains available for explicit UTC deployments.
+- Implemented upstream issue #3272: async light population now locks and keeps the target chunk loaded while calculating, then discards stale light results if main-thread terrain changes break the lock before completion.
 
 ### Maintenance
 
@@ -36,6 +37,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #4206, targeted `WorldTest` (2 tests, 9 assertions), touched-file PHPStan, full PHPUnit (248 tests, 72,663 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `1276dd876`.
 - For #6800, targeted `BaseInventoryTest` (11 tests, 28 assertions), touched-file PHPStan, full PHPUnit (250 tests, 72,667 assertions), full PHPStan, and syntax checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `c1956b066`.
 - For #6818, targeted `TimezoneTest` (2 tests, 7 assertions), touched-file PHPStan, full PHPUnit (252 tests, 72,674 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `425d075bf`.
+- For #3272, targeted `WorldTest` (4 tests, 22 assertions), touched-file PHPStan, full PHPUnit (254 tests, 72,687 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally. PHP-CS-Fixer is not installed in this workspace and remains pending CI verification.
 
 ### Reviewed Or Deferred
 

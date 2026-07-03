@@ -33,6 +33,7 @@ use pocketmine\world\format\io\ChunkData;
 use pocketmine\world\format\io\LoadedChunkData;
 use pocketmine\world\format\io\WorldData;
 use pocketmine\world\format\io\WritableWorldProvider;
+use pocketmine\world\format\LightArray;
 
 final class WorldTest extends TestCase{
 
@@ -78,6 +79,37 @@ final class WorldTest extends TestCase{
 		return $world;
 	}
 
+	private function createWorldForLightPopulationCompletion(int $chunkX, int $chunkZ, Chunk $chunk, ?ChunkLockId $heldLockId, ChunkLoader $temporaryLoader, ChunkLoader $persistentLoader) : World{
+		$world = (new \ReflectionClass(World::class))->newInstanceWithoutConstructor();
+		self::assertInstanceOf(World::class, $world);
+
+		$chunkHash = World::chunkHash($chunkX, $chunkZ);
+		self::setPrivateProperty($world, "chunks", [$chunkHash => $chunk]);
+		self::setPrivateProperty($world, "chunkLock", $heldLockId !== null ? [$chunkHash => $heldLockId] : []);
+		self::setPrivateProperty($world, "chunkLoaders", [
+			$chunkHash => [
+				\spl_object_id($temporaryLoader) => $temporaryLoader,
+				\spl_object_id($persistentLoader) => $persistentLoader
+			]
+		]);
+
+		return $world;
+	}
+
+	/**
+	 * @param LightArray[] $blockLight
+	 * @param LightArray[] $skyLight
+	 * @param int[]        $heightMap
+	 *
+	 * @phpstan-param array<int, LightArray> $blockLight
+	 * @phpstan-param array<int, LightArray> $skyLight
+	 * @phpstan-param non-empty-list<int>    $heightMap
+	 */
+	private static function completeLightPopulation(World $world, ChunkLockId $lockId, int $chunkX, int $chunkZ, ChunkLoader $temporaryLoader, array $blockLight, array $skyLight, array $heightMap) : void{
+		$method = (new \ReflectionMethod(World::class, "completeLightPopulation"))->getClosure($world);
+		$method($lockId, $chunkX, $chunkZ, $temporaryLoader, $blockLight, $skyLight, $heightMap);
+	}
+
 	public function testLoadChunkSkipsOutOfBoundsLoadedTiles() : void{
 		$tile = CompoundTag::create()
 			->setString(Tile::TAG_ID, "Sign")
@@ -115,6 +147,57 @@ final class WorldTest extends TestCase{
 		self::assertSame(64, $tile->getPosition()->getFloorY());
 		self::assertSame(20, $tile->getPosition()->getFloorZ());
 		self::assertSame($tile, $replacementChunk->getTile(3, 64, 4));
+	}
+
+	public function testLightPopulationCompletionAppliesOnlyWithValidLock() : void{
+		$chunkX = 0;
+		$chunkZ = 0;
+		$chunk = new Chunk([], true);
+		$chunk->setLightPopulated(null);
+		$lockId = new ChunkLockId();
+		$temporaryLoader = new class implements ChunkLoader{};
+		$persistentLoader = new class implements ChunkLoader{};
+		$world = $this->createWorldForLightPopulationCompletion($chunkX, $chunkZ, $chunk, $lockId, $temporaryLoader, $persistentLoader);
+
+		$blockLight = LightArray::fill(0);
+		$blockLight->set(1, 2, 3, 4);
+		$skyLight = LightArray::fill(0);
+		$skyLight->set(1, 2, 3, 12);
+		$heightMap = \array_fill(0, 256, 64);
+		$heightMap[0] = 70;
+
+		self::completeLightPopulation($world, $lockId, $chunkX, $chunkZ, $temporaryLoader, [0 => $blockLight], [0 => $skyLight], $heightMap);
+
+		self::assertTrue($chunk->isLightPopulated());
+		self::assertSame($heightMap, $chunk->getHeightMapArray());
+		self::assertSame(4, $chunk->getSubChunk(0)->getBlockLightArray()->get(1, 2, 3));
+		self::assertSame(12, $chunk->getSubChunk(0)->getBlockSkyLightArray()->get(1, 2, 3));
+		self::assertFalse($world->isChunkLocked($chunkX, $chunkZ));
+		self::assertSame([$persistentLoader], \array_values($world->getChunkLoaders($chunkX, $chunkZ)));
+	}
+
+	public function testLightPopulationCompletionDiscardsStaleResult() : void{
+		$chunkX = 0;
+		$chunkZ = 0;
+		$chunk = new Chunk([], true);
+		$chunk->setLightPopulated(null);
+		$lockId = new ChunkLockId();
+		$temporaryLoader = new class implements ChunkLoader{};
+		$persistentLoader = new class implements ChunkLoader{};
+		$world = $this->createWorldForLightPopulationCompletion($chunkX, $chunkZ, $chunk, null, $temporaryLoader, $persistentLoader);
+
+		$blockLight = LightArray::fill(0);
+		$blockLight->set(1, 2, 3, 4);
+		$skyLight = LightArray::fill(0);
+		$skyLight->set(1, 2, 3, 12);
+
+		self::completeLightPopulation($world, $lockId, $chunkX, $chunkZ, $temporaryLoader, [0 => $blockLight], [0 => $skyLight], \array_fill(0, 256, 64));
+
+		self::assertFalse($chunk->isLightPopulated());
+		self::assertSame(0, $chunk->getSubChunk(0)->getBlockLightArray()->get(1, 2, 3));
+		self::assertSame(0, $chunk->getSubChunk(0)->getBlockSkyLightArray()->get(1, 2, 3));
+		self::assertFalse($world->isChunkLocked($chunkX, $chunkZ));
+		self::assertSame([$persistentLoader], \array_values($world->getChunkLoaders($chunkX, $chunkZ)));
 	}
 }
 
