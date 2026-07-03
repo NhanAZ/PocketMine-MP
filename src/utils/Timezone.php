@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace pocketmine\utils;
 
+use DateTimeZone;
 use function abs;
 use function date_default_timezone_set;
 use function date_parse;
@@ -31,6 +32,7 @@ use function exec;
 use function file_get_contents;
 use function floor;
 use function hexdec;
+use function in_array;
 use function ini_get;
 use function ini_set;
 use function is_array;
@@ -60,25 +62,15 @@ abstract class Timezone{
 
 	public static function init() : void{
 		$timezone = Utils::assumeNotFalse(ini_get("date.timezone"), "date.timezone should always be set in ini");
-		if($timezone !== ""){
-			/*
-			 * This is here so that people don't come to us complaining and fill up the issue tracker when they put
-			 * an incorrect timezone abbreviation in php.ini apparently.
-			 */
-			if(!str_contains($timezone, "/")){
-				$default_timezone = timezone_name_from_abbr($timezone);
-				if($default_timezone !== false){
-					ini_set("date.timezone", $default_timezone);
-					date_default_timezone_set($default_timezone);
-					return;
-				}
+		if(($configuredTimezone = self::resolveConfiguredTimezone($timezone)) !== null){
+			ini_set("date.timezone", $configuredTimezone);
+			date_default_timezone_set($configuredTimezone);
+			return;
+		}
 
-				//Bad php.ini value, try another method to detect timezone
-				\GlobalLogger::get()->warning("Timezone \"$timezone\" could not be parsed as a valid timezone from php.ini, falling back to auto-detection");
-			}else{
-				date_default_timezone_set($timezone);
-				return;
-			}
+		if($timezone !== "" && $timezone !== "UTC"){
+			//Bad php.ini value, try another method to detect timezone
+			\GlobalLogger::get()->warning("Timezone \"$timezone\" could not be parsed as a valid timezone from php.ini, falling back to auto-detection");
 		}
 
 		if(($timezone = self::detectSystemTimezone()) !== false && date_default_timezone_set($timezone)){
@@ -103,6 +95,29 @@ abstract class Timezone{
 		ini_set("date.timezone", "UTC");
 		date_default_timezone_set("UTC");
 		\GlobalLogger::get()->warning("Timezone could not be automatically determined or was set to an invalid value. An incorrect timezone will result in incorrect timestamps on console logs. It has been set to \"UTC\" by default. You can change it on the php.ini file.");
+	}
+
+	private static function resolveConfiguredTimezone(string $timezone) : ?string{
+		/*
+		 * PHP 8.2+ reports UTC when date.timezone is unset or invalid, so it can't be distinguished from explicit UTC.
+		 * Try auto-detection for UTC; users who really want UTC can set Etc/UTC instead.
+		 */
+		if($timezone === "" || $timezone === "UTC"){
+			return null;
+		}
+
+		/*
+		 * This is here so that people don't come to us complaining and fill up the issue tracker when they put
+		 * an incorrect timezone abbreviation in php.ini apparently.
+		 */
+		if(!str_contains($timezone, "/")){
+			$default_timezone = timezone_name_from_abbr($timezone);
+			if($default_timezone !== false){
+				return $default_timezone;
+			}
+		}
+
+		return in_array($timezone, DateTimeZone::listIdentifiers(DateTimeZone::ALL_WITH_BC), true) ? $timezone : null;
 	}
 
 	public static function detectSystemTimezone() : string|false{
