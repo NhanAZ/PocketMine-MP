@@ -28,6 +28,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #4931: sugarcane random ticks now run only from the top block and add at most one new block, while fertilizer can still grow sugarcane up to the normal maximum height; cactus top-only one-block growth is covered by regression tests.
 - Implemented upstream issue #6713: entity and block explosion events now reject affected or ignition blocks whose positions have no valid loaded world or are outside that world's bounds.
 - Implemented upstream issue #6821: invalid item custom block data now logs a concise loading error and leaves the placed tile active instead of crashing the server.
+- Implemented upstream issue #6680: worlds retry non-empty chunk population queues once per tick, preventing externally locked requests from remaining dormant after their lock is released.
 
 ### Maintenance
 
@@ -37,6 +38,8 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #5638: `PlayerAuthInputPacket` now reports timing breakdowns for input flags, movement, item-use transactions, item-stack requests, and block actions.
 - Implemented upstream issue #5064: added `settings.query-player-list`, defaulting to true, so GS4 Query can keep reporting player counts while hiding player names from long-query responses when disabled.
 - Refreshed source monitoring; PowerNukkitX commit `0d0a3b4f9362f4188d3e2b65df47bc93b4f41975` is reviewed as reference-only map-image evidence.
+- Reviewed upstream issue #5510 and deferred NPC fake-player packet timing changes until the skin loss is reproduced on a current Bedrock client.
+- Reviewed upstream issue #6632 and deferred its broad `NetworkSession` ownership refactor to a dedicated architecture and compatibility unit.
 - Reviewed upstream issue #6062 and deferred cross-thread dynamic block type ID allocation until a shared allocator/registry or type-ID redesign is available.
 - Reviewed upstream issue #4449 with related #6547 and deferred duplicate landing/step sound work until player ground tolerance can be redesigned with PlayerAuthInputPacket velocity/collision evidence.
 - Recorded the #2148 bed-spawn decision in source review notes: only spawnpoints created through real bed sleep get bed validation, because plugins and commands can intentionally set arbitrary custom spawnpoints.
@@ -73,6 +76,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #4931, targeted `BlockGrowthTest` (5 tests, 20 assertions), block PHPUnit (33 tests, 47,371 assertions), full PHPUnit (286 tests, 74,354 assertions), full PHPStan, syntax, code generation, translation validation, source audit, non-vendor JSON validation, whitespace checks, CI matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker checks passed for follow-up commit `6b9c772cd` after the first implementation run failed only PHP-CS-Fixer formatting in the new test file. Focused per-file PHPStan still reports the existing `Sugarcane::canBeSupportedAt()` dynamic trait-use warning when the class is analyzed outside the full project graph.
 - For #6713, targeted `ExplosionEventTest` (3 tests, 6 assertions), event PHPUnit (12 tests, 17 assertions), full PHPUnit (289 tests, 74,360 assertions), focused and full PHPStan, syntax checks, GitHub CI, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker checks passed for follow-up commit `322df2425` after the first implementation run failed only PHP-CS-Fixer on the new test header.
 - For #6821, targeted `TileTest` (2 tests, 4 assertions), full PHPUnit (291 tests, 74,364 assertions), focused and full PHPStan, syntax, PHP-CS-Fixer 3.75, code generation, translation validation, non-vendor JSON, whitespace, PHP 8.1-8.5 CI, integration, generated-code, ShellCheck, and Docker checks passed for implementation commit `3014ca16d`.
+- For #6680, targeted `WorldTest` (5 tests, 24 assertions), full PHPUnit (292 tests, 74,366 assertions), focused and full PHPStan, syntax, PHP-CS-Fixer 3.75, code generation, source audit, non-vendor JSON, translation, and whitespace checks passed locally; GitHub CI and Docker are pending the implementation push.
 
 ### Reviewed Or Deferred
 

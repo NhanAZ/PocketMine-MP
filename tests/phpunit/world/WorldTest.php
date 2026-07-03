@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace pocketmine\world;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use pocketmine\block\RuntimeBlockStateRegistry;
 use pocketmine\block\tile\Tile;
@@ -99,6 +100,22 @@ final class WorldTest extends TestCase{
 		return $world;
 	}
 
+	private function createWorldForPopulationQueueRetry(bool $hasQueuedRequest) : World&MockObject{
+		$world = $this->getMockBuilder(World::class)
+			->disableOriginalConstructor()
+			->onlyMethods(["actuallyDoTick", "drainPopulationRequestQueue"])
+			->getMock();
+		$queue = new \SplQueue();
+		if($hasQueuedRequest){
+			$queue->enqueue(World::chunkHash(0, 0));
+		}
+		self::setPrivateProperty($world, "folderName", "test");
+		self::setPrivateProperty($world, "chunkPopulationRequestQueue", $queue);
+		$world->timings = new WorldTimings($world);
+
+		return $world;
+	}
+
 	/**
 	 * @param LightArray[] $blockLight
 	 * @param LightArray[] $skyLight
@@ -150,6 +167,18 @@ final class WorldTest extends TestCase{
 		self::assertSame(64, $tile->getPosition()->getFloorY());
 		self::assertSame(20, $tile->getPosition()->getFloorZ());
 		self::assertSame($tile, $replacementChunk->getTile(3, 64, 4));
+	}
+
+	public function testPopulationQueueIsRetriedOnlyWhenNonEmpty() : void{
+		$queuedWorld = $this->createWorldForPopulationQueueRetry(true);
+		$queuedWorld->expects(self::once())->method("drainPopulationRequestQueue");
+		$queuedWorld->expects(self::once())->method("actuallyDoTick")->with(123);
+		$queuedWorld->doTick(123);
+
+		$emptyWorld = $this->createWorldForPopulationQueueRetry(false);
+		$emptyWorld->expects(self::never())->method("drainPopulationRequestQueue");
+		$emptyWorld->expects(self::once())->method("actuallyDoTick")->with(456);
+		$emptyWorld->doTick(456);
 	}
 
 	public function testLightPopulationCompletionAppliesOnlyWithValidLock() : void{

@@ -920,6 +920,7 @@ class World implements ChunkManager{
 		$this->timings->doTick->startTiming();
 		$this->doingTick = true;
 		try{
+			$this->retryQueuedChunkPopulations();
 			$this->actuallyDoTick($currentTick);
 		}finally{
 			$this->doingTick = false;
@@ -950,7 +951,6 @@ class World implements ChunkManager{
 			$this->provider->doGarbageCollection();
 			$this->providerGarbageCollectionTicker = 0;
 		}
-
 		$this->timings->scheduledBlockUpdates->startTiming();
 		//Delayed updates
 		while($this->scheduledBlockUpdateQueue->count() > 0 && $this->scheduledBlockUpdateQueue->current()["priority"] <= $currentTick){
@@ -3408,6 +3408,12 @@ class World implements ChunkManager{
 		if(!isset($this->chunkPopulationRequestQueueIndex[$chunkHash])){
 			$this->chunkPopulationRequestQueue->enqueue($chunkHash);
 			$this->chunkPopulationRequestQueueIndex[$chunkHash] = true;
+		}
+	}
+
+	private function retryQueuedChunkPopulations() : void{
+		if(!$this->chunkPopulationRequestQueue->isEmpty()){
+			$this->drainPopulationRequestQueue();
 		}
 	}
 
