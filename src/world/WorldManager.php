@@ -30,6 +30,7 @@ use pocketmine\event\world\WorldUnloadEvent;
 use pocketmine\lang\KnownTranslationFactory;
 use pocketmine\player\ChunkSelector;
 use pocketmine\Server;
+use pocketmine\utils\AssumptionFailedError;
 use pocketmine\world\format\Chunk;
 use pocketmine\world\format\io\exception\CorruptedWorldException;
 use pocketmine\world\format\io\exception\UnsupportedWorldFormatException;
@@ -38,6 +39,7 @@ use pocketmine\world\format\io\WorldProviderManager;
 use pocketmine\world\format\io\WritableWorldProvider;
 use pocketmine\world\generator\GeneratorManager;
 use pocketmine\world\generator\InvalidGeneratorOptionsException;
+use pocketmine\YmlServerProperties;
 use Symfony\Component\Filesystem\Path;
 use function array_keys;
 use function array_shift;
@@ -47,6 +49,7 @@ use function floor;
 use function implode;
 use function intdiv;
 use function iterator_to_array;
+use function max;
 use function microtime;
 use function round;
 use function sprintf;
@@ -67,11 +70,17 @@ class WorldManager{
 	private int $autoSaveTicks = self::TICKS_PER_AUTOSAVE;
 	private int $autoSaveTicker = 0;
 
+	private int $maxConcurrentChunkPopulationTasks;
+	private int $activeChunkPopulationTasks = 0;
+	private bool $drainingPopulationRequestQueues = false;
+
 	public function __construct(
 		private Server $server,
 		private string $dataPath,
 		private WorldProviderManager $providerManager
-	){}
+	){
+		$this->maxConcurrentChunkPopulationTasks = max(1, $server->getConfigGroup()->getPropertyInt(YmlServerProperties::CHUNK_GENERATION_POPULATION_QUEUE_SIZE, 2));
+	}
 
 	public function getProviderManager() : WorldProviderManager{
 		return $this->providerManager;
@@ -87,6 +96,57 @@ class WorldManager{
 
 	public function getDefaultWorld() : ?World{
 		return $this->defaultWorld;
+	}
+
+	/**
+	 * @internal
+	 */
+	public function hasChunkPopulationTaskSlot() : bool{
+		return $this->activeChunkPopulationTasks < $this->maxConcurrentChunkPopulationTasks;
+	}
+
+	/**
+	 * @internal
+	 */
+	public function tryReserveChunkPopulationTaskSlot() : bool{
+		if(!$this->hasChunkPopulationTaskSlot()){
+			return false;
+		}
+
+		$this->activeChunkPopulationTasks++;
+		return true;
+	}
+
+	/**
+	 * @internal
+	 */
+	public function releaseChunkPopulationTaskSlot() : void{
+		if($this->activeChunkPopulationTasks === 0){
+			throw new AssumptionFailedError("Cannot release a chunk population task slot when none are reserved");
+		}
+
+		$this->activeChunkPopulationTasks--;
+		$this->drainPopulationRequestQueues();
+	}
+
+	private function drainPopulationRequestQueues() : void{
+		if($this->drainingPopulationRequestQueues){
+			return;
+		}
+
+		$this->drainingPopulationRequestQueues = true;
+		try{
+			foreach($this->worlds as $world){
+				if(!$this->hasChunkPopulationTaskSlot()){
+					break;
+				}
+				if($world->isLoaded()){
+					$world->drainPopulationRequestQueue();
+				}
+			}
+		}finally{
+			$this->drainingPopulationRequestQueues = false;
+		}
 	}
 
 	/**

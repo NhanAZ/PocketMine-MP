@@ -3430,9 +3430,16 @@ class World implements ChunkManager{
 		return $resolver->getPromise();
 	}
 
-	private function drainPopulationRequestQueue() : void{
+	/**
+	 * @internal
+	 */
+	public function drainPopulationRequestQueue() : void{
 		$failed = [];
-		while(count($this->activeChunkPopulationTasks) < $this->maxConcurrentChunkPopulationTasks && !$this->chunkPopulationRequestQueue->isEmpty()){
+		while(
+			count($this->activeChunkPopulationTasks) < $this->maxConcurrentChunkPopulationTasks &&
+			$this->server->getWorldManager()->hasChunkPopulationTaskSlot() &&
+			!$this->chunkPopulationRequestQueue->isEmpty()
+		){
 			$nextChunkHash = $this->chunkPopulationRequestQueue->dequeue();
 			unset($this->chunkPopulationRequestQueueIndex[$nextChunkHash]);
 			World::getXZ($nextChunkHash, $nextChunkX, $nextChunkZ);
@@ -3498,7 +3505,7 @@ class World implements ChunkManager{
 			return $resolver?->getPromise() ?? $this->enqueuePopulationRequest($chunkX, $chunkZ, $associatedChunkLoader);
 		}
 
-		if(count($this->activeChunkPopulationTasks) >= $this->maxConcurrentChunkPopulationTasks){
+		if(count($this->activeChunkPopulationTasks) >= $this->maxConcurrentChunkPopulationTasks || !$this->server->getWorldManager()->hasChunkPopulationTaskSlot()){
 			//too many chunks are already generating; delay resolution of the request until later
 			return $resolver?->getPromise() ?? $this->enqueuePopulationRequest($chunkX, $chunkZ, $associatedChunkLoader);
 		}
@@ -3543,6 +3550,16 @@ class World implements ChunkManager{
 					}
 				}
 			}
+			if(!$this->server->getWorldManager()->tryReserveChunkPopulationTaskSlot()){
+				return $resolver?->getPromise() ?? $this->enqueuePopulationRequest($chunkX, $chunkZ, $associatedChunkLoader);
+			}
+			$populationTaskSlotReleased = false;
+			$releasePopulationTaskSlot = function() use (&$populationTaskSlotReleased) : void{
+				if(!$populationTaskSlotReleased){
+					$populationTaskSlotReleased = true;
+					$this->server->getWorldManager()->releaseChunkPopulationTaskSlot();
+				}
+			};
 
 			$this->activeChunkPopulationTasks[$chunkHash] = true;
 			if($resolver === null){
@@ -3564,19 +3581,28 @@ class World implements ChunkManager{
 			$centerChunk = $this->loadChunk($chunkX, $chunkZ);
 			$adjacentChunks = $this->getAdjacentChunks($chunkX, $chunkZ);
 
-			$this->generatorExecutor->populate(
-				$chunkX,
-				$chunkZ,
-				$centerChunk,
-				$adjacentChunks,
-				function(Chunk $centerChunk, array $adjacentChunks) use ($chunkPopulationLockId, $chunkX, $chunkZ, $temporaryChunkLoader) : void{
-					if(!$this->isLoaded()){
-						return;
-					}
+			try{
+				$this->generatorExecutor->populate(
+					$chunkX,
+					$chunkZ,
+					$centerChunk,
+					$adjacentChunks,
+					function(Chunk $centerChunk, array $adjacentChunks) use ($chunkPopulationLockId, $chunkX, $chunkZ, $temporaryChunkLoader, $releasePopulationTaskSlot) : void{
+						try{
+							if(!$this->isLoaded()){
+								return;
+							}
 
-					$this->generateChunkCallback($chunkPopulationLockId, $chunkX, $chunkZ, $centerChunk, $adjacentChunks, $temporaryChunkLoader);
-				}
-			);
+							$this->generateChunkCallback($chunkPopulationLockId, $chunkX, $chunkZ, $centerChunk, $adjacentChunks, $temporaryChunkLoader);
+						}finally{
+							$releasePopulationTaskSlot();
+						}
+					}
+				);
+			}catch(\Throwable $e){
+				$releasePopulationTaskSlot();
+				throw $e;
+			}
 
 			return $resolver->getPromise();
 		}finally{
