@@ -21,6 +21,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #6661: enchantment instances reject levels outside `1 ... 32767`, preventing invalid item enchantment data and delayed gameplay or `TAG_Short` serialization failures.
 - Implemented upstream issue #6782: schema-converted blockitems without state NBT now resolve registered block defaults instead of assuming network legacy meta `0`; all seven legacy skull variants retain their correct item type.
 - Implemented the safe deserializer portion of upstream issue #6654: global block and item deserializers now reject outputs that lack matching persistent serializers, catching incomplete plugin registration during load instead of later during save.
+- Implemented upstream issue #4673: RakLib socket creation failures now raise `SocketException`, allowing unsupported IPv6/address-family startup errors to report as controlled network-start failures instead of thread crash dumps.
 
 ### Maintenance
 
@@ -54,6 +55,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #6661, targeted `ItemTest` (16 tests, 29 assertions), full PHPUnit (264 tests, 74,281 assertions), full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, source audit, Composer validation/install dry-run, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `f30646a6b`.
 - For #6782, targeted item-upgrader and item serializer/deserializer PHPUnit (9 tests, 11,770 assertions), full PHPUnit (271 tests, 74,309 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, source audit, Composer validation/install dry-run, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `6f4d51ff7`.
 - For #6654, targeted block/item serializer-deserializer PHPUnit (7 tests, 23,142 assertions), full PHPUnit (273 tests, 74,313 assertions), full PHPStan, syntax, code generation, generated-file/report diff checks, 119-file non-vendor JSON validation, source audit, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `212435707`. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
+- For #4673, RakLib socket syntax, targeted RakLib/Query PHPUnit (6 tests, 33 assertions), full PHPUnit (273 tests, 74,313 assertions), full PHPStan, code generation, translation validation, generated-file collision, 119-file non-vendor JSON validation, source audit, and whitespace checks passed locally. Direct RakLib package PHPStan through the root config still reports unrelated pre-existing package issues; Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` and RakLib `GPL-3.0` SPDX warnings.
 
 ### Reviewed Or Deferred
 

@@ -42,7 +42,7 @@ abstract class Socket{
 	protected function __construct(bool $ipv6){
 		$socket = @socket_create($ipv6 ? AF_INET6 : AF_INET, SOCK_DGRAM, SOL_UDP);
 		if($socket === false){
-			throw new \RuntimeException("Failed to create socket: " . trim(socket_strerror(socket_last_error())));
+			throw new SocketException("Failed to create socket: " . trim(socket_strerror(socket_last_error())));
 		}
 		$this->socket = $socket;
 
