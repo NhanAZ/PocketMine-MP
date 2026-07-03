@@ -44,6 +44,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 
 ### Reviewed Or Deferred
 
+- Reviewed upstream issue #5410 and deferred flat-world height changes until representative pre-1.18, post-1.18, and PMMP-created worlds establish `FlatWorldLayers` version and Y-offset semantics with round-trip and live-client evidence.
 - Reviewed upstream issue #7035 and rejected the unsupported suggestion to raise the LevelDB world NetworkVersion ceiling without an affected world or matching chunk, blockstate, and upgrade-schema evidence. Current network protocol `1001` does not imply safe support for worlds newer than the deliberate `924` storage ceiling.
 - Reviewed upstream issue #5385 and related #1567, then deferred the death-screen rejoin fix because the correct direction requires moving respawn state and `PlayerRespawnEvent` into the login/pre-`StartGamePacket` path, which needs a separate plugin-compatibility plan.
 - Reviewed upstream issue #6781 and deferred the large long-lived array GC-performance work because it needs a runtime or collection-design strategy with benchmarks, not a small registry-wrapper patch.
