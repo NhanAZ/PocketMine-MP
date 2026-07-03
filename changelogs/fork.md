@@ -51,7 +51,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #5805, source audit, review JSON validation, whitespace, GitHub CI, PHP-CS-Fixer, and Docker checks passed for decision commit `32ad9a0c1`; runtime-specific tests were not required because no source code changed.
 - For #2731, source audit, review JSON validation, whitespace, GitHub CI, PHP-CS-Fixer, and Docker checks passed for decision commit `4b8e3df70`; runtime-specific tests were not required because no source code changed.
 - For #6661, targeted `ItemTest` (16 tests, 29 assertions), full PHPUnit (264 tests, 74,281 assertions), full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, source audit, Composer validation/install dry-run, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `f30646a6b`.
-- For #6782, targeted item-upgrader and item serializer/deserializer PHPUnit (9 tests, 11,770 assertions), full PHPUnit (271 tests, 74,309 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, source audit, Composer validation/install dry-run, and whitespace checks passed. Pushed CI is pending.
+- For #6782, targeted item-upgrader and item serializer/deserializer PHPUnit (9 tests, 11,770 assertions), full PHPUnit (271 tests, 74,309 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, source audit, Composer validation/install dry-run, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `6f4d51ff7`.
 
 ### Reviewed Or Deferred
 
