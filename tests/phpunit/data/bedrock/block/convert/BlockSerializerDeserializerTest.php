@@ -31,6 +31,7 @@ use pocketmine\block\CaveVines;
 use pocketmine\block\Farmland;
 use pocketmine\block\MobHead;
 use pocketmine\block\RuntimeBlockStateRegistry;
+use pocketmine\block\VanillaBlocks;
 use pocketmine\data\bedrock\block\BlockStateData;
 use pocketmine\data\bedrock\block\BlockStateDeserializeException;
 use pocketmine\data\bedrock\block\BlockStateNames as StateNames;
@@ -46,8 +47,8 @@ final class BlockSerializerDeserializerTest extends TestCase{
 	private BlockObjectToStateSerializer $serializer;
 
 	public function setUp() : void{
-		$this->deserializer = new BlockStateToObjectDeserializer();
 		$this->serializer = new BlockObjectToStateSerializer();
+		$this->deserializer = new BlockStateToObjectDeserializer($this->serializer);
 		$registrar = new BlockSerializerDeserializerRegistrar($this->deserializer, $this->serializer);
 		VanillaBlockMappings::init($registrar);
 	}
@@ -66,6 +67,17 @@ final class BlockSerializerDeserializerTest extends TestCase{
 		$this->deserializer->deserializeBlock(new BlockStateData(Ids::OAK_LOG, [
 			StateNames::PILLAR_AXIS => new IntTag(0)
 		], BlockStateData::CURRENT_VERSION));
+	}
+
+	public function testDeserializeRejectsBlocksWithoutMatchingSerializer() : void{
+		$serializer = new BlockObjectToStateSerializer();
+		$deserializer = new BlockStateToObjectDeserializer($serializer);
+		$deserializer->map(Ids::STONE, fn() => VanillaBlocks::STONE());
+
+		$this->expectException(\LogicException::class);
+		$this->expectExceptionMessage("not registered with BlockObjectToStateSerializer");
+
+		$deserializer->deserialize(BlockStateData::current(Ids::STONE, []));
 	}
 
 	public function testAllKnownBlockStatesSerializableAndDeserializable() : void{

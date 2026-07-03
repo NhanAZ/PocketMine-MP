@@ -20,6 +20,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #6926: command integer parsing now checks numeric-string bounds before integer conversion, preventing PHP 8.5 out-of-range float-string warnings while preserving existing decimal, exponent, clamp, and localized error behaviour.
 - Implemented upstream issue #6661: enchantment instances reject levels outside `1 ... 32767`, preventing invalid item enchantment data and delayed gameplay or `TAG_Short` serialization failures.
 - Implemented upstream issue #6782: schema-converted blockitems without state NBT now resolve registered block defaults instead of assuming network legacy meta `0`; all seven legacy skull variants retain their correct item type.
+- Implemented the safe deserializer portion of upstream issue #6654: global block and item deserializers now reject outputs that lack matching persistent serializers, catching incomplete plugin registration during load instead of later during save.
 
 ### Maintenance
 
@@ -52,6 +53,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #2731, source audit, review JSON validation, whitespace, GitHub CI, PHP-CS-Fixer, and Docker checks passed for decision commit `4b8e3df70`; runtime-specific tests were not required because no source code changed.
 - For #6661, targeted `ItemTest` (16 tests, 29 assertions), full PHPUnit (264 tests, 74,281 assertions), full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, source audit, Composer validation/install dry-run, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `f30646a6b`.
 - For #6782, targeted item-upgrader and item serializer/deserializer PHPUnit (9 tests, 11,770 assertions), full PHPUnit (271 tests, 74,309 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, source audit, Composer validation/install dry-run, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `6f4d51ff7`.
+- For #6654, targeted block/item serializer-deserializer PHPUnit (7 tests, 23,142 assertions), full PHPUnit (273 tests, 74,313 assertions), full PHPStan, syntax, code generation, generated-file/report diff checks, 119-file non-vendor JSON validation, source audit, and whitespace checks passed. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
 
 ### Reviewed Or Deferred
 

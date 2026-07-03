@@ -25,6 +25,9 @@ namespace pocketmine\data\bedrock\item;
 
 use PHPUnit\Framework\TestCase;
 use pocketmine\block\RuntimeBlockStateRegistry;
+use pocketmine\item\Item;
+use pocketmine\item\ItemIdentifier;
+use pocketmine\item\ItemTypeIds;
 use pocketmine\item\VanillaItems;
 use pocketmine\world\format\io\GlobalBlockStateHandlers;
 
@@ -34,8 +37,8 @@ final class ItemSerializerDeserializerTest extends TestCase{
 	private ItemSerializer $serializer;
 
 	public function setUp() : void{
-		$this->deserializer = new ItemDeserializer(GlobalBlockStateHandlers::getDeserializer());
 		$this->serializer = new ItemSerializer(GlobalBlockStateHandlers::getSerializer());
+		$this->deserializer = new ItemDeserializer(GlobalBlockStateHandlers::getDeserializer(), $this->serializer);
 	}
 
 	public function testAllVanillaItemsSerializableAndDeserializable() : void{
@@ -79,5 +82,17 @@ final class ItemSerializerDeserializerTest extends TestCase{
 
 			self::assertTrue($item->equalsExact($newItem));
 		}
+	}
+
+	public function testDeserializeRejectsItemsWithoutMatchingSerializer() : void{
+		$this->deserializer->map(
+			"test:unregistered",
+			fn() => new Item(new ItemIdentifier(ItemTypeIds::newId()), "Unregistered")
+		);
+
+		$this->expectException(\LogicException::class);
+		$this->expectExceptionMessage("not registered with ItemSerializer");
+
+		$this->deserializer->deserializeType(new SavedItemData("test:unregistered"));
 	}
 }

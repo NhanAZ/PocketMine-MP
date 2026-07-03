@@ -56,6 +56,8 @@ final class BlockStateToObjectDeserializer implements BlockStateDeserializer{
 	 */
 	private array $defaultStates = [];
 
+	public function __construct(private ?BlockObjectToStateSerializer $blockStateSerializer = null){}
+
 	public function deserialize(BlockStateData $stateData) : int{
 		if(count($stateData->getStates()) === 0){
 			//if a block has zero properties, we can keep a map of string ID -> internal blockstate ID
@@ -67,11 +69,15 @@ final class BlockStateToObjectDeserializer implements BlockStateDeserializer{
 	}
 
 	private function deserializeToStateId(BlockStateData $stateData) : int{
-		$stateId = $this->deserializeBlock($stateData)->getStateId();
+		$block = $this->deserializeBlock($stateData);
+		$stateId = $block->getStateId();
 		//plugin devs seem to keep missing this and causing core crashes, so we need to verify this at the earliest
 		//available opportunity
 		if(!RuntimeBlockStateRegistry::getInstance()->hasStateId($stateId)){
 			throw new \LogicException("State ID $stateId returned by deserializer for " . $stateData->getName() . " is not registered in RuntimeBlockStateRegistry");
+		}
+		if($this->blockStateSerializer !== null && !$this->blockStateSerializer->isRegistered($block)){
+			throw new \LogicException("Block returned by deserializer for " . $stateData->getName() . " is not registered with BlockObjectToStateSerializer");
 		}
 		return $stateId;
 	}

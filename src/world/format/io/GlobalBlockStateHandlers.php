@@ -54,8 +54,8 @@ final class GlobalBlockStateHandlers{
 
 	public static function getRegistrar() : BlockSerializerDeserializerRegistrar{
 		if(self::$registrar === null){
-			$deserializer = new BlockStateToObjectDeserializer();
 			$serializer = new BlockObjectToStateSerializer();
+			$deserializer = new BlockStateToObjectDeserializer($serializer);
 			self::$registrar = new BlockSerializerDeserializerRegistrar($deserializer, $serializer);
 			VanillaBlockMappings::init(self::$registrar);
 		}

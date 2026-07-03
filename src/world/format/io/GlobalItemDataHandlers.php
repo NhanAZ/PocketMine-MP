@@ -47,7 +47,7 @@ final class GlobalItemDataHandlers{
 	}
 
 	public static function getDeserializer() : ItemDeserializer{
-		return self::$itemDeserializer ??= new ItemDeserializer(GlobalBlockStateHandlers::getDeserializer());
+		return self::$itemDeserializer ??= new ItemDeserializer(GlobalBlockStateHandlers::getDeserializer(), self::getSerializer());
 	}
 
 	public static function getUpgrader() : ItemDataUpgrader{

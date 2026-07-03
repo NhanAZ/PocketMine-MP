@@ -42,7 +42,8 @@ final class ItemDeserializer{
 	private array $deserializers = [];
 
 	public function __construct(
-		private BlockStateDeserializer $blockStateDeserializer
+		private BlockStateDeserializer $blockStateDeserializer,
+		private ?ItemSerializer $itemSerializer = null
 	){
 		new ItemSerializerDeserializerRegistrar($this, null);
 	}
@@ -86,14 +87,20 @@ final class ItemDeserializer{
 			}
 
 			//TODO: worth caching this or not?
-			return RuntimeBlockStateRegistry::getInstance()->fromStateId($block)->asItem();
+			$item = RuntimeBlockStateRegistry::getInstance()->fromStateId($block)->asItem();
+		}else{
+			$id = $data->getName();
+			if(!isset($this->deserializers[$id])){
+				throw new UnsupportedItemTypeException("No deserializer found for ID $id");
+			}
+
+			$item = ($this->deserializers[$id])($data);
 		}
-		$id = $data->getName();
-		if(!isset($this->deserializers[$id])){
-			throw new UnsupportedItemTypeException("No deserializer found for ID $id");
+		if($this->itemSerializer !== null && !$this->itemSerializer->isRegistered($item)){
+			throw new \LogicException("Item " . $item::class . " returned by deserializer for " . $data->getName() . " is not registered with ItemSerializer");
 		}
 
-		return ($this->deserializers[$id])($data);
+		return $item;
 	}
 
 	/**

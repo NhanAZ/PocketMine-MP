@@ -83,6 +83,15 @@ final class ItemSerializer{
 		$this->blockItemSerializers[$index] = $serializer;
 	}
 
+	public function isRegistered(Item $item) : bool{
+		if($item->isNull()){
+			return false;
+		}
+		return $item instanceof ItemBlock ?
+			$this->isBlockItemRegistered($item->getBlock()) :
+			isset($this->itemSerializers[$item->getTypeId()]);
+	}
+
 	/**
 	 * @phpstan-template TItemType of Item
 	 * @phpstan-param TItemType $item
@@ -165,6 +174,18 @@ final class ItemSerializer{
 		}
 
 		return $data;
+	}
+
+	private function isBlockItemRegistered(Block $block) : bool{
+		if(isset($this->blockItemSerializers[$block->getTypeId()])){
+			return true;
+		}
+		try{
+			$this->blockStateSerializer->serialize($block->getStateId());
+			return true;
+		}catch(BlockStateSerializeException){
+			return false;
+		}
 	}
 
 	/**
