@@ -199,6 +199,7 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 	private const TAG_SPAWN_X = "SpawnX"; //TAG_Int
 	private const TAG_SPAWN_Y = "SpawnY"; //TAG_Int
 	private const TAG_SPAWN_Z = "SpawnZ"; //TAG_Int
+	private const TAG_SPAWN_IS_BED = "SpawnIsBed"; //TAG_Byte
 	private const TAG_DEATH_WORLD = "DeathLevel"; //TAG_String
 	private const TAG_DEATH_X = "DeathPositionX"; //TAG_Int
 	private const TAG_DEATH_Y = "DeathPositionY"; //TAG_Int
@@ -282,6 +283,7 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 
 	protected ?Vector3 $sleeping = null;
 	private ?Position $spawnPosition = null;
+	private bool $spawnPositionIsBedSpawn = false;
 
 	private bool $respawnLocked = false;
 
@@ -407,6 +409,7 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 
 		if(($world = $this->server->getWorldManager()->getWorldByName($nbt->getString(self::TAG_SPAWN_WORLD, ""))) instanceof World){
 			$this->spawnPosition = new Position($nbt->getInt(self::TAG_SPAWN_X), $nbt->getInt(self::TAG_SPAWN_Y), $nbt->getInt(self::TAG_SPAWN_Z), $world);
+			$this->spawnPositionIsBedSpawn = $nbt->getByte(self::TAG_SPAWN_IS_BED, 0) !== 0;
 		}
 		if(($world = $this->server->getWorldManager()->getWorldByName($nbt->getString(self::TAG_DEATH_WORLD, ""))) instanceof World){
 			$this->deathPosition = new Position($nbt->getInt(self::TAG_DEATH_X), $nbt->getInt(self::TAG_DEATH_Y), $nbt->getInt(self::TAG_DEATH_Z), $world);
@@ -1127,6 +1130,10 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 		return $this->spawnPosition !== null && $this->spawnPosition->isValid();
 	}
 
+	private function isBedSpawnValid(Position $spawnPosition) : bool{
+		return $spawnPosition->isValid() && $spawnPosition->getWorld()->getBlock($spawnPosition) instanceof Bed;
+	}
+
 	/**
 	 * Sets the spawnpoint of the player (and the compass direction) to a Vector3, or set it on another world with a
 	 * Position object
@@ -1134,6 +1141,10 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 	 * @param Vector3|Position|null $pos
 	 */
 	public function setSpawn(?Vector3 $pos) : void{
+		$this->setSpawnInternal($pos, false);
+	}
+
+	private function setSpawnInternal(?Vector3 $pos, bool $bedSpawn) : void{
 		if($pos !== null){
 			if(!($pos instanceof Position)){
 				$world = $this->getWorld();
@@ -1141,8 +1152,10 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 				$world = $pos->getWorld();
 			}
 			$this->spawnPosition = new Position($pos->x, $pos->y, $pos->z, $world);
+			$this->spawnPositionIsBedSpawn = $bedSpawn;
 		}else{
 			$this->spawnPosition = null;
+			$this->spawnPositionIsBedSpawn = false;
 		}
 		$this->getNetworkSession()->syncPlayerSpawnPoint($this->getSpawn());
 	}
@@ -1169,7 +1182,7 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 		$this->sleeping = $pos;
 		$this->networkPropertiesDirty = true;
 
-		$this->setSpawn($pos);
+		$this->setSpawnInternal($pos, $b instanceof Bed);
 
 		$this->getWorld()->setSleepTicks(60);
 
@@ -2493,6 +2506,9 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 			$nbt->setInt(self::TAG_SPAWN_X, $spawn->getFloorX());
 			$nbt->setInt(self::TAG_SPAWN_Y, $spawn->getFloorY());
 			$nbt->setInt(self::TAG_SPAWN_Z, $spawn->getFloorZ());
+			if($this->spawnPositionIsBedSpawn){
+				$nbt->setByte(self::TAG_SPAWN_IS_BED, 1);
+			}
 		}
 
 		if($this->deathPosition !== null && $this->deathPosition->isValid()){
@@ -2581,52 +2597,22 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 				if(!$this->isConnected()){
 					return;
 				}
-				$this->logger->debug("Respawn position located, completing respawn");
-				$ev = new PlayerRespawnEvent($this, $safeSpawn);
-				$spawnPosition = $ev->getRespawnPosition();
-				$spawnBlock = $spawnPosition->getWorld()->getBlock($spawnPosition);
-				if($spawnBlock instanceof RespawnAnchor){
-					if($spawnBlock->getCharges() > 0){
-						$spawnPosition->getWorld()->setBlock($spawnPosition, $spawnBlock->setCharges($spawnBlock->getCharges() - 1));
-						$spawnPosition->getWorld()->addSound($spawnPosition, new RespawnAnchorDepleteSound());
-					}else{
-						$defaultSpawn = $this->server->getWorldManager()->getDefaultWorld()?->getSpawnLocation();
-						if($defaultSpawn !== null){
-							$this->setSpawn($defaultSpawn);
-							$ev->setRespawnPosition($defaultSpawn);
-							$this->sendMessage(KnownTranslationFactory::tile_respawn_anchor_notValid()->prefix(TextFormat::GRAY));
-						}
+				if($this->spawnPositionIsBedSpawn && $this->spawnPosition !== null && !$this->isBedSpawnValid($this->spawnPosition)){
+					$defaultSpawn = $this->server->getWorldManager()->getDefaultWorld()?->getSpawnLocation();
+					if($defaultSpawn !== null){
+						$this->setSpawn(null);
+						$defaultSpawn->getWorld()->requestSafeSpawn($defaultSpawn)->onCompletion(
+							fn(Position $defaultSafeSpawn) => $this->completeRespawn($defaultSafeSpawn),
+							function() : void{
+								if($this->isConnected()){
+									$this->getNetworkSession()->disconnectWithError(KnownTranslationFactory::pocketmine_disconnect_error_respawn());
+								}
+							}
+						);
+						return;
 					}
 				}
-				$ev->call();
-
-				$realSpawn = Position::fromObject($ev->getRespawnPosition()->add(0.5, 0, 0.5), $ev->getRespawnPosition()->getWorld());
-				$this->teleport($realSpawn);
-
-				$this->setSprinting(false);
-				$this->setSneaking(false);
-				$this->setFlying(false);
-
-				$this->extinguish(EntityExtinguishEvent::CAUSE_RESPAWN);
-				$this->setAirSupplyTicks($this->getMaxAirSupplyTicks());
-				$this->deadTicks = 0;
-				$this->noDamageTicks = 60;
-
-				$this->effectManager->clear();
-				$this->setHealth($this->getMaxHealth());
-
-				foreach($this->attributeMap->getAll() as $attr){
-					if($attr->getId() === Attribute::EXPERIENCE || $attr->getId() === Attribute::EXPERIENCE_LEVEL){ //we have already reset both of those if needed when the player died
-						continue;
-					}
-					$attr->resetToDefault();
-				}
-
-				$this->spawnToAll();
-				$this->scheduleUpdate();
-
-				$this->getNetworkSession()->onServerRespawn();
-				$this->respawnLocked = false;
+				$this->completeRespawn($safeSpawn);
 			},
 			function() : void{
 				if($this->isConnected()){
@@ -2634,6 +2620,59 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 				}
 			}
 		);
+	}
+
+	private function completeRespawn(Position $safeSpawn) : void{
+		if(!$this->isConnected()){
+			return;
+		}
+
+		$this->logger->debug("Respawn position located, completing respawn");
+		$ev = new PlayerRespawnEvent($this, $safeSpawn);
+		$spawnPosition = $ev->getRespawnPosition();
+		$spawnBlock = $spawnPosition->getWorld()->getBlock($spawnPosition);
+		if($spawnBlock instanceof RespawnAnchor){
+			if($spawnBlock->getCharges() > 0){
+				$spawnPosition->getWorld()->setBlock($spawnPosition, $spawnBlock->setCharges($spawnBlock->getCharges() - 1));
+				$spawnPosition->getWorld()->addSound($spawnPosition, new RespawnAnchorDepleteSound());
+			}else{
+				$defaultSpawn = $this->server->getWorldManager()->getDefaultWorld()?->getSpawnLocation();
+				if($defaultSpawn !== null){
+					$this->setSpawn($defaultSpawn);
+					$ev->setRespawnPosition($defaultSpawn);
+					$this->sendMessage(KnownTranslationFactory::tile_respawn_anchor_notValid()->prefix(TextFormat::GRAY));
+				}
+			}
+		}
+		$ev->call();
+
+		$realSpawn = Position::fromObject($ev->getRespawnPosition()->add(0.5, 0, 0.5), $ev->getRespawnPosition()->getWorld());
+		$this->teleport($realSpawn);
+
+		$this->setSprinting(false);
+		$this->setSneaking(false);
+		$this->setFlying(false);
+
+		$this->extinguish(EntityExtinguishEvent::CAUSE_RESPAWN);
+		$this->setAirSupplyTicks($this->getMaxAirSupplyTicks());
+		$this->deadTicks = 0;
+		$this->noDamageTicks = 60;
+
+		$this->effectManager->clear();
+		$this->setHealth($this->getMaxHealth());
+
+		foreach($this->attributeMap->getAll() as $attr){
+			if($attr->getId() === Attribute::EXPERIENCE || $attr->getId() === Attribute::EXPERIENCE_LEVEL){ //we have already reset both of those if needed when the player died
+				continue;
+			}
+			$attr->resetToDefault();
+		}
+
+		$this->spawnToAll();
+		$this->scheduleUpdate();
+
+		$this->getNetworkSession()->onServerRespawn();
+		$this->respawnLocked = false;
 	}
 
 	protected function applyPostDamageEffects(EntityDamageEvent $source) : void{

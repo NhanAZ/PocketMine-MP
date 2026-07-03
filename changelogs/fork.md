@@ -23,6 +23,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented the safe deserializer portion of upstream issue #6654: global block and item deserializers now reject outputs that lack matching persistent serializers, catching incomplete plugin registration during load instead of later during save.
 - Implemented upstream issue #4673: RakLib socket creation failures now raise `SocketException`, allowing unsupported IPv6/address-family startup errors to report as controlled network-start failures instead of thread crash dumps.
 - Implemented upstream issue #1537: chests now refuse to open when a `Living` entity is standing above the chest or either half of a double chest, while non-living entities do not block opening.
+- Implemented upstream issue #2148: spawnpoints created by real bed sleep now fall back to default world spawn if the bed block is missing at respawn time, while `/spawnpoint` and plugin-set spawnpoints remain bed-independent.
 
 ### Maintenance
 
@@ -33,6 +34,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #5064: added `settings.query-player-list`, defaulting to true, so GS4 Query can keep reporting player counts while hiding player names from long-query responses when disabled.
 - Refreshed source monitoring; PowerNukkitX commit `0d0a3b4f9362f4188d3e2b65df47bc93b4f41975` is reviewed as reference-only map-image evidence.
 - Reviewed upstream issue #6062 and deferred cross-thread dynamic block type ID allocation until a shared allocator/registry or type-ID redesign is available.
+- Recorded the #2148 bed-spawn decision in source review notes: only spawnpoints created through real bed sleep get bed validation, because plugins and commands can intentionally set arbitrary custom spawnpoints.
 - Fixed the GitHub Code Style follow-up for #3272 by applying PHP-CS-Fixer native-function import style in `WorldTest`; follow-up commit `4c941c578` restored green CI.
 
 ### Checks
@@ -60,6 +62,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #6654, targeted block/item serializer-deserializer PHPUnit (7 tests, 23,142 assertions), full PHPUnit (273 tests, 74,313 assertions), full PHPStan, syntax, code generation, generated-file/report diff checks, 119-file non-vendor JSON validation, source audit, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `212435707`. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
 - For #4673, RakLib socket syntax, targeted RakLib/Query PHPUnit (6 tests, 33 assertions), full PHPUnit (273 tests, 74,313 assertions), full PHPStan, code generation, translation validation, generated-file collision, 119-file non-vendor JSON validation, source audit, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `32b06ac70`. Direct RakLib package PHPStan through the root config still reports unrelated pre-existing package issues; Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` and RakLib `GPL-3.0` SPDX warnings.
 - For #1537, targeted `ChestTest` (3 tests, 9 assertions), block PHPUnit (13 tests, 45,699 assertions), full PHPUnit (276 tests, 74,322 assertions), targeted and full PHPStan, syntax, code generation, translation validation, generated-file collision, 119-file non-vendor JSON validation, source audit, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `7a657f0b4`. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
+- For #2148, targeted `PlayerSpawnTest` (3 tests, 4 assertions), focused player/block PHPUnit (7 tests, 1,582 assertions), full PHPUnit (279 tests, 74,326 assertions), targeted and full PHPStan, syntax, code generation, translation validation, generated-file collision, source audit, 119-file non-vendor JSON validation, and whitespace checks passed locally. Composer strict validation still reports only the pre-existing deprecated root `LGPL-3.0` SPDX warning.
 
 ### Reviewed Or Deferred
 
