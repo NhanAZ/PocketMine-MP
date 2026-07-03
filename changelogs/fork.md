@@ -23,6 +23,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #5638: `PlayerAuthInputPacket` now reports timing breakdowns for input flags, movement, item-use transactions, item-stack requests, and block actions.
 - Implemented upstream issue #5064: added `settings.query-player-list`, defaulting to true, so GS4 Query can keep reporting player counts while hiding player names from long-query responses when disabled.
 - Refreshed source monitoring; PowerNukkitX commit `0d0a3b4f9362f4188d3e2b65df47bc93b4f41975` is reviewed as reference-only map-image evidence.
+- Fixed the GitHub Code Style follow-up for #3272 by applying PHP-CS-Fixer native-function import style in `WorldTest`.
 
 ### Checks
 
@@ -37,7 +38,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #4206, targeted `WorldTest` (2 tests, 9 assertions), touched-file PHPStan, full PHPUnit (248 tests, 72,663 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `1276dd876`.
 - For #6800, targeted `BaseInventoryTest` (11 tests, 28 assertions), touched-file PHPStan, full PHPUnit (250 tests, 72,667 assertions), full PHPStan, and syntax checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `c1956b066`.
 - For #6818, targeted `TimezoneTest` (2 tests, 7 assertions), touched-file PHPStan, full PHPUnit (252 tests, 72,674 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `425d075bf`.
-- For #3272, targeted `WorldTest` (4 tests, 22 assertions), touched-file PHPStan, full PHPUnit (254 tests, 72,687 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally. PHP-CS-Fixer is not installed in this workspace and remains pending CI verification.
+- For #3272, targeted `WorldTest` (4 tests, 22 assertions), touched-file PHPStan, full PHPUnit (254 tests, 72,687 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally. The first pushed run failed only PHP-CS-Fixer native-function import style; the follow-up style patch passed targeted syntax, `WorldTest`, and touched-file PHPStan locally and is pending CI.
 
 ### Reviewed Or Deferred
 
