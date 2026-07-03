@@ -23,6 +23,8 @@ declare(strict_types=1);
 
 namespace pocketmine\item\enchantment;
 
+use pocketmine\utils\Limits;
+
 /**
  * Container for enchantment data applied to items.
  *
@@ -32,7 +34,11 @@ final class EnchantmentInstance{
 	public function __construct(
 		private Enchantment $enchantment,
 		private int $level = 1
-	){}
+	){
+		if($this->level < 1 || $this->level > Limits::INT16_MAX){
+			throw new \InvalidArgumentException("Enchantment level must be in range 1 ... " . Limits::INT16_MAX);
+		}
+	}
 
 	/**
 	 * Returns the type of this enchantment.

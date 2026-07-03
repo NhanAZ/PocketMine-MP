@@ -29,6 +29,7 @@ use pocketmine\data\bedrock\item\SavedItemData;
 use pocketmine\data\SavedDataLoadingException;
 use pocketmine\item\enchantment\EnchantmentInstance;
 use pocketmine\item\enchantment\VanillaEnchantments;
+use pocketmine\utils\Limits;
 
 class ItemTest extends TestCase{
 
@@ -102,6 +103,27 @@ class ItemTest extends TestCase{
 	public function testGetEnchantmentLevel() : void{
 		$this->item->addEnchantment(new EnchantmentInstance(VanillaEnchantments::EFFICIENCY(), 5));
 		self::assertSame(5, $this->item->getEnchantmentLevel(VanillaEnchantments::EFFICIENCY()));
+	}
+
+	public function testValidEnchantmentLevelBounds() : void{
+		self::assertSame(1, (new EnchantmentInstance(VanillaEnchantments::EFFICIENCY(), 1))->getLevel());
+		self::assertSame(Limits::INT16_MAX, (new EnchantmentInstance(VanillaEnchantments::EFFICIENCY(), Limits::INT16_MAX))->getLevel());
+	}
+
+	/**
+	 * @dataProvider invalidEnchantmentLevelProvider
+	 */
+	public function testInvalidEnchantmentLevel(int $level) : void{
+		$this->expectException(\InvalidArgumentException::class);
+		$this->expectExceptionMessage("Enchantment level must be in range 1 ... " . Limits::INT16_MAX);
+
+		new EnchantmentInstance(VanillaEnchantments::EFFICIENCY(), $level);
+	}
+
+	/** @return iterable<string, array{int}> */
+	public static function invalidEnchantmentLevelProvider() : iterable{
+		yield "zero" => [0];
+		yield "above TAG_Short maximum" => [Limits::INT16_MAX + 1];
 	}
 
 	public function testGetEnchantments() : void{

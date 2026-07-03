@@ -18,6 +18,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - Implemented upstream issue #3272: async light population now locks and keeps the target chunk loaded while calculating, then discards stale light results if main-thread terrain changes break the lock before completion.
 - Implemented upstream issue #3974: chunk population now uses a server-wide task slot limiter so many loaded worlds cannot each consume the full configured population concurrency at once.
 - Implemented upstream issue #6926: command integer parsing now checks numeric-string bounds before integer conversion, preventing PHP 8.5 out-of-range float-string warnings while preserving existing decimal, exponent, clamp, and localized error behaviour.
+- Implemented upstream issue #6661: enchantment instances reject levels outside `1 ... 32767`, preventing invalid item enchantment data and delayed gameplay or `TAG_Short` serialization failures.
 
 ### Maintenance
 
@@ -48,9 +49,13 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #6926, targeted `VanillaCommandTest` (4 tests, 8 assertions), full PHPUnit (261 tests, 74,275 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, whitespace, PHP 8.1-8.5 CI, PHP-CS-Fixer, integration, and Docker checks passed for commit `5fddf6251`.
 - For #5805, source audit, review JSON validation, whitespace, GitHub CI, PHP-CS-Fixer, and Docker checks passed for decision commit `32ad9a0c1`; runtime-specific tests were not required because no source code changed.
 - For #2731, source audit, review JSON validation, whitespace, GitHub CI, PHP-CS-Fixer, and Docker checks passed for decision commit `4b8e3df70`; runtime-specific tests were not required because no source code changed.
+- For #6661, targeted `ItemTest` (16 tests, 29 assertions), full PHPUnit (264 tests, 74,281 assertions), full PHPStan, syntax, code generation, translation validation, generated-file collision, 114-file JSON validation, source audit, Composer validation/install dry-run, and whitespace checks passed. PHP-CS-Fixer, integration, the PHP 8.1-8.5 matrix, and Docker are pending pushed CI.
 
 ### Reviewed Or Deferred
 
+- Reviewed #4649 and deferred deterministic cross-chunk population until a shared ownership or staging design can cover trees, ores, and other conflicting features.
+- Reviewed #6814 and #6831 together and deferred global entity-physics changes until Vanilla Bedrock trajectories, per-axis drag, PvP compatibility, and plugin migration are addressed as one design.
+- Reviewed #2041 and deferred magma surface damage with #2731 until collision directions can identify contacted block faces without broad hot-path scans.
 - Reviewed upstream issue #2731 and deferred cactus top-contact damage until movement collision directions can support a dedicated surface-contact action without the adjacent-block false positives or broad AABB cost seen in abandoned PRs #4243 and #6347.
 - Reviewed upstream pull request #5805 and deferred its specialized compression-worker pool because the incomplete 2023 branch lacks current integration, tests, idle-pool cleanup, bounded queue safeguards, and a safe fallback for forced login compression.
 - Reviewed upstream issue #5821 and deferred increasing leaf-decay distance until a cached distance-state design, bounded neighbour propagation, generated-tree coverage, traversal benchmarks, and block-state/plugin compatibility plan replace the current recursive random-tick search.
