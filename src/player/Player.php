@@ -1232,7 +1232,7 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 			}
 			$this->setHasBlockCollision(true);
 			$this->setSilent(false);
-			$this->checkGroundState(0, 0, 0, 0, 0, 0);
+			$this->refreshGroundState();
 		}
 	}
 
@@ -1345,6 +1345,15 @@ class Player extends Human implements CommandSender, ChunkListener, IPlayer, Nev
 
 			$this->onGround = $this->isCollided = count($this->getWorld()->getCollisionBlocks($bb, true)) > 0;
 		}
+	}
+
+	protected function refreshGroundState() : void{
+		$this->checkGroundState(0, 0, 0, 0, 0, 0);
+	}
+
+	public function onNearbyBlockChange() : void{
+		parent::onNearbyBlockChange();
+		$this->refreshGroundState();
 	}
 
 	public function canBeMovedByCurrents() : bool{
