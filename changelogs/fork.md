@@ -50,6 +50,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 
 ### Reviewed Or Deferred
 
+- Reviewed upstream issue #2731 and deferred cactus top-contact damage until movement collision directions can support a dedicated surface-contact action without the adjacent-block false positives or broad AABB cost seen in abandoned PRs #4243 and #6347.
 - Reviewed upstream pull request #5805 and deferred its specialized compression-worker pool because the incomplete 2023 branch lacks current integration, tests, idle-pool cleanup, bounded queue safeguards, and a safe fallback for forced login compression.
 - Reviewed upstream issue #5821 and deferred increasing leaf-decay distance until a cached distance-state design, bounded neighbour propagation, generated-tree coverage, traversal benchmarks, and block-state/plugin compatibility plan replace the current recursive random-tick search.
 - Reviewed upstream issue #5410 and deferred flat-world height changes until representative pre-1.18, post-1.18, and PMMP-created worlds establish `FlatWorldLayers` version and Y-offset semantics with round-trip and live-client evidence.
