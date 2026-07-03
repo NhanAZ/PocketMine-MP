@@ -21,6 +21,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 ### Maintenance
 
 - Refreshed the upstream intake snapshot to 419 open issues and 31 open pull requests, retaining a scored 40-item shortlist.
+- Reviewed upstream issue #2549 as already covered by later canonical player generation throttling and concentric chunk ordering; added `ChunkSelector` ring-order/completeness regression coverage and clarified the global `population-queue-size` setting.
 - Implemented upstream issue #5638: `PlayerAuthInputPacket` now reports timing breakdowns for input flags, movement, item-use transactions, item-stack requests, and block actions.
 - Implemented upstream issue #5064: added `settings.query-player-list`, defaulting to true, so GS4 Query can keep reporting player counts while hiding player names from long-query responses when disabled.
 - Refreshed source monitoring; PowerNukkitX commit `0d0a3b4f9362f4188d3e2b65df47bc93b4f41975` is reviewed as reference-only map-image evidence.
@@ -41,6 +42,7 @@ Upstream PocketMine-MP release notes remain in the numbered changelog files.
 - For #6818, targeted `TimezoneTest` (2 tests, 7 assertions), touched-file PHPStan, full PHPUnit (252 tests, 72,674 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for implementation commit `425d075bf`.
 - For #3272, targeted `WorldTest` (4 tests, 22 assertions), touched-file PHPStan, full PHPUnit (254 tests, 72,687 assertions), full PHPStan, syntax, JSON, and whitespace checks passed locally. Fork CI then passed its PHP 8.1-8.5 matrix, PHP-CS-Fixer, integration, generated-code, translation, ShellCheck, and Docker jobs for follow-up commit `4c941c578` after the initial implementation run failed only PHP-CS-Fixer native-function import style.
 - For #3974, targeted `WorldManagerTest`/`WorldTest` (6 tests, 33 assertions), full PHPUnit (256 tests, 72,698 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, JSON, whitespace, GitHub CI, PHP-CS-Fixer, and Docker checks passed for commit `05a6694b5`.
+- For #2549, targeted `ChunkSelectorTest` (1 test, 1,569 assertions), full PHPUnit (257 tests, 74,267 assertions), touched-file and full PHPStan, syntax, code generation, translation validation, generated-file collision, JSON, and whitespace checks passed locally. PHP-CS-Fixer and CI are pending.
 
 ### Reviewed Or Deferred
 
