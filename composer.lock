@@ -196,12 +196,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/axolotl-pm/NetherNet.git",
-                "reference": "a6e145db1e90373fb92b30ae82e665fa1b4c13ae"
+                "reference": "6a1be327cf4a79b42f205f88074d3a7789c5640a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/axolotl-pm/NetherNet/zipball/a6e145db1e90373fb92b30ae82e665fa1b4c13ae",
-                "reference": "a6e145db1e90373fb92b30ae82e665fa1b4c13ae",
+                "url": "https://api.github.com/repos/axolotl-pm/NetherNet/zipball/6a1be327cf4a79b42f205f88074d3a7789c5640a",
+                "reference": "6a1be327cf4a79b42f205f88074d3a7789c5640a",
                 "shasum": ""
             },
             "require": {
@@ -213,6 +213,7 @@
                 "ext-webrtc": "*",
                 "php": "^8.1",
                 "php-64bit": "*",
+                "php-ipv6": "*",
                 "pocketmine/log": "^0.4.0"
             },
             "require-dev": {
@@ -231,14 +232,14 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "LGPL-3.0"
+                "LGPL-3.0-or-later"
             ],
             "description": "A NetherNet (WebRTC) transport implementation written in PHP",
             "support": {
                 "issues": "https://github.com/axolotl-pm/NetherNet/issues",
                 "source": "https://github.com/axolotl-pm/NetherNet/tree/master"
             },
-            "time": "2026-10-06T06:49:35+00:00"
+            "time": "2026-10-11T04:59:49+00:00"
         },
         {
             "name": "axolotl-pm/xoroshiro128pp",
