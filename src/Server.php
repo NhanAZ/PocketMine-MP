@@ -127,6 +127,7 @@ use pocketmine\YmlServerProperties as Yml;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Filesystem\Path;
 use function array_fill;
+use function array_slice;
 use function array_sum;
 use function base64_encode;
 use function chr;
@@ -1272,7 +1273,11 @@ class Server{
 	}
 
 	private function startupPrepareNetworkInterfaces() : bool{
-		foreach(explode(",", $this->configGroup->getPropertyString(Yml::TRANSPORT_NAME, "raknet,nethernet"), limit: self::MAX_ACTIVE_TRANSPORTS) as $name){ //TODO: remove hardcoded string once we remove raknet
+		foreach(array_slice(explode(
+			",",
+			$this->configGroup->getPropertyString(Yml::TRANSPORT_NAME, RakLibTransport::NAME . "," . NetherNetTransport::NAME), //TODO: remove raknet
+			limit: self::MAX_ACTIVE_TRANSPORTS + 1
+		), 0, self::MAX_ACTIVE_TRANSPORTS) as $name){
 			$name = strtolower(trim($name));
 			if($name === ""){
 				continue;
