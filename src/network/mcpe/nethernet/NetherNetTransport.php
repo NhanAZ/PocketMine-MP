@@ -302,7 +302,7 @@ final class NetherNetTransport implements Transport{
 		try{
 			Filesystem::safeFilePutContents($path, $pem);
 		}catch(\RuntimeException $e){
-			$this->server->getLogger()->warning($this->server->getLanguage()->translate(KnownTranslationFactory::pocketmine_server_nethernet_identityKeySaveFailed($path)));
+			$this->server->getLogger()->error($this->server->getLanguage()->translate(KnownTranslationFactory::pocketmine_server_nethernet_identityKeySaveFailed($path)));
 		}finally{
 			umask($previousUmask);
 		}
