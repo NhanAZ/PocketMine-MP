@@ -914,6 +914,8 @@ class NetworkSession{
 			}elseif($clientPubKey === null){
 				$error = "Missing client public key"; //failsafe
 			}elseif($authenticated && $this->transportIdentityKey !== null){
+				//Authenticated logins require the connection's proven key to prevent replay attacks,
+				//unauthenticated logins carry no verified identity to impersonate.
 				try{
 					$this->transportIdentityKey->verify($clientPubKey);
 				}catch(TransportIdentityException $e){
@@ -1011,6 +1013,7 @@ class NetworkSession{
 			}
 		}
 
+		// Skip handshake if the transport layer already provides encryption and client identity.
 		if(EncryptionContext::$ENABLED && !($this->transportEncrypted && $this->transportIdentityKey !== null)){
 			$this->server->getAsyncPool()->submitTask(new PrepareEncryptionTask($clientPubKey, function(string $encryptionKey, string $handshakeJwt) : void{
 				if(!$this->connected){

@@ -36,9 +36,7 @@ final class NetherNetIdentityKey implements TransportIdentityKey{
 
 	public function __construct(
 		private ?string $key
-	){
-		//TODO: validate key
-	}
+	){}
 
 	public function getKey() : ?string{
 		return $this->key;
