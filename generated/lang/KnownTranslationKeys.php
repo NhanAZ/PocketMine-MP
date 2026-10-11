@@ -629,6 +629,7 @@ final class KnownTranslationKeys{
 	public const POCKETMINE_SERVER_STARTFINISHED = "pocketmine.server.startFinished";
 	public const POCKETMINE_SERVER_TICKOVERLOAD = "pocketmine.server.tickOverload";
 	public const POCKETMINE_SERVER_TRANSPORT_NONECONFIGURED = "pocketmine.server.transport.noneConfigured";
+	public const POCKETMINE_SERVER_TRANSPORT_UNAVAILABLE = "pocketmine.server.transport.unavailable";
 	public const POCKETMINE_SERVER_TRANSPORT_UNKNOWN = "pocketmine.server.transport.unknown";
 	public const POCKETMINE_SERVER_UPNP_DEPRECATED = "pocketmine.server.upnp.deprecated";
 	public const POCKETMINE_SERVER_URL_BUGREPORTING = "pocketmine.server.url.bugReporting";

@@ -2947,6 +2947,13 @@ final class KnownTranslationFactory{
 		return new Translatable(KnownTranslationKeys::POCKETMINE_SERVER_TRANSPORT_NONECONFIGURED, []);
 	}
 
+	public static function pocketmine_server_transport_unavailable(Translatable|string $param0, Translatable|string $param1) : Translatable{
+		return new Translatable(KnownTranslationKeys::POCKETMINE_SERVER_TRANSPORT_UNAVAILABLE, [
+			0 => $param0,
+			1 => $param1,
+		]);
+	}
+
 	public static function pocketmine_server_transport_unknown(Translatable|string $param0) : Translatable{
 		return new Translatable(KnownTranslationKeys::POCKETMINE_SERVER_TRANSPORT_UNKNOWN, [
 			0 => $param0,

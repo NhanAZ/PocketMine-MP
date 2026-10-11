@@ -66,6 +66,9 @@ final class NetherNetTransport implements Transport{
 
 	public const NAME = "nethernet";
 
+	private const MIN_WEBRTC_VERSION = "0.3.1";
+	private const MAX_WEBRTC_VERSION = "0.4.0";
+
 	private const TLS_PASSPHRASE_FILE_PREFIX = "file:";
 
 	/**
@@ -102,19 +105,27 @@ final class NetherNetTransport implements Transport{
 		$this->configurator = $configurator;
 	}
 
+	private function getUnavailableReason() : ?string{
+		if(!extension_loaded("webrtc")){
+			return "the axolotl-pm/ext-webrtc extension is not loaded";
+		}
+		$version = phpversion("webrtc");
+		if($version !== false && (version_compare($version, self::MIN_WEBRTC_VERSION, "<") || version_compare($version, self::MAX_WEBRTC_VERSION, ">="))){
+			return "ext-webrtc ^" . self::MIN_WEBRTC_VERSION . " is required (found $version)";
+		}
+		return null;
+	}
+
 	public function createInterfaces(
 		PacketBroadcaster $packetBroadcaster,
 		EntityEventBroadcaster $entityEventBroadcaster,
 		TypeConverter $typeConverter
 	) : array{
-		if(!extension_loaded("webrtc")){
-			throw new NetworkInterfaceStartException("NetherNet transport requires axolotl-pm/ext-webrtc extension, but your binary is missing it");
-		}
-		$webrtcVersion = phpversion("webrtc");
-		if($webrtcVersion !== false){
-			if(version_compare($webrtcVersion = phpversion("webrtc"), "0.3.0") < 0 || version_compare($webrtcVersion, "0.4.0") >= 0){
-				throw new NetworkInterfaceStartException("NetherNet transport requires axolotl-pm/ext-webrtc extension 0.3.x, but your binary is missing or has an incompatible version.");
-			}
+		$unavailableReason = $this->getUnavailableReason();
+		if($unavailableReason !== null){
+			//other transports may still be usable, Server fails if none are
+			$this->server->getLogger()->warning($this->server->getLanguage()->translate(KnownTranslationFactory::pocketmine_server_transport_unavailable(self::NAME, $unavailableReason)));
+			return [];
 		}
 		$configGroup = $this->server->getConfigGroup();
 

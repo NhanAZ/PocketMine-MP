@@ -1296,6 +1296,10 @@ class Server{
 			$this->logger->emergency($e->getMessage());
 			return false;
 		}
+		if(count($this->network->getInterfaces()) === 0){
+			$this->logger->emergency($this->language->translate(KnownTranslationFactory::pocketmine_server_transport_noneConfigured()));
+			return false;
+		}
 
 		if($this->configGroup->getConfigBool(ServerProperties::ENABLE_QUERY, true)){
 			$this->startupPrepareQueryInterface($this->getIp(), $this->getPort(), false);
