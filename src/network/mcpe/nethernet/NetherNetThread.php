@@ -28,18 +28,19 @@ use pmmp\encoding\VarInt;
 use pmmp\thread\Thread as NativeThread;
 use pmmp\thread\ThreadSafeArray;
 use pmmp\webrtc\IceServer;
-use pocketmine\nethernet\discovery\MutableServerDataProvider;
-use pocketmine\nethernet\discovery\ServerData;
 use pocketmine\nethernet\identity\AssertionIdentityVerifier;
 use pocketmine\nethernet\identity\SelfSignedIdentityProvider;
 use pocketmine\nethernet\identity\ServerIdentity;
-use pocketmine\nethernet\negotiation\ConfiguredPeerConnectionFactory;
+use pocketmine\nethernet\info\MutableServerInfoProvider;
+use pocketmine\nethernet\info\ServerInfoCodec;
 use pocketmine\nethernet\NetherNetException;
-use pocketmine\nethernet\NetherNetServer;
-use pocketmine\nethernet\SctpConfiguration;
-use pocketmine\nethernet\ServerConfiguration;
-use pocketmine\nethernet\signaling\http\MutableServerStatusProvider;
-use pocketmine\network\mcpe\protocol\ProtocolInfo;
+use pocketmine\nethernet\protocol\Reliability;
+use pocketmine\nethernet\server\NetherNetServer;
+use pocketmine\nethernet\server\ServerConfiguration;
+use pocketmine\nethernet\server\ServerState;
+use pocketmine\nethernet\signaling\lan\packet\DiscoveryException;
+use pocketmine\nethernet\transport\webrtc\SctpConfiguration;
+use pocketmine\nethernet\transport\webrtc\WebRtcTransportFactory;
 use pocketmine\network\NetworkInterfaceStartException;
 use pocketmine\snooze\SleeperHandlerEntry;
 use pocketmine\thread\log\ThreadSafeLogger;
@@ -65,14 +66,17 @@ final class NetherNetThread extends Thread{
 	 * Clients will be disconnected after this threshold is reached.
 	 */
 	private const SCTP_MAX_RETRANSMIT_ATTEMPTS = 4;
+	/**
+	 * Minimum SCTP retransmission timeout in milliseconds.
+	 * Clients delay their acknowledgements by up to 200 ms, so anything at or below that retransmits needlessly.
+	 */
+	private const SCTP_MIN_RETRANSMIT_TIMEOUT = 400;
 
 	protected bool $ready = false;
 
 	protected ?string $startupError = null;
 
 	protected int $consumedBytes = 0;
-
-	protected int $ticks = 0;
 
 	/** @phpstan-var ThreadSafeArray<int, NetherNetSignalingFactory> */
 	protected ThreadSafeArray $signalingFactories;
@@ -86,12 +90,13 @@ final class NetherNetThread extends Thread{
 		protected ThreadSafeLogger $logger,
 		protected ThreadSafeArray $mainToThread,
 		protected ThreadSafeArray $threadToMain,
-		protected int $maxMtu,
+		protected int $mtu,
 		protected string $identityPem,
 		protected string $identityDomain,
 		protected bool $allowAnonymous,
 		protected NetherNetIceConfiguration $iceConfig,
 		ThreadSafeArray $signalingFactories,
+		protected ?NetherNetServerConfigurator $configurator,
 		protected SleeperHandlerEntry $sleeperEntry
 	){
 		$this->signalingFactories = $signalingFactories;
@@ -128,11 +133,11 @@ final class NetherNetThread extends Thread{
 		$out = new NetherNetChannel($this->threadToMain, $this->sleeperEntry->createNotifier());
 
 		$listener = new NetherNetSessionListener($out);
-		$advert = new MutableServerDataProvider(new ServerData(serverName: "", protocol: ProtocolInfo::CURRENT_PROTOCOL, version: ProtocolInfo::MINECRAFT_VERSION_NETWORK, levelName: ""));
-		$status = new MutableServerStatusProvider();
+		//nothing is advertised until the main thread has said what to advertise
+		$serverInfo = new MutableServerInfoProvider();
 
 		try{
-			[$server, $ipcSignaling] = $this->createServer($listener, $out, $advert, $status);
+			[$server, $ipcSignaling] = $this->createServer($listener, $out, $serverInfo);
 			$server->start();
 		}catch(NetherNetException|\InvalidArgumentException $e){
 			$this->synchronized(function() use ($e) : void{
@@ -155,20 +160,15 @@ final class NetherNetThread extends Thread{
 			$listener->setConsumedBytes($this->consumedBytes);
 			$server->tick();
 
-			$this->handleInbound($in, $server, $listener, $ipcSignaling, $advert, $status);
-			$listener->flushReceipts();
-			$listener->updateBandwidthStats();
-			if(++$this->ticks % self::TPS === 0){
-				$listener->flushBandwidthStats();
-				$listener->flushPings();
-			}
+			$this->handleInbound($in, $server, $ipcSignaling, $serverInfo);
 
 			self::sleepUntilNextTick($start);
 		}
-		$this->handleInbound($in, $server, $listener, $ipcSignaling, $advert, $status);
+		$this->handleInbound($in, $server, $ipcSignaling, $serverInfo);
 
+		$server->initiateShutdown();
 		$deadline = microtime(true) + self::SHUTDOWN_DRAIN_TIMEOUT;
-		while($server->getSessionManager()->count() > 0 && microtime(true) < $deadline){
+		while($server->getState() !== ServerState::STOPPED && microtime(true) < $deadline){
 			$start = microtime(true);
 
 			$server->tick();
@@ -185,7 +185,7 @@ final class NetherNetThread extends Thread{
 	 * @throws NetherNetException
 	 * @throws \InvalidArgumentException
 	 */
-	private function createServer(NetherNetSessionListener $listener, NetherNetChannel $out, MutableServerDataProvider $advert, MutableServerStatusProvider $status) : array{
+	private function createServer(NetherNetSessionListener $listener, NetherNetChannel $out, MutableServerInfoProvider $serverInfo) : array{
 		$iceServers = [];
 		foreach($this->iceConfig->getServers() as $iceServer){
 			$iceServers[] = $iceServer->isTurn()
@@ -193,36 +193,37 @@ final class NetherNetThread extends Thread{
 				: IceServer::stun($iceServer->getHost(), $iceServer->getPort());
 		}
 
-		$server = NetherNetServer::create(
-			new ServerConfiguration(
-				identityProvider: new SelfSignedIdentityProvider(ServerIdentity::fromPrivateKeyPem($this->identityPem), $this->identityDomain),
-				identityVerifier: new AssertionIdentityVerifier(allowAnonymous: $this->allowAnonymous),
-				peerConnectionFactory: new ConfiguredPeerConnectionFactory(
-					iceServers: $iceServers,
-					bindAddress: $this->iceConfig->getBindAddress(),
-					portRangeBegin: $this->iceConfig->getPortRangeBegin(),
-					portRangeEnd: $this->iceConfig->getPortRangeEnd(),
-					iceUdpMuxEnabled: $this->iceConfig->isUdpMux(),
-					mtu: $this->maxMtu
-				),
-				logger: $this->logger,
-				sctp: new SctpConfiguration(
-					heartbeatInterval: self::SCTP_HEARTBEAT_INTERVAL,
-					maxRetransmitAttempts: self::SCTP_MAX_RETRANSMIT_ATTEMPTS
-				),
-				advertisedAddresses: $this->iceConfig->getAdvertisedAddresses()
-			),
-			$listener
-		);
+		//this thread is the only user of WebRTC in the process, so the process-wide SCTP timers are ours to set
+		(new SctpConfiguration(
+			heartbeatInterval: self::SCTP_HEARTBEAT_INTERVAL,
+			maxRetransmitAttempts: self::SCTP_MAX_RETRANSMIT_ATTEMPTS,
+			minRetransmitTimeout: self::SCTP_MIN_RETRANSMIT_TIMEOUT
+		))->applyGlobally();
 
-		$context = new NetherNetSignalingContext($server->getNegotiator(), $status, $advert, $this->logger);
+		$configuration = new ServerConfiguration(
+			identityProvider: new SelfSignedIdentityProvider(ServerIdentity::fromPrivateKeyPem($this->identityPem), $this->identityDomain),
+			identityVerifier: new AssertionIdentityVerifier(allowAnonymous: $this->allowAnonymous),
+			transportFactory: new WebRtcTransportFactory(
+				iceServers: $iceServers,
+				bindAddress: $this->iceConfig->getBindAddress(),
+				portRangeBegin: $this->iceConfig->getPortRangeBegin(),
+				portRangeEnd: $this->iceConfig->getPortRangeEnd(),
+				iceUdpMuxEnabled: $this->iceConfig->isUdpMux(),
+				mtu: $this->mtu
+			),
+			logger: $this->logger,
+			advertisedAddresses: $this->iceConfig->getAdvertisedAddresses()
+		);
+		$server = NetherNetServer::create($this->configurator?->configure($configuration) ?? $configuration, $listener);
+
+		$context = new NetherNetSignalingContext($serverInfo, $this->logger);
 		foreach((array) $this->signalingFactories as $factory){
 			foreach($factory->create($context) as $signaling){
 				$server->addSignaling($signaling);
 			}
 		}
 
-		$ipcSignaling = new NetherNetIpcSignaling($server->getNegotiator(), $out, $this->logger);
+		$ipcSignaling = new NetherNetIpcSignaling($out, $this->logger);
 		$server->addSignaling($ipcSignaling);
 
 		return [$server, $ipcSignaling];
@@ -234,18 +235,17 @@ final class NetherNetThread extends Thread{
 		}
 	}
 
-	private function handleInbound(NetherNetChannel $in, NetherNetServer $server, NetherNetSessionListener $listener, NetherNetIpcSignaling $ipcSignaling, MutableServerDataProvider $advert, MutableServerStatusProvider $status) : void{
+	private function handleInbound(NetherNetChannel $in, NetherNetServer $server, NetherNetIpcSignaling $ipcSignaling, MutableServerInfoProvider $serverInfo) : void{
 		while(($message = $in->read()) !== null){
 			$reader = new ByteBufferReader($message);
 			$type = ord($reader->readByteArray(1));
 
 			if($type === NetherNetIpc::M2T_SET_SERVER_DATA){
-				$pong = $reader->readByteArray($reader->getUnreadLength());
-				$data = ServerData::fromPongData($pong);
-				if($data !== null){
-					$advert->setServerData($data);
+				try{
+					$serverInfo->setServerInfo(ServerInfoCodec::decode($reader->readByteArray($reader->getUnreadLength())));
+				}catch(DiscoveryException $e){
+					$this->logger->debug("Ignoring unreadable server info from the main thread: " . $e->getMessage());
 				}
-				$status->setPongData($pong);
 				continue;
 			}
 
@@ -282,15 +282,16 @@ final class NetherNetThread extends Thread{
 
 			$sessionId = VarInt::readUnsignedInt($reader);
 			if($type === NetherNetIpc::M2T_CLOSE_SESSION){
-				$listener->close($sessionId);
+				$server->closeSession($sessionId);
 				continue;
 			}
 
 			// 0 means no receipt requested; valid receipt IDs are incremented by 1
 			$receiptId = VarInt::readUnsignedInt($reader);
-			$listener->send(
+			$server->sendPacket(
 				$sessionId,
 				$reader->readByteArray($reader->getUnreadLength()),
+				$type === NetherNetIpc::M2T_SEND_UNRELIABLE ? Reliability::UNRELIABLE : Reliability::RELIABLE,
 				$receiptId === 0 ? null : $receiptId - 1
 			);
 		}

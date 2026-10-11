@@ -23,19 +23,18 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\nethernet;
 
-use pocketmine\nethernet\AddressBlockTracker;
-use pocketmine\nethernet\negotiation\ErrorCode;
 use pocketmine\nethernet\negotiation\Negotiation;
 use pocketmine\nethernet\negotiation\NegotiationException;
-use pocketmine\nethernet\negotiation\Negotiator;
-use pocketmine\nethernet\signaling\SignalingInterface;
+use pocketmine\nethernet\protocol\ErrorCode;
+use pocketmine\nethernet\signaling\Signaling;
+use pocketmine\nethernet\signaling\SignalingContext;
 use function count;
 use function microtime;
 
 /**
  * Signaling transport that processes offers forwarded from the main thread via IPC ({@link NetherNetInterface::acceptOffer()}).
  */
-final class NetherNetIpcSignaling implements SignalingInterface{
+final class NetherNetIpcSignaling implements Signaling{
 
 	public const NEGOTIATION_TIMEOUT = 20.0;
 	public const MAX_PENDING_OFFERS = 256;
@@ -43,31 +42,28 @@ final class NetherNetIpcSignaling implements SignalingInterface{
 	/** @phpstan-var array<int, array{Negotiation, float}> */
 	private array $pending = [];
 
-	private AddressBlockTracker $blockTracker;
+	/** Set once the server starts this transport; offers cannot be accepted before that. */
+	private ?SignalingContext $context = null;
 
 	private bool $closed = false;
 
 	public function __construct(
-		private readonly Negotiator $negotiator,
 		private readonly NetherNetChannel $out,
-		private readonly ?\Logger $logger = null,
+		private readonly \Logger $logger,
 		private readonly float $negotiationTimeout = self::NEGOTIATION_TIMEOUT
-	){
-		$this->blockTracker = new AddressBlockTracker();
-	}
+	){}
 
-	public function setAddressBlockTracker(AddressBlockTracker $blockTracker) : void{
-		$this->blockTracker = $blockTracker;
+	public function start(SignalingContext $context) : void{
+		$this->context = $context;
 	}
-
-	public function start() : void{}
 
 	public function acceptOffer(int $requestId, string $networkId, string $offerSdp, ?string $clientAddress) : void{
-		if($this->closed){
-			$this->fail($requestId, ErrorCode::NO_SIGNALING_CHANNEL, "NetherNet is shut down");
+		$context = $this->context;
+		if($this->closed || $context === null){
+			$this->fail($requestId, ErrorCode::NO_SIGNALING_CHANNEL, "NetherNet is not running");
 			return;
 		}
-		if($clientAddress !== null && $this->blockTracker->isBlocked($clientAddress)){
+		if($clientAddress !== null && $context->blockList->isBlocked($clientAddress)){
 			$this->fail($requestId, ErrorCode::INCOMING_CONNECTION_IGNORED, "Address $clientAddress is blocked");
 			return;
 		}
@@ -77,7 +73,7 @@ final class NetherNetIpcSignaling implements SignalingInterface{
 		}
 
 		try{
-			$negotiation = $this->negotiator->beginNegotiation($offerSdp, $networkId, peerAddress: $clientAddress);
+			$negotiation = $context->negotiator->beginNegotiation($offerSdp, $networkId, peerAddress: $clientAddress);
 		}catch(NegotiationException $e){
 			$this->fail($requestId, $e->getErrorCode(), $e->getMessage());
 			return;
@@ -96,12 +92,11 @@ final class NetherNetIpcSignaling implements SignalingInterface{
 		$pending[0]->fail("Cancelled by the plugin that accepted the offer", ErrorCode::INCOMING_CONNECTION_IGNORED);
 	}
 
-	public function tick() : void{
+	public function tick(float $now) : void{
 		if($this->closed){
 			return;
 		}
 
-		$now = microtime(true);
 		foreach($this->pending as $requestId => [$negotiation, $deadline]){
 			$answer = $negotiation->getAnswer();
 			if($answer !== null){
@@ -136,7 +131,7 @@ final class NetherNetIpcSignaling implements SignalingInterface{
 	}
 
 	private function fail(int $requestId, ErrorCode $code, string $reason) : void{
-		$this->logger?->debug("Offer $requestId from the main thread failed: $reason");
+		$this->logger->debug("Offer $requestId from the main thread failed: $reason");
 		$this->out->write(NetherNetIpc::offerFailure($requestId, $code->value, $reason));
 	}
 }

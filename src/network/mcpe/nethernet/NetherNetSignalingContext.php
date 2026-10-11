@@ -23,9 +23,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\nethernet;
 
-use pocketmine\nethernet\discovery\ServerDataProvider;
-use pocketmine\nethernet\negotiation\Negotiator;
-use pocketmine\nethernet\signaling\http\ServerStatusProvider;
+use pocketmine\nethernet\info\ServerInfoProvider;
 
 /**
  * Context provided to {@link NetherNetSignalingFactory} when constructing signaling transports on the NetherNet thread.
@@ -33,17 +31,11 @@ use pocketmine\nethernet\signaling\http\ServerStatusProvider;
 final class NetherNetSignalingContext{
 
 	public function __construct(
-		private Negotiator $negotiator,
-		private ServerStatusProvider $statusProvider,
-		private ServerDataProvider $serverDataProvider,
+		private ServerInfoProvider $serverInfoProvider,
 		private \Logger $logger
 	){}
 
-	public function getNegotiator() : Negotiator{ return $this->negotiator; }
-
-	public function getStatusProvider() : ServerStatusProvider{ return $this->statusProvider; }
-
-	public function getServerDataProvider() : ServerDataProvider{ return $this->serverDataProvider; }
+	public function getServerInfoProvider() : ServerInfoProvider{ return $this->serverInfoProvider; }
 
 	public function getLogger() : \Logger{ return $this->logger; }
 }

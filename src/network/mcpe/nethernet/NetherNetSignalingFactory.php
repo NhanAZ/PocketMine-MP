@@ -25,15 +25,15 @@ namespace pocketmine\network\mcpe\nethernet;
 
 use pmmp\thread\ThreadSafe;
 use pocketmine\lang\Translatable;
-use pocketmine\nethernet\signaling\SignalingInterface;
+use pocketmine\nethernet\signaling\Signaling;
 
 abstract class NetherNetSignalingFactory extends ThreadSafe{
 
 	/**
 	 * Creates signaling transports on the NetherNet thread. Transports must not perform blocking operations.
 	 *
-	 * @return SignalingInterface[]
-	 * @phpstan-return list<SignalingInterface>
+	 * @return Signaling[]
+	 * @phpstan-return list<Signaling>
 	 */
 	abstract public function create(NetherNetSignalingContext $context) : array;
 

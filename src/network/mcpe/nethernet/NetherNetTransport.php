@@ -25,10 +25,11 @@ namespace pocketmine\network\mcpe\nethernet;
 
 use pmmp\thread\ThreadSafeArray;
 use pocketmine\lang\KnownTranslationFactory;
-use pocketmine\nethernet\crypto\CryptoException;
-use pocketmine\nethernet\discovery\LanSignaling;
+use pocketmine\nethernet\identity\IdentityException;
 use pocketmine\nethernet\identity\PublicKey;
 use pocketmine\nethernet\identity\ServerIdentity;
+use pocketmine\nethernet\signaling\lan\LanSignaling;
+use pocketmine\nethernet\transport\webrtc\WebRtcTransportFactory;
 use pocketmine\network\mcpe\convert\TypeConverter;
 use pocketmine\network\mcpe\EntityEventBroadcaster;
 use pocketmine\network\mcpe\PacketBroadcaster;
@@ -73,6 +74,8 @@ final class NetherNetTransport implements Transport{
 	 */
 	private array $signaling = [];
 
+	private ?NetherNetServerConfigurator $configurator = null;
+
 	private bool $started = false;
 
 	public function __construct(
@@ -87,6 +90,16 @@ final class NetherNetTransport implements Transport{
 			throw new \LogicException("Signaling must be registered before NetherNet starts");
 		}
 		$this->signaling[] = $factory;
+	}
+
+	/**
+	 * @throws \LogicException if NetherNet has already started
+	 */
+	public function setConfigurator(?NetherNetServerConfigurator $configurator) : void{
+		if($this->started){
+			throw new \LogicException("The configurator must be set before NetherNet starts");
+		}
+		$this->configurator = $configurator;
 	}
 
 	public function createInterfaces(
@@ -118,6 +131,10 @@ final class NetherNetTransport implements Transport{
 				$bindAddress === "0.0.0.0" ? null : $bindAddress,
 				$configGroup->getProperty(Yml::TRANSPORT_NETHERNET_ADVERTISE_ADDRESSES)
 			);
+			$mtu = $configGroup->getPropertyInt(Yml::TRANSPORT_NETHERNET_MTU, WebRtcTransportFactory::DEFAULT_MTU);
+			if($mtu < WebRtcTransportFactory::MIN_MTU || $mtu > WebRtcTransportFactory::MAX_MTU){
+				throw new \InvalidArgumentException("mtu must be between " . WebRtcTransportFactory::MIN_MTU . " and " . WebRtcTransportFactory::MAX_MTU . ", got $mtu");
+			}
 			if($configGroup->getPropertyBool(Yml::TRANSPORT_NETHERNET_BUILTIN_SIGNALING_ENABLED, true)){
 				$signaling = [$this->createBuiltinSignaling($configGroup, $networkId), ...$signaling];
 			}else{
@@ -136,9 +153,10 @@ final class NetherNetTransport implements Transport{
 			$this->server,
 			$identityPem,
 			$this->identityDomain($configGroup),
-			$networkId,
 			$iceConfig,
+			$mtu,
 			ThreadSafeArray::fromArray($signaling),
+			$this->configurator,
 			$packetBroadcaster,
 			$entityEventBroadcaster,
 			$typeConverter
@@ -247,7 +265,7 @@ final class NetherNetTransport implements Transport{
 			$pem = Filesystem::fileGetContents($path);
 			try{
 				ServerIdentity::fromPrivateKeyPem($pem);
-			}catch(CryptoException $e){
+			}catch(IdentityException $e){
 				throw new NetworkInterfaceStartException(
 					"NetherNet identity key $path is invalid",
 					0,
@@ -260,7 +278,7 @@ final class NetherNetTransport implements Transport{
 
 		try{
 			$pem = ServerIdentity::generate()->exportPrivateKeyPem();
-		}catch(CryptoException $e){
+		}catch(IdentityException $e){
 			throw new NetworkInterfaceStartException("Could not create a NetherNet identity: " . $e->getMessage(), 0, $e);
 		}
 

@@ -23,39 +23,35 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\nethernet;
 
-use pocketmine\nethernet\AddressBlockTracker;
+use pocketmine\nethernet\signaling\Signaling;
+use pocketmine\nethernet\signaling\SignalingContext;
 use pocketmine\nethernet\signaling\SignalingException;
-use pocketmine\nethernet\signaling\SignalingInterface;
 
 /**
  * Wraps an optional signaling transport. It does not stop the server from starting even if this signaling fails to start.
  */
-final class NetherNetOptionalSignaling implements SignalingInterface{
+final class NetherNetOptionalSignaling implements Signaling{
 
 	private bool $failed = false;
 
 	public function __construct(
-		private SignalingInterface $inner,
+		private Signaling $inner,
 		private string $failureMessage,
 		private \Logger $logger
 	){}
 
-	public function setAddressBlockTracker(AddressBlockTracker $blockTracker) : void{
-		$this->inner->setAddressBlockTracker($blockTracker);
-	}
-
-	public function start() : void{
+	public function start(SignalingContext $context) : void{
 		try{
-			$this->inner->start();
+			$this->inner->start($context);
 		}catch(SignalingException $e){
 			$this->failed = true;
 			$this->logger->warning($this->failureMessage . ": " . $e->getMessage());
 		}
 	}
 
-	public function tick() : void{
+	public function tick(float $now) : void{
 		if(!$this->failed){
-			$this->inner->tick();
+			$this->inner->tick($now);
 		}
 	}
 

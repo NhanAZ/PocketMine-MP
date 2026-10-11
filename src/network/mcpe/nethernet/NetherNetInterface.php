@@ -28,10 +28,13 @@ use pmmp\encoding\VarInt;
 use pmmp\thread\ThreadSafeArray;
 use pocketmine\lang\KnownTranslationFactory;
 use pocketmine\lang\Translatable;
-use pocketmine\nethernet\negotiation\ErrorCode;
-use pocketmine\nethernet\session\DisconnectReason;
+use pocketmine\nethernet\info\GameType;
+use pocketmine\nethernet\info\ServerInfo;
+use pocketmine\nethernet\info\ServerInfoCodec;
+use pocketmine\nethernet\protocol\DisconnectReason;
+use pocketmine\nethernet\protocol\ErrorCode;
+use pocketmine\nethernet\protocol\Reliability;
 use pocketmine\nethernet\signaling\http\HttpSignaling;
-use pocketmine\nethernet\signaling\http\ServerStatus;
 use pocketmine\network\AdvancedNetworkInterface;
 use pocketmine\network\mcpe\compression\ZlibCompressor;
 use pocketmine\network\mcpe\convert\TypeConverter;
@@ -39,19 +42,20 @@ use pocketmine\network\mcpe\EntityEventBroadcaster;
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\network\mcpe\PacketBroadcaster;
 use pocketmine\network\mcpe\protocol\PacketPool;
-use pocketmine\network\mcpe\ServerPongData;
+use pocketmine\network\mcpe\protocol\ProtocolInfo;
 use pocketmine\network\Network;
 use pocketmine\network\PacketHandlingException;
+use pocketmine\player\GameMode;
 use pocketmine\Server;
 use pocketmine\thread\ThreadCrashException;
 use pocketmine\timings\Timings;
-use pocketmine\utils\AssumptionFailedError;
 use pocketmine\utils\Utils;
-use pocketmine\YmlServerProperties;
 use function bin2hex;
 use function filter_var;
 use function implode;
 use function ord;
+use function random_bytes;
+use function spl_object_id;
 use function strlen;
 use const FILTER_VALIDATE_IP;
 
@@ -70,12 +74,21 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 	/** @var array<int, NetworkSession> */
 	private array $sessions = [];
 
+	/** @phpstan-var array<int, int> session IDs by spl_object_id() of their NetworkSession */
+	private array $sessionIds = [];
+
+	/** @phpstan-var (\Closure(NetworkSession, string) : void)|null */
+	private ?\Closure $unreliablePacketHandler = null;
+
 	/** @phpstan-var array<int, NetherNetNegotiation> */
 	private array $pendingOffers = [];
 
 	private int $nextOfferId = 0;
 
 	private string $name = "";
+
+	/** Random for each run of the host, as a dedicated server's is */
+	private string $nonce;
 
 	private bool $shutDown = false;
 
@@ -88,13 +101,16 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 		private Server $server,
 		string $identityPem,
 		string $identityDomain,
-		private int $networkId,
 		NetherNetIceConfiguration $iceConfig,
+		int $mtu,
 		private ThreadSafeArray $signalingFactories,
+		?NetherNetServerConfigurator $configurator,
 		private PacketBroadcaster $packetBroadcaster,
 		private EntityEventBroadcaster $entityEventBroadcaster,
 		private TypeConverter $typeConverter
 	){
+		$this->nonce = bin2hex(random_bytes(8));
+
 		$sleeperEntry = $this->server->getTickSleeper()->addNotifier(function() : void{
 			Timings::$connection->startTiming();
 			try{
@@ -123,12 +139,13 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 			$this->server->getLogger(),
 			$mainToThread,
 			$threadToMain,
-			$this->server->getConfigGroup()->getPropertyInt(YmlServerProperties::NETWORK_MAX_MTU_SIZE, 1492),
+			$mtu,
 			$identityPem,
 			$identityDomain,
 			!$this->server->getOnlineMode(),
 			$iceConfig,
 			$signalingFactories,
+			$configurator,
 			$sleeperEntry
 		);
 	}
@@ -177,9 +194,27 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 		return $negotiation;
 	}
 
-	public function getServerStatus() : ServerStatus{
-		return ServerStatus::fromPongData(ServerPongData::build($this->server, $this->name, $this->networkId))
-			?? throw new AssumptionFailedError("Pong data built by the server is always parseable");
+	public function getServerInfo() : ServerInfo{
+		$info = $this->server->getQueryInformation();
+		$onlineMode = $this->server->getOnlineMode();
+
+		return new ServerInfo(
+			serverName: $this->name,
+			protocol: ProtocolInfo::CURRENT_PROTOCOL,
+			gameVersion: ProtocolInfo::MINECRAFT_VERSION_NETWORK,
+			levelName: $this->server->getName(),
+			gameType: match($this->server->getGamemode()){
+				GameMode::SURVIVAL => GameType::SURVIVAL,
+				GameMode::ADVENTURE => GameType::ADVENTURE,
+				default => GameType::CREATIVE
+			},
+			playerCount: $info->getPlayerCount(),
+			maxPlayerCount: $info->getMaxPlayerCount(),
+			hardcore: $this->server->isHardcore(),
+			acceptsOnlineAuth: $onlineMode,
+			acceptsSelfSignedAuth: !$onlineMode,
+			nonce: $this->nonce
+		);
 	}
 
 	public function tick() : void{
@@ -214,11 +249,20 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 				$this->handlePacket($id, $reader->readByteArray($reader->getUnreadLength()));
 				break;
 
+			case NetherNetIpc::T2M_UNRELIABLE_PACKET:
+				$session = $this->sessions[$id] ?? null;
+				if($session !== null && $this->unreliablePacketHandler !== null){
+					($this->unreliablePacketHandler)($session, $reader->readByteArray($reader->getUnreadLength()));
+				}
+				break;
+
 			case NetherNetIpc::T2M_SESSION_CLOSE:
 				$reason = DisconnectReason::tryFrom(VarInt::readUnsignedInt($reader));
 				$session = $this->sessions[$id] ?? null;
-				unset($this->sessions[$id]);
-				$session?->onClientDisconnect(self::disconnectReason($reason));
+				if($session !== null){
+					unset($this->sessions[$id], $this->sessionIds[spl_object_id($session)]);
+					$session->onClientDisconnect(self::disconnectReason($reason));
+				}
 				break;
 
 			case NetherNetIpc::T2M_RECEIPT:
@@ -286,6 +330,7 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 			true
 		);
 		$this->sessions[$sessionId] = $session;
+		$this->sessionIds[spl_object_id($session)] = $sessionId;
 
 		if($publicKeyDigest !== ""){
 			$session->getLogger()->debug("NetherNet identity key " . bin2hex($publicKeyDigest));
@@ -315,20 +360,42 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 
 	public function putPacket(int $sessionId, string $payload, ?int $receiptId = null) : void{
 		if(isset($this->sessions[$sessionId])){
-			$this->toThread->write(NetherNetIpc::send($sessionId, $payload, $receiptId));
+			$this->toThread->write(NetherNetIpc::send($sessionId, $payload, $receiptId, Reliability::RELIABLE));
 		}
+	}
+
+	/**
+	 * Sends a payload to the session's client on the unreliable channel, as it is given: it is not batched,
+	 * compressed or encrypted, it may arrive out of order or not at all, and one too large for a single
+	 * message is dropped. Does nothing if the session is not connected through this interface.
+	 */
+	public function sendUnreliablePacket(NetworkSession $session, string $payload) : void{
+		$sessionId = $this->sessionIds[spl_object_id($session)] ?? null;
+		if($sessionId !== null){
+			$this->toThread->write(NetherNetIpc::send($sessionId, $payload, null, Reliability::UNRELIABLE));
+		}
+	}
+
+	/**
+	 * Sets what receives the payloads clients send on the unreliable channel. They arrive in no particular order,
+	 * so they are kept out of the session's packet stream, which depends on it; without a handler they are dropped.
+	 *
+	 * @phpstan-param (\Closure(NetworkSession $session, string $payload) : void)|null $handler
+	 */
+	public function setUnreliablePacketHandler(?\Closure $handler) : void{
+		$this->unreliablePacketHandler = $handler;
 	}
 
 	public function close(int $sessionId) : void{
 		if(isset($this->sessions[$sessionId])){
-			unset($this->sessions[$sessionId]);
+			unset($this->sessionIds[spl_object_id($this->sessions[$sessionId])], $this->sessions[$sessionId]);
 			$this->toThread->write(NetherNetIpc::closeSession($sessionId));
 		}
 	}
 
 	public function setName(string $name) : void{
 		$this->name = $name;
-		$this->toThread->write(NetherNetIpc::setServerData(ServerPongData::build($this->server, $name, $this->networkId)));
+		$this->toThread->write(NetherNetIpc::setServerData(ServerInfoCodec::encode($this->getServerInfo())));
 	}
 
 	public function shutdown() : void{

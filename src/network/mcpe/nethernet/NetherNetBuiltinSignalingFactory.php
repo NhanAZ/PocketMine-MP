@@ -25,11 +25,13 @@ namespace pocketmine\network\mcpe\nethernet;
 
 use pmmp\thread\ThreadSafeArray;
 use pocketmine\lang\KnownTranslationFactory;
-use pocketmine\nethernet\discovery\LanSignaling;
-use pocketmine\nethernet\InternetAddress;
 use pocketmine\nethernet\signaling\http\HttpSignaling;
 use pocketmine\nethernet\signaling\http\ReverseProxy;
+use pocketmine\nethernet\signaling\http\TlsConfiguration;
+use pocketmine\nethernet\signaling\lan\LanSignaling;
+use pocketmine\nethernet\utils\InternetAddress;
 use function array_values;
+use function count;
 
 final class NetherNetBuiltinSignalingFactory extends NetherNetSignalingFactory{
 
@@ -65,6 +67,10 @@ final class NetherNetBuiltinSignalingFactory extends NetherNetSignalingFactory{
 	 * @throws \InvalidArgumentException
 	 */
 	private static function createReverseProxy(array $networks) : ReverseProxy{
+		if(count($networks) === 0){
+			throw new \InvalidArgumentException("At least one trusted reverse proxy address or CIDR block is required");
+		}
+
 		return new ReverseProxy(
 			[ReverseProxy::HEADER_FORWARDED_FOR, ReverseProxy::HEADER_REAL_IP, ReverseProxy::HEADER_CF_CONNECTING_IP],
 			$networks
@@ -72,29 +78,21 @@ final class NetherNetBuiltinSignalingFactory extends NetherNetSignalingFactory{
 	}
 
 	public function create(NetherNetSignalingContext $context) : array{
-		$tlsContext = null;
-		if($this->tlsCertFile !== null && $this->tlsKeyFile !== null){
-			$tlsContext = ["local_cert" => $this->tlsCertFile, "local_pk" => $this->tlsKeyFile];
-			if($this->tlsPassphrase !== null){
-				$tlsContext["passphrase"] = $this->tlsPassphrase;
-			}
-		}
+		$tls = $this->tlsCertFile !== null && $this->tlsKeyFile !== null ? new TlsConfiguration($this->tlsCertFile, $this->tlsKeyFile, $this->tlsPassphrase) : null;
 
-		$signaling = [$this->createHttpSignaling($context, new InternetAddress($this->httpBindAddress, $this->httpPort, 4), $tlsContext)];
+		$signaling = [$this->createHttpSignaling($context, new InternetAddress($this->httpBindAddress, $this->httpPort, 4), $tls)];
 		if($this->httpBindAddressV6 !== null){
 			$signaling[] = new NetherNetOptionalSignaling(
-				$this->createHttpSignaling($context, new InternetAddress($this->httpBindAddressV6, $this->httpPort, 6), $tlsContext),
+				$this->createHttpSignaling($context, new InternetAddress($this->httpBindAddressV6, $this->httpPort, 6), $tls),
 				"Unable to start IPv6 signaling",
 				$context->getLogger()
 			);
 		}
 		$signaling[] = new NetherNetOptionalSignaling(
 			new LanSignaling(
-				$context->getNegotiator(),
-				$context->getServerDataProvider(),
+				$context->getServerInfoProvider(),
 				$this->networkId,
-				new InternetAddress($this->lanBindAddress, $this->lanPort, 4),
-				$context->getLogger()
+				new InternetAddress($this->lanBindAddress, $this->lanPort, 4)
 			),
 			"Unable to start LAN discovery",
 			$context->getLogger()
@@ -103,17 +101,11 @@ final class NetherNetBuiltinSignalingFactory extends NetherNetSignalingFactory{
 		return $signaling;
 	}
 
-	/**
-	 * @phpstan-param array<string, string>|null $tlsContext
-	 */
-	private function createHttpSignaling(NetherNetSignalingContext $context, InternetAddress $bindAddress, ?array $tlsContext) : HttpSignaling{
+	private function createHttpSignaling(NetherNetSignalingContext $context, InternetAddress $bindAddress, ?TlsConfiguration $tls) : HttpSignaling{
 		return new HttpSignaling(
-			$context->getNegotiator(),
 			$bindAddress,
-			$tlsContext,
-			$context->getLogger(),
-			HttpSignaling::DEFAULT_MAX_CONNECTIONS,
-			$context->getStatusProvider(),
+			$tls,
+			$context->getServerInfoProvider(),
 			$this->reverseProxyNetworks !== null ? self::createReverseProxy(array_values((array) $this->reverseProxyNetworks)) : null
 		);
 	}

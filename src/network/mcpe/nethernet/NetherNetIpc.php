@@ -25,6 +25,7 @@ namespace pocketmine\network\mcpe\nethernet;
 
 use pmmp\encoding\ByteBufferWriter;
 use pmmp\encoding\VarInt;
+use pocketmine\nethernet\protocol\Reliability;
 use function chr;
 use function strlen;
 
@@ -39,6 +40,7 @@ final class NetherNetIpc{
 	public const T2M_PING = 5;
 	public const T2M_OFFER_ANSWER = 6;
 	public const T2M_OFFER_FAILURE = 7;
+	public const T2M_UNRELIABLE_PACKET = 8;
 
 	//main to thread
 	public const M2T_SEND = 0;
@@ -48,15 +50,16 @@ final class NetherNetIpc{
 	public const M2T_UNBLOCK_ADDRESS = 4;
 	public const M2T_OFFER = 5;
 	public const M2T_CANCEL_OFFER = 6;
+	public const M2T_SEND_UNRELIABLE = 7;
 
 	private function __construct(){
 		//NOOP
 	}
 
-	public static function setServerData(string $pongData) : string{
+	public static function setServerData(string $encodedServerInfo) : string{
 		$out = new ByteBufferWriter();
 		$out->writeByteArray(chr(self::M2T_SET_SERVER_DATA));
-		$out->writeByteArray($pongData);
+		$out->writeByteArray($encodedServerInfo);
 
 		return $out->getData();
 	}
@@ -73,9 +76,9 @@ final class NetherNetIpc{
 		return $out->getData();
 	}
 
-	public static function packet(int $sessionId, string $payload) : string{
+	public static function packet(int $sessionId, string $payload, Reliability $reliability) : string{
 		$out = new ByteBufferWriter();
-		$out->writeByteArray(chr(self::T2M_PACKET));
+		$out->writeByteArray(chr($reliability === Reliability::RELIABLE ? self::T2M_PACKET : self::T2M_UNRELIABLE_PACKET));
 		VarInt::writeUnsignedInt($out, $sessionId);
 		$out->writeByteArray($payload);
 
@@ -138,9 +141,9 @@ final class NetherNetIpc{
 		return $out->getData();
 	}
 
-	public static function send(int $sessionId, string $payload, ?int $receiptId) : string{
+	public static function send(int $sessionId, string $payload, ?int $receiptId, Reliability $reliability) : string{
 		$out = new ByteBufferWriter();
-		$out->writeByteArray(chr(self::M2T_SEND));
+		$out->writeByteArray(chr($reliability === Reliability::RELIABLE ? self::M2T_SEND : self::M2T_SEND_UNRELIABLE));
 		VarInt::writeUnsignedInt($out, $sessionId);
 		// 0 represents no receipt requested; valid receipt IDs are incremented by 1
 		VarInt::writeUnsignedInt($out, $receiptId === null ? 0 : $receiptId + 1);

@@ -23,7 +23,7 @@ declare(strict_types=1);
 
 namespace pocketmine\network\mcpe\nethernet;
 
-use pocketmine\nethernet\negotiation\ErrorCode;
+use pocketmine\nethernet\protocol\ErrorCode;
 
 /**
  * Handle for an SDP offer submitted through {@link NetherNetInterface::acceptOffer()}.

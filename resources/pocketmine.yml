@@ -80,6 +80,7 @@ network:
   upnp-forwarding: false
   #Maximum size in bytes of packets sent over the network (default 1492 bytes). Packets larger than this will be
   #fragmented or split into smaller parts. Clients can request MTU sizes up to but not more than this number.
+  #Only applies to RakNet. See transport.nethernet.mtu for NetherNet.
   max-mtu-size: 1492
   #Enable encryption of Minecraft network traffic. This has an impact on performance, but prevents hackers from stealing sessions and pretending to be other players.
   #DO NOT DISABLE THIS unless you understand the risks involved.
@@ -110,6 +111,11 @@ transport:
     #UDP port range for connections.
     #Parsed as [min, max], e.g. [19132, 19140]. Leave empty to use any available port.
     port-range:
+
+    #Size in bytes of the largest IP packet sent to clients (default 1200 bytes).
+    #Unlike RakNet, the size is not negotiated: every client gets the same one, and packets larger than what
+    #the path to a client supports are lost. Only raise this if every client reaches the server over a path that allows it.
+    mtu: 1200
 
     #IP addresses advertised to clients for peer connections instead of locally gathered interface addresses.
     #Useful when behind a 1:1 NAT (specify the public IP) or when the server has unreachable internal interfaces.
@@ -159,7 +165,7 @@ transport:
         enabled: false
         #List of trusted reverse proxy IP addresses or CIDR blocks.
         #Forwarded headers from unlisted addresses are ignored to prevent IP address spoofing.
-        #Leave empty to trust headers from any address (only safe if public access to the signaling port is restricted).
+        #At least one entry is required when enabled.
         trusted-ips:
         #Example:
         #- 127.0.0.1

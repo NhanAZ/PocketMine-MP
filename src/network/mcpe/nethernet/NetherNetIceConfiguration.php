@@ -25,7 +25,7 @@ namespace pocketmine\network\mcpe\nethernet;
 
 use pmmp\thread\ThreadSafe;
 use pmmp\thread\ThreadSafeArray;
-use pocketmine\nethernet\InternetAddress;
+use pocketmine\nethernet\utils\InternetAddress;
 use pocketmine\utils\Utils;
 use function array_values;
 use function count;

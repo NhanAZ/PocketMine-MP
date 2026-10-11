@@ -126,6 +126,7 @@ final class YmlServerProperties{
 	public const TRANSPORT_NETHERNET_ICE_UDP_MUX = 'transport.nethernet.ice-udp-mux';
 	public const TRANSPORT_NETHERNET_IDENTITY_DOMAIN = 'transport.nethernet.identity-domain';
 	public const TRANSPORT_NETHERNET_KEY_FILE = 'transport.nethernet.key-file';
+	public const TRANSPORT_NETHERNET_MTU = 'transport.nethernet.mtu';
 	public const TRANSPORT_NETHERNET_PORT_RANGE = 'transport.nethernet.port-range';
 	public const WORLDS = 'worlds';
 }
