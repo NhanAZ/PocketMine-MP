@@ -205,7 +205,7 @@ final class NetherNetTransport implements Transport{
 				? self::parseReverseProxyNetworks($configGroup->getProperty(Yml::TRANSPORT_NETHERNET_BUILTIN_SIGNALING_REVERSE_PROXY_TRUSTED_IPS))
 				: null,
 			lanBindAddress: "0.0.0.0",
-			lanPort: LanSignaling::DEFAULT_PORT, //TODO: should this be configurable?
+			lanPort: LanSignaling::DEFAULT_PORT, //clients look for LAN games on this port
 			networkId: $networkId
 		);
 	}
