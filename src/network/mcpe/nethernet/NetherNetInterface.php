@@ -235,6 +235,15 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 
 		$reader = new ByteBufferReader($message);
 		$type = ord($reader->readByteArray(1));
+
+		if($type === NetherNetIpc::T2M_BANDWIDTH_STATS){ //not tied to a session
+			$bytesSentDiff = VarInt::readUnsignedLong($reader);
+			$bytesReceivedDiff = VarInt::readUnsignedLong($reader);
+			$this->network->getBandwidthTracker()->add($bytesSentDiff, $bytesReceivedDiff);
+
+			return true;
+		}
+
 		$id = VarInt::readUnsignedInt($reader);
 
 		switch($type){
@@ -267,12 +276,6 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 
 			case NetherNetIpc::T2M_RECEIPT:
 				($this->sessions[$id] ?? null)?->handleAckReceipt(VarInt::readUnsignedInt($reader));
-				break;
-
-			case NetherNetIpc::T2M_BANDWIDTH_STATS:
-				$bytesSentDiff = VarInt::readUnsignedLong($reader);
-				$bytesReceivedDiff = VarInt::readUnsignedLong($reader);
-				$this->network->getBandwidthTracker()->add($bytesSentDiff, $bytesReceivedDiff);
 				break;
 
 			case NetherNetIpc::T2M_PING:

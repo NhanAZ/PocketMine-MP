@@ -106,7 +106,6 @@ final class NetherNetIpc{
 	public static function bandwidthStats(int $bytesSentDiff, int $bytesReceivedDiff) : string{
 		$out = new ByteBufferWriter();
 		$out->writeByteArray(chr(self::T2M_BANDWIDTH_STATS));
-		VarInt::writeUnsignedInt($out, -1); //placeholder session ID for bandwidth stats
 		VarInt::writeUnsignedLong($out, $bytesSentDiff);
 		VarInt::writeUnsignedLong($out, $bytesReceivedDiff);
 
