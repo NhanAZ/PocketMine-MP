@@ -1275,7 +1275,7 @@ class Server{
 	private function startupPrepareNetworkInterfaces() : bool{
 		foreach(array_slice(explode(
 			",",
-			$this->configGroup->getPropertyString(Yml::TRANSPORT_NAME, RakLibTransport::NAME . "," . NetherNetTransport::NAME), //TODO: remove raknet
+			$this->configGroup->getPropertyString(Yml::TRANSPORT_NAME, NetherNetTransport::NAME . "," . RakLibTransport::NAME), //TODO: remove raknet
 			limit: self::MAX_ACTIVE_TRANSPORTS + 1
 		), 0, self::MAX_ACTIVE_TRANSPORTS) as $name){
 			$name = strtolower(trim($name));
