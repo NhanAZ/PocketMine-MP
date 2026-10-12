@@ -202,6 +202,7 @@ final class NetherNetThread extends Thread{
 
 		$configuration = new ServerConfiguration(
 			identityProvider: new SelfSignedIdentityProvider(ServerIdentity::fromPrivateKeyPem($this->identityPem), $this->identityDomain),
+			logger: $this->logger,
 			identityVerifier: new AssertionIdentityVerifier(allowAnonymous: $this->allowAnonymous),
 			transportFactory: new WebRtcTransportFactory(
 				iceServers: $iceServers,
@@ -211,7 +212,6 @@ final class NetherNetThread extends Thread{
 				iceUdpMuxEnabled: $this->iceConfig->isUdpMux(),
 				mtu: $this->mtu
 			),
-			logger: $this->logger,
 			advertisedAddresses: $this->iceConfig->getAdvertisedAddresses()
 		);
 		$server = NetherNetServer::create($this->configurator?->configure($configuration) ?? $configuration, $listener);
