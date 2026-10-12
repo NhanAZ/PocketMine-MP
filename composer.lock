@@ -196,12 +196,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/axolotl-pm/NetherNet.git",
-                "reference": "6a1be327cf4a79b42f205f88074d3a7789c5640a"
+                "reference": "76a52977040699623d4e90c0fa912ababe188aee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/axolotl-pm/NetherNet/zipball/6a1be327cf4a79b42f205f88074d3a7789c5640a",
-                "reference": "6a1be327cf4a79b42f205f88074d3a7789c5640a",
+                "url": "https://api.github.com/repos/axolotl-pm/NetherNet/zipball/76a52977040699623d4e90c0fa912ababe188aee",
+                "reference": "76a52977040699623d4e90c0fa912ababe188aee",
                 "shasum": ""
             },
             "require": {
@@ -217,7 +217,6 @@
                 "pocketmine/log": "^0.4.0"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.75",
                 "phpstan/phpstan": "2.1.46",
                 "phpstan/phpstan-phpunit": "^2.0.0",
                 "phpstan/phpstan-strict-rules": "^2.0.0",
@@ -239,7 +238,7 @@
                 "issues": "https://github.com/axolotl-pm/NetherNet/issues",
                 "source": "https://github.com/axolotl-pm/NetherNet/tree/master"
             },
-            "time": "2026-10-11T04:59:49+00:00"
+            "time": "2026-10-12T06:47:46+00:00"
         },
         {
             "name": "axolotl-pm/xoroshiro128pp",
