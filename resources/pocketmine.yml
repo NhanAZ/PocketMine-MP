@@ -112,9 +112,7 @@ transport:
     #Parsed as [min, max], e.g. [19132, 19140]. Leave empty to use any available port.
     port-range:
 
-    #Size in bytes of the largest IP packet sent to clients (default 1200 bytes).
-    #Unlike RakNet, the size is not negotiated: every client gets the same one, and packets larger than what
-    #the path to a client supports are lost. Only raise this if every client reaches the server over a path that allows it.
+    #Maximum size in bytes of IP packets sent to clients. Not negotiated, so only raise it if every client's network path allows it.
     mtu: 1200
 
     #IP addresses advertised to clients for peer connections instead of locally gathered interface addresses.
