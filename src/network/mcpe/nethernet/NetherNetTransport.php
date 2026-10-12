@@ -129,8 +129,13 @@ final class NetherNetTransport implements Transport{
 		}
 		$configGroup = $this->server->getConfigGroup();
 
-		$identityPem = $this->loadOrCreateIdentityPem($configGroup->getPropertyString(Yml::TRANSPORT_NETHERNET_KEY_FILE, "nethernet.key"));
-		$networkId = self::networkIdOf(ServerIdentity::fromPrivateKeyPem($identityPem)->getPublicKey());
+		$identityKeyFile = $configGroup->getPropertyString(Yml::TRANSPORT_NETHERNET_KEY_FILE, "nethernet.key");
+		$identityPem = $this->loadOrCreateIdentityPem($identityKeyFile);
+		try{
+			$networkId = self::networkIdOf(ServerIdentity::fromPrivateKeyPem($identityPem)->getPublicKey());
+		}catch(IdentityException $e){
+			throw new NetworkInterfaceStartException("NetherNet identity key $identityKeyFile is invalid", 0, $e);
+		}
 
 		$signaling = $this->signaling;
 		try{
@@ -274,18 +279,15 @@ final class NetherNetTransport implements Transport{
 		$path = Path::makeAbsolute($identityKeyFile, $this->server->getDataPath());
 
 		if(is_file($path)){
-			$pem = Filesystem::fileGetContents($path);
 			try{
-				ServerIdentity::fromPrivateKeyPem($pem);
-			}catch(IdentityException $e){
+				return Filesystem::fileGetContents($path);
+			}catch(\RuntimeException $e){
 				throw new NetworkInterfaceStartException(
-					"NetherNet identity key $path is invalid",
+					"Could not read NetherNet identity key $path: " . $e->getMessage(),
 					0,
 					$e
 				);
 			}
-
-			return $pem;
 		}
 
 		try{
