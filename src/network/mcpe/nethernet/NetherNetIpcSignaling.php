@@ -53,6 +53,10 @@ final class NetherNetIpcSignaling implements Signaling{
 		private readonly float $negotiationTimeout = self::NEGOTIATION_TIMEOUT
 	){}
 
+	public function describe() : string{
+		return "NetherNet IPC signaling";
+	}
+
 	public function start(SignalingContext $context) : void{
 		$this->context = $context;
 	}

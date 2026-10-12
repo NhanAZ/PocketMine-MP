@@ -24,26 +24,12 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\nethernet;
 
 use pmmp\thread\ThreadSafe;
-use pocketmine\lang\Translatable;
-use pocketmine\nethernet\signaling\Signaling;
+use pocketmine\nethernet\signaling\SignalingRegistry;
 
 abstract class NetherNetSignalingFactory extends ThreadSafe{
 
 	/**
-	 * Creates signaling transports on the NetherNet thread. Transports must not perform blocking operations.
-	 *
-	 * @return Signaling[]
-	 * @phpstan-return list<Signaling>
+	 * Runs on the NetherNet thread. Signaling must not perform blocking operations.
 	 */
-	abstract public function create(NetherNetSignalingContext $context) : array;
-
-	/**
-	 * Returns informational messages to log upon successful NetherNet startup.
-	 *
-	 * @return Translatable[]|string[]
-	 * @phpstan-return list<Translatable|string>
-	 */
-	public function getStartupMessages() : array{
-		return [];
-	}
+	abstract public function register(SignalingRegistry $registry, NetherNetSignalingContext $context) : void;
 }

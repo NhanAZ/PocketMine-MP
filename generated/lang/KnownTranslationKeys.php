@@ -614,7 +614,6 @@ final class KnownTranslationKeys{
 	public const POCKETMINE_SERVER_LICENSE = "pocketmine.server.license";
 	public const POCKETMINE_SERVER_NETHERNET_BUILTINSIGNALINGDISABLED = "pocketmine.server.nethernet.builtinSignalingDisabled";
 	public const POCKETMINE_SERVER_NETHERNET_IDENTITYKEYSAVEFAILED = "pocketmine.server.nethernet.identityKeySaveFailed";
-	public const POCKETMINE_SERVER_NETHERNET_SIGNALINGSTART = "pocketmine.server.nethernet.signalingStart";
 	public const POCKETMINE_SERVER_NETHERNET_TLS_DISABLED = "pocketmine.server.nethernet.tls.disabled";
 	public const POCKETMINE_SERVER_NETHERNET_TLS_ENABLED = "pocketmine.server.nethernet.tls.enabled";
 	public const POCKETMINE_SERVER_NETHERNET_UDPMUXWITHOUTPORTRANGE = "pocketmine.server.nethernet.udpMuxWithoutPortRange";

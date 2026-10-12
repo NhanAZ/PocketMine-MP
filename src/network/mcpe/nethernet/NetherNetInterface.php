@@ -103,7 +103,7 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 		string $identityDomain,
 		NetherNetIceConfiguration $iceConfig,
 		int $mtu,
-		private ThreadSafeArray $signalingFactories,
+		ThreadSafeArray $signalingFactories,
 		?NetherNetServerConfigurator $configurator,
 		private PacketBroadcaster $packetBroadcaster,
 		private EntityEventBroadcaster $entityEventBroadcaster,
@@ -154,12 +154,6 @@ final class NetherNetInterface implements AdvancedNetworkInterface{
 		$this->server->getLogger()->debug("Waiting for NetherNet to start...");
 		$this->thread->startAndWait();
 		$this->server->getLogger()->debug("NetherNet booted successfully");
-
-		foreach((array) $this->signalingFactories as $factory){
-			foreach($factory->getStartupMessages() as $message){
-				$this->server->getLogger()->info($message instanceof Translatable ? $this->server->getLanguage()->translate($message) : $message);
-			}
-		}
 	}
 
 	/**

@@ -218,9 +218,7 @@ final class NetherNetThread extends Thread{
 
 		$context = new NetherNetSignalingContext($serverInfo, $this->logger);
 		foreach((array) $this->signalingFactories as $factory){
-			foreach($factory->create($context) as $signaling){
-				$server->addSignaling($signaling);
-			}
+			$factory->register($server, $context);
 		}
 
 		$ipcSignaling = new NetherNetIpcSignaling($out, $this->logger);

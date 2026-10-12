@@ -24,11 +24,11 @@ declare(strict_types=1);
 namespace pocketmine\network\mcpe\nethernet;
 
 use pmmp\thread\ThreadSafeArray;
-use pocketmine\lang\KnownTranslationFactory;
 use pocketmine\nethernet\signaling\http\HttpSignaling;
 use pocketmine\nethernet\signaling\http\ReverseProxy;
 use pocketmine\nethernet\signaling\http\TlsConfiguration;
 use pocketmine\nethernet\signaling\lan\LanSignaling;
+use pocketmine\nethernet\signaling\SignalingRegistry;
 use pocketmine\nethernet\utils\InternetAddress;
 use function array_values;
 use function count;
@@ -77,28 +77,18 @@ final class NetherNetBuiltinSignalingFactory extends NetherNetSignalingFactory{
 		);
 	}
 
-	public function create(NetherNetSignalingContext $context) : array{
+	public function register(SignalingRegistry $registry, NetherNetSignalingContext $context) : void{
 		$tls = $this->tlsCertFile !== null && $this->tlsKeyFile !== null ? new TlsConfiguration($this->tlsCertFile, $this->tlsKeyFile, $this->tlsPassphrase) : null;
 
-		$signaling = [$this->createHttpSignaling($context, new InternetAddress($this->httpBindAddress, $this->httpPort, 4), $tls)];
+		$registry->addSignaling($this->createHttpSignaling($context, new InternetAddress($this->httpBindAddress, $this->httpPort, 4), $tls));
 		if($this->httpBindAddressV6 !== null){
-			$signaling[] = new NetherNetOptionalSignaling(
-				$this->createHttpSignaling($context, new InternetAddress($this->httpBindAddressV6, $this->httpPort, 6), $tls),
-				"Unable to start IPv6 signaling",
-				$context->getLogger()
-			);
+			$registry->addSignaling($this->createHttpSignaling($context, new InternetAddress($this->httpBindAddressV6, $this->httpPort, 6), $tls), optional: true);
 		}
-		$signaling[] = new NetherNetOptionalSignaling(
-			new LanSignaling(
-				$context->getServerInfoProvider(),
-				$this->networkId,
-				new InternetAddress($this->lanBindAddress, $this->lanPort, 4)
-			),
-			"Unable to start LAN discovery",
-			$context->getLogger()
-		);
-
-		return $signaling;
+		$registry->addSignaling(new LanSignaling(
+			$context->getServerInfoProvider(),
+			$this->networkId,
+			new InternetAddress($this->lanBindAddress, $this->lanPort, 4)
+		), optional: true);
 	}
 
 	private function createHttpSignaling(NetherNetSignalingContext $context, InternetAddress $bindAddress, ?TlsConfiguration $tls) : HttpSignaling{
@@ -108,13 +98,5 @@ final class NetherNetBuiltinSignalingFactory extends NetherNetSignalingFactory{
 			$context->getServerInfoProvider(),
 			$this->reverseProxyNetworks !== null ? self::createReverseProxy(array_values((array) $this->reverseProxyNetworks)) : null
 		);
-	}
-
-	public function getStartupMessages() : array{
-		$messages = [KnownTranslationFactory::pocketmine_server_nethernet_signalingStart($this->httpBindAddress, (string) $this->httpPort, "TCP")];
-		if($this->httpBindAddressV6 !== null){
-			$messages[] = KnownTranslationFactory::pocketmine_server_nethernet_signalingStart("[$this->httpBindAddressV6]", (string) $this->httpPort, "TCP");
-		}
-		return $messages;
 	}
 }
