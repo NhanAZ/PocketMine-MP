@@ -1288,10 +1288,6 @@ class Server{
 			}
 			$this->network->activateTransport($name);
 		}
-		if(count($this->network->getActiveTransports()) === 0){
-			$this->logger->emergency($this->language->translate(KnownTranslationFactory::pocketmine_server_transport_noneConfigured()));
-			return false;
-		}
 
 		$typeConverter = TypeConverter::getInstance();
 		$packetBroadcaster = new StandardPacketBroadcaster($this);
