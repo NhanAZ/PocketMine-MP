@@ -88,7 +88,7 @@ network:
   enable-encryption: true
 
 transport:
-  #Network transport(s) used for player connections. Accepts a comma-separated list (e.g. raknet,nethernet).
+  #Network transport(s) used for player connections. Accepts a comma-separated list (e.g. raknet,nethernet), up to 8 entries.
   #Built-in options: raknet, nethernet. Plugins may register additional transports.
   name: nethernet,raknet
   #Settings for the NetherNet (WebRTC) transport.
