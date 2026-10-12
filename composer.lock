@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dcf4ea018a492aba1c9372e2d2b0fc90",
+    "content-hash": "12dba7f91cea101f2e156a844509fa14",
     "packages": [
         {
             "name": "adhocore/json-comment",
@@ -192,7 +192,7 @@
         },
         {
             "name": "axolotl-pm/nethernet",
-            "version": "dev-master",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/axolotl-pm/NetherNet.git",
@@ -222,7 +222,6 @@
                 "phpstan/phpstan-strict-rules": "^2.0.0",
                 "phpunit/phpunit": "^10.5.24"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -236,7 +235,7 @@
             "description": "A NetherNet (WebRTC) transport implementation written in PHP",
             "support": {
                 "issues": "https://github.com/axolotl-pm/NetherNet/issues",
-                "source": "https://github.com/axolotl-pm/NetherNet/tree/master"
+                "source": "https://github.com/axolotl-pm/NetherNet/tree/0.2.0"
             },
             "time": "2026-10-12T06:47:46+00:00"
         },
@@ -2864,9 +2863,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "axolotl-pm/nethernet": 20
-    },
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
