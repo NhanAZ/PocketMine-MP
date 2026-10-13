@@ -161,13 +161,15 @@ transport:
       #Allows resolving the client's real IP from forwarded headers for features like TURN relays.
       reverse-proxy:
         enabled: false
+        #Header the proxy sets the client's IP in (e.g. X-Forwarded-For, X-Real-IP, CF-Connecting-IP).
+        header: X-Forwarded-For
         #List of trusted reverse proxy IP addresses or CIDR blocks.
         #Forwarded headers from unlisted addresses are ignored to prevent IP address spoofing.
         #At least one entry is required when enabled.
         trusted-ips:
         #Example:
         #- 127.0.0.1
-        #- 192.168.0.0/16
+        #- 10.0.0.2
 
 debug:
   #If > 1, it will show debug messages in the console

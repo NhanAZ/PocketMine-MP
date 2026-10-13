@@ -117,6 +117,7 @@ final class YmlServerProperties{
 	public const TRANSPORT_NETHERNET_BUILTIN_SIGNALING_PORT = 'transport.nethernet.builtin-signaling.port';
 	public const TRANSPORT_NETHERNET_BUILTIN_SIGNALING_REVERSE_PROXY = 'transport.nethernet.builtin-signaling.reverse-proxy';
 	public const TRANSPORT_NETHERNET_BUILTIN_SIGNALING_REVERSE_PROXY_ENABLED = 'transport.nethernet.builtin-signaling.reverse-proxy.enabled';
+	public const TRANSPORT_NETHERNET_BUILTIN_SIGNALING_REVERSE_PROXY_HEADER = 'transport.nethernet.builtin-signaling.reverse-proxy.header';
 	public const TRANSPORT_NETHERNET_BUILTIN_SIGNALING_REVERSE_PROXY_TRUSTED_IPS = 'transport.nethernet.builtin-signaling.reverse-proxy.trusted-ips';
 	public const TRANSPORT_NETHERNET_BUILTIN_SIGNALING_TLS = 'transport.nethernet.builtin-signaling.tls';
 	public const TRANSPORT_NETHERNET_BUILTIN_SIGNALING_TLS_CERTIFICATE = 'transport.nethernet.builtin-signaling.tls.certificate';

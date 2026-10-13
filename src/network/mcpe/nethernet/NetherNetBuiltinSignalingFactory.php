@@ -41,7 +41,7 @@ final class NetherNetBuiltinSignalingFactory extends NetherNetSignalingFactory{
 	/**
 	 * @phpstan-param list<string>|null $reverseProxyNetworks
 	 *
-	 * @throws \InvalidArgumentException if a network cannot be parsed
+	 * @throws \InvalidArgumentException if the header or a network is invalid
 	 */
 	public function __construct(
 		private string $httpBindAddress,
@@ -51,12 +51,13 @@ final class NetherNetBuiltinSignalingFactory extends NetherNetSignalingFactory{
 		private ?string $tlsKeyFile,
 		private ?string $tlsPassphrase,
 		?array $reverseProxyNetworks,
+		private string $reverseProxyHeader,
 		private string $lanBindAddress,
 		private int $lanPort,
 		private int $networkId
 	){
 		if($reverseProxyNetworks !== null){
-			self::createReverseProxy($reverseProxyNetworks);
+			self::createReverseProxy($reverseProxyHeader, $reverseProxyNetworks);
 		}
 		$this->reverseProxyNetworks = $reverseProxyNetworks === null ? null : ThreadSafeArray::fromArray($reverseProxyNetworks);
 	}
@@ -66,15 +67,12 @@ final class NetherNetBuiltinSignalingFactory extends NetherNetSignalingFactory{
 	 *
 	 * @throws \InvalidArgumentException
 	 */
-	private static function createReverseProxy(array $networks) : ReverseProxy{
+	private static function createReverseProxy(string $header, array $networks) : ReverseProxy{
 		if(count($networks) === 0){
 			throw new \InvalidArgumentException("At least one trusted reverse proxy address or CIDR block is required");
 		}
 
-		return new ReverseProxy(
-			[ReverseProxy::HEADER_FORWARDED_FOR, ReverseProxy::HEADER_REAL_IP, ReverseProxy::HEADER_CF_CONNECTING_IP],
-			$networks
-		);
+		return new ReverseProxy($header, $networks);
 	}
 
 	public function register(SignalingRegistry $registry, NetherNetSignalingContext $context) : void{
@@ -96,7 +94,7 @@ final class NetherNetBuiltinSignalingFactory extends NetherNetSignalingFactory{
 			$bindAddress,
 			$tls,
 			$context->getServerInfoProvider(),
-			$this->reverseProxyNetworks !== null ? self::createReverseProxy(array_values((array) $this->reverseProxyNetworks)) : null
+			$this->reverseProxyNetworks !== null ? self::createReverseProxy($this->reverseProxyHeader, array_values((array) $this->reverseProxyNetworks)) : null
 		);
 	}
 }

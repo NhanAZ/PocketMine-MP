@@ -28,6 +28,7 @@ use pocketmine\lang\KnownTranslationFactory;
 use pocketmine\nethernet\identity\IdentityException;
 use pocketmine\nethernet\identity\PublicKey;
 use pocketmine\nethernet\identity\ServerIdentity;
+use pocketmine\nethernet\signaling\http\ReverseProxy;
 use pocketmine\nethernet\signaling\lan\LanSignaling;
 use pocketmine\nethernet\transport\webrtc\WebRtcTransportFactory;
 use pocketmine\network\mcpe\convert\TypeConverter;
@@ -209,6 +210,7 @@ final class NetherNetTransport implements Transport{
 			reverseProxyNetworks: $configGroup->getPropertyBool(Yml::TRANSPORT_NETHERNET_BUILTIN_SIGNALING_REVERSE_PROXY_ENABLED, false)
 				? self::parseReverseProxyNetworks($configGroup->getProperty(Yml::TRANSPORT_NETHERNET_BUILTIN_SIGNALING_REVERSE_PROXY_TRUSTED_IPS))
 				: null,
+			reverseProxyHeader: $configGroup->getPropertyString(Yml::TRANSPORT_NETHERNET_BUILTIN_SIGNALING_REVERSE_PROXY_HEADER, ReverseProxy::HEADER_FORWARDED_FOR),
 			lanBindAddress: "0.0.0.0",
 			lanPort: LanSignaling::DEFAULT_PORT, //clients look for LAN games on this port
 			networkId: $networkId
